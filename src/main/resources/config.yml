@@ -1,0 +1,62 @@
+Locations:
+  Spawn: #This is where the waiting room is to join the game
+    x: 0
+    y: 0
+    z: 0
+  Lobby: #This is where the main lobby is
+   x: 0
+   y: 0
+   z: 0
+  Bases: #This is where the players are teleported when the game start
+   Base1:
+     x: 0
+     y: 0
+     z: 0
+   Base2:
+     x: 0
+     y: 0
+     z: 0
+   Base3:
+     x: 0
+     y: 0
+     z: 0
+   Base4:
+     x: 0
+     y: 0
+     z: 0
+   Base5:
+     x: 0
+     y: 0
+     z: 0
+   Base6:
+     x: 0
+     y: 0
+     z: 0
+   Base7:
+     x: 0
+     y: 0
+     z: 0
+   Base8:
+     x: 0
+     y: 0
+     z: 0
+Walls:
+  wall1: #Set the cords of the first wall like the fill command
+    cord1:
+      x: 0
+      y: 0
+      z: 0
+    cord2:
+      x: 0
+      y: 0
+      z: 0
+  wall2: ##Set the cords of the second wall like the fill command
+    cord1:
+      x: 0
+      y: 0
+      z: 0
+    cord2:
+      x: 0
+      y: 0
+      z: 0
+MinPlayers: 2 #Minimum players needed to start the game
