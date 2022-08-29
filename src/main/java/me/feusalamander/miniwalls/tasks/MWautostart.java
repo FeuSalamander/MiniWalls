@@ -1,12 +1,11 @@
 package me.feusalamander.miniwalls.tasks;
 import me.feusalamander.miniwalls.MWstates;
 import me.feusalamander.miniwalls.MiniWalls;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 public class MWautostart extends BukkitRunnable{
     private int timer = 20;
@@ -69,9 +68,71 @@ public class MWautostart extends BukkitRunnable{
                 player.getInventory().setItem( 0, new ItemStack(Material.STONE_SWORD));
                 player.getInventory().setItem( 1, new ItemStack(Material.BOW));
                 player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
-                player.getInventory().setHelmet( new ItemStack(Material.LEATHER_HELMET));
-                player.getInventory().setChestplate( new ItemStack(Material.LEATHER_CHESTPLATE));
-                player.getInventory().setLeggings( new ItemStack(Material.LEATHER_LEGGINGS));
+                if(main.scoreboard.getTeam("Blue").hasPlayer(player)){
+                    ItemStack LeatherHelmet = new ItemStack(Material.LEATHER_HELMET);
+                    LeatherArmorMeta meta = (LeatherArmorMeta) LeatherHelmet.getItemMeta();
+                    meta.setColor(Color.BLUE);
+                    LeatherHelmet.setItemMeta(meta);
+                    player.getInventory().setHelmet(LeatherHelmet);
+                    ItemStack LeatherCP = new ItemStack(Material.LEATHER_CHESTPLATE);
+                    LeatherArmorMeta metac = (LeatherArmorMeta) LeatherCP.getItemMeta();
+                    metac.setColor(Color.BLUE);
+                    LeatherCP.setItemMeta(metac);
+                    player.getInventory().setChestplate(LeatherCP);
+                    ItemStack LeatherL = new ItemStack(Material.LEATHER_LEGGINGS);
+                    LeatherArmorMeta metal = (LeatherArmorMeta) LeatherL.getItemMeta();
+                    metal.setColor(Color.BLUE);
+                    LeatherL.setItemMeta(metal);
+                    player.getInventory().setLeggings(LeatherL);
+                }else if(main.scoreboard.getTeam("Red").hasPlayer(player)) {
+                    ItemStack LeatherHelmet = new ItemStack(Material.LEATHER_HELMET);
+                    LeatherArmorMeta meta = (LeatherArmorMeta) LeatherHelmet.getItemMeta();
+                    meta.setColor(Color.RED);
+                    LeatherHelmet.setItemMeta(meta);
+                    player.getInventory().setHelmet(LeatherHelmet);
+                    ItemStack LeatherCP = new ItemStack(Material.LEATHER_CHESTPLATE);
+                    LeatherArmorMeta metac = (LeatherArmorMeta) LeatherCP.getItemMeta();
+                    metac.setColor(Color.RED);
+                    LeatherCP.setItemMeta(metac);
+                    player.getInventory().setChestplate(LeatherCP);
+                    ItemStack LeatherL = new ItemStack(Material.LEATHER_LEGGINGS);
+                    LeatherArmorMeta metal = (LeatherArmorMeta) LeatherL.getItemMeta();
+                    metal.setColor(Color.RED);
+                    LeatherL.setItemMeta(metal);
+                    player.getInventory().setLeggings(LeatherL);
+                }else if(main.scoreboard.getTeam("Green").hasPlayer(player)) {
+                    ItemStack LeatherHelmet = new ItemStack(Material.LEATHER_HELMET);
+                    LeatherArmorMeta meta = (LeatherArmorMeta) LeatherHelmet.getItemMeta();
+                    meta.setColor(Color.GREEN);
+                    LeatherHelmet.setItemMeta(meta);
+                    player.getInventory().setHelmet(LeatherHelmet);
+                    ItemStack LeatherCP = new ItemStack(Material.LEATHER_CHESTPLATE);
+                    LeatherArmorMeta metac = (LeatherArmorMeta) LeatherCP.getItemMeta();
+                    metac.setColor(Color.GREEN);
+                    LeatherCP.setItemMeta(metac);
+                    player.getInventory().setChestplate(LeatherCP);
+                    ItemStack LeatherL = new ItemStack(Material.LEATHER_LEGGINGS);
+                    LeatherArmorMeta metal = (LeatherArmorMeta) LeatherL.getItemMeta();
+                    metal.setColor(Color.GREEN);
+                    LeatherL.setItemMeta(metal);
+                    player.getInventory().setLeggings(LeatherL);
+                }else if(main.scoreboard.getTeam("Yellow").hasPlayer(player)){
+                    ItemStack LeatherHelmet = new ItemStack(Material.LEATHER_HELMET);
+                    LeatherArmorMeta meta = (LeatherArmorMeta) LeatherHelmet.getItemMeta();
+                    meta.setColor(Color.YELLOW);
+                    LeatherHelmet.setItemMeta(meta);
+                    player.getInventory().setHelmet(LeatherHelmet);
+                    ItemStack LeatherCP = new ItemStack(Material.LEATHER_CHESTPLATE);
+                    LeatherArmorMeta metac = (LeatherArmorMeta) LeatherCP.getItemMeta();
+                    metac.setColor(Color.YELLOW);
+                    LeatherCP.setItemMeta(metac);
+                    player.getInventory().setChestplate(LeatherCP);
+                    ItemStack LeatherL = new ItemStack(Material.LEATHER_LEGGINGS);
+                    LeatherArmorMeta metal = (LeatherArmorMeta) LeatherL.getItemMeta();
+                    metal.setColor(Color.YELLOW);
+                    LeatherL.setItemMeta(metal);
+                    player.getInventory().setLeggings(LeatherL);
+                }
                 player.getInventory().setBoots( new ItemStack(Material.DIAMOND_BOOTS));
                 player.updateInventory();
                 if(main.scoreboard.getTeam("Blue").hasPlayer(player)){

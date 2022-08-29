@@ -154,26 +154,42 @@ public class listener implements Listener {
         if(main.getPlayers().contains(player)){
             if(player.getItemInHand().getType() == Material.BLUE_WOOL){
                 if(player.getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase("§1Click to join the §9Blue Team !")){
-                    main.scoreboard.getTeam("Blue").addPlayer(player);
-                    player.sendMessage("§9You joined the Blue Team");
+                    if(main.scoreboard.getTeam("Yellow").getSize() < 2){
+                        main.scoreboard.getTeam("Blue").addPlayer(player);
+                        player.sendMessage("§9You joined the Blue Team");
+                    }else{
+                        player.sendMessage("This team is full");
+                    }
                 }
             }
             if(player.getItemInHand().getType() == Material.RED_WOOL){
                 if(player.getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase("§4Click to join the §cRed Team !")){
-                    main.scoreboard.getTeam("Red").addPlayer(player);
-                    player.sendMessage("§cYou joined the Red Team");
+                    if(main.scoreboard.getTeam("Yellow").getSize() < 2){
+                        main.scoreboard.getTeam("Red").addPlayer(player);
+                        player.sendMessage("§cYou joined the Red Team");
+                    }else{
+                        player.sendMessage("This team is full");
+                    }
                 }
             }
             if(player.getItemInHand().getType() == Material.GREEN_WOOL){
                 if(player.getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase("§2Click to join the §aGreen Team !")){
-                    main.scoreboard.getTeam("Green").addPlayer(player);
-                    player.sendMessage("§aYou joined the Green Team");
+                    if(main.scoreboard.getTeam("Yellow").getSize() < 2){
+                        main.scoreboard.getTeam("Green").addPlayer(player);
+                        player.sendMessage("§aYou joined the Green Team");
+                    }else{
+                        player.sendMessage("This team is full");
+                    }
                 }
             }
             if(player.getItemInHand().getType() == Material.YELLOW_WOOL){
                 if(player.getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase("§6Click to join the §eYellow Team !")){
-                    main.scoreboard.getTeam("Yellow").addPlayer(player);
-                    player.sendMessage("§eYou joined the Yellow Team");
+                    if(main.scoreboard.getTeam("Yellow").getSize() < 2){
+                        main.scoreboard.getTeam("Yellow").addPlayer(player);
+                        player.sendMessage("§eYou joined the Yellow Team");
+                    }else{
+                        player.sendMessage("This team is full");
+                    }
                 }
             }
         }
