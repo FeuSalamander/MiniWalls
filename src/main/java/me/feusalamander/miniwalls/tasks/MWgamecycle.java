@@ -26,10 +26,6 @@ public class MWgamecycle extends BukkitRunnable {
             Bukkit.dispatchCommand(console, command);
             String wall2 = "fill "+main.getConfig().getInt("Walls.wall2.cord1.x")+" "+main.getConfig().getInt("Walls.wall2.cord1.y")+" "+main.getConfig().getInt("Walls.wall2.cord1.z")+" "+main.getConfig().getInt("Walls.wall2.cord2.x")+" "+main.getConfig().getInt("Walls.wall2.cord2.y")+" "+main.getConfig().getInt("Walls.wall2.cord2.z")+" minecraft:bedrock";
             Bukkit.dispatchCommand(console, wall2);
-            main.activeteams.add("Blue");
-            main.activeteams.add("Red");
-            main.activeteams.add("Green");
-            main.activeteams.add("Yellow");
         }
         if(timer == 290){
             for(Player list : main.getPlayers()) {

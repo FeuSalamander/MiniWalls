@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>me.feusalamander</groupId>
-    <artifactId>mini-walls</artifactId>
+    <artifactId>MiniWalls</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 

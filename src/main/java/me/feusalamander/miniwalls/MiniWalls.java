@@ -63,13 +63,13 @@ public final class MiniWalls extends JavaPlugin{
         player.sendMessage("§4You got eliminated");
         Location lobby  = new Location(Bukkit.getWorld("world"), getConfig().getInt("Locations.Lobby.x"), getConfig().getInt("Locations.Lobby.y"), getConfig().getInt("Locations.Lobby.z"));
         player.teleport(lobby);
-        player.getInventory().clear();
-        player.setLevel(0);
-        player.setHealth(20);
         scoreboard.getTeam("Blue").removePlayer(player);
         scoreboard.getTeam("Red").removePlayer(player);
         scoreboard.getTeam("Green").removePlayer(player);
         scoreboard.getTeam("Yellow").removePlayer(player);
+        player.getInventory().clear();
+        player.setLevel(0);
+        player.setHealth(20);
         if(scoreboard.getTeam("Blue").getSize() == 0){
             activeteams.remove("Blue");
         }
@@ -88,6 +88,7 @@ public final class MiniWalls extends JavaPlugin{
         if(activeteams.size() <= 1){
             Bukkit.broadcastMessage(scoreboard.getTeam(activeteams.get(0)).getPrefix()+"Team §6Won the game");
             setState(MWstates.WAITING);
+            activeteams.clear();
             for(int i = 0; i < getPlayers().size(); i++)
             {
                 Player winner = getPlayers().get(i);

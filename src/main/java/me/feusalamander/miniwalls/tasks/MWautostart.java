@@ -68,7 +68,7 @@ public class MWautostart extends BukkitRunnable{
                 player.getInventory().clear();
                 player.getInventory().setItem( 0, new ItemStack(Material.STONE_SWORD));
                 player.getInventory().setItem( 1, new ItemStack(Material.BOW));
-                player.getInventory().setItem( 0, new ItemStack(Material.ARROW, 5));
+                player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
                 player.getInventory().setHelmet( new ItemStack(Material.LEATHER_HELMET));
                 player.getInventory().setChestplate( new ItemStack(Material.LEATHER_CHESTPLATE));
                 player.getInventory().setLeggings( new ItemStack(Material.LEATHER_LEGGINGS));
@@ -89,6 +89,10 @@ public class MWautostart extends BukkitRunnable{
             }
             MWgamecycle cycle = new MWgamecycle(main);
             cycle.runTaskTimer(main, 0, 20);
+            main.activeteams.add("Blue");
+            main.activeteams.add("Red");
+            main.activeteams.add("Green");
+            main.activeteams.add("Yellow");
             cancel();
         }
         timer--;
