@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -24,11 +25,6 @@ public class listener implements Listener {
     public void onCommand(PlayerCommandPreprocessEvent e){
         Player player = e.getPlayer();
         if (e.getMessage().equalsIgnoreCase("/mw join")){
-            Location spawn  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Spawn.x"), main.getConfig().getInt("Locations.Spawn.y"), main.getConfig().getInt("Locations.Spawn.z"));
-            player.teleport(spawn);
-            player.setHealth(20);
-            player.setFoodLevel(20);
-            player.getInventory().clear();
             if(!main.isState(MWstates.WAITING))
             {
                 if(!main.getPlayers().contains(player)){
@@ -40,6 +36,11 @@ public class listener implements Listener {
             }
             if(!main.getPlayers().contains(player)) {
                 main.getPlayers().add(player);
+                Location spawn  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Spawn.x"), main.getConfig().getInt("Locations.Spawn.y"), main.getConfig().getInt("Locations.Spawn.z"));
+                player.teleport(spawn);
+                player.setHealth(20);
+                player.setFoodLevel(20);
+                player.getInventory().clear();
                 Bukkit.broadcastMessage(player.getName() + "§a joined the MiniWalls game ! §7<§f" + main.getPlayers().size() + "§7/§f8§7>");
                 player.setGameMode(GameMode.ADVENTURE);
                 ItemStack bwool = new ItemStack(Material.BLUE_WOOL);
@@ -62,6 +63,7 @@ public class listener implements Listener {
                 wooly.setDisplayName("§6Click to join the §eYellow Team !");
                 ywool.setItemMeta(wooly);
                 player.getInventory().setItem(8, ywool);
+                e.getPlayer().setScoreboard(main.scoreboard);
             }
             if(main.isState(MWstates.WAITING)&& main.getPlayers().size() >= main.getConfig().getInt("MinPlayers"))
             {
@@ -78,6 +80,11 @@ public class listener implements Listener {
             Location lobby  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Lobby.x"), main.getConfig().getInt("Locations.Lobby.y"), main.getConfig().getInt("Locations.Lobby.z"));
             player.teleport(lobby);
             if(main.getPlayers().contains(player)){
+                player.teleport(lobby);
+                main.scoreboard.getTeam("Blue").removePlayer(player);
+                main.scoreboard.getTeam("Red").removePlayer(player);
+                main.scoreboard.getTeam("Green").removePlayer(player);
+                main.scoreboard.getTeam("Yellow").removePlayer(player);
                 if(main.isState(MWstates.WAITING)){
                     main.getPlayers().remove(player);
                     Bukkit.broadcastMessage(player.getName()+"§a left the MiniWalls game ! §7<§f" +main.getPlayers().size()+"§7/§f8§7>");
@@ -101,8 +108,12 @@ public class listener implements Listener {
         Player player = e.getPlayer();
         if (e.getMessage().equalsIgnoreCase("/mw leave")){
             Location lobby  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Lobby.x"), main.getConfig().getInt("Locations.Lobby.y"), main.getConfig().getInt("Locations.Lobby.z"));
-            player.teleport(lobby);
             if(main.getPlayers().contains(player)){
+                player.teleport(lobby);
+                main.scoreboard.getTeam("Blue").removePlayer(player);
+                main.scoreboard.getTeam("Red").removePlayer(player);
+                main.scoreboard.getTeam("Green").removePlayer(player);
+                main.scoreboard.getTeam("Yellow").removePlayer(player);
                 if(main.isState(MWstates.WAITING)){
                     main.getPlayers().remove(player);
                     Bukkit.broadcastMessage(player.getName()+"§a left the MiniWalls game ! §7<§f" +main.getPlayers().size()+"§7/§f8§7>");
@@ -137,5 +148,35 @@ public class listener implements Listener {
             }
         }
     }
+    @EventHandler
+    public  void jointeam(PlayerInteractEvent e){
+        Player player = e.getPlayer();
+        ItemStack item = e.getItem();
+        if(main.getPlayers().contains(player)){
+            if(player.getItemInHand().getType() == Material.BLUE_WOOL){
+                if(player.getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase("§1Click to join the §9Blue Team !")){
+                    main.scoreboard.getTeam("Blue").addPlayer(player);
+                    player.sendMessage("§9You joined the Blue Team");
+                }
+            }
+            if(player.getItemInHand().getType() == Material.RED_WOOL){
+                if(player.getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase("§4Click to join the §cRed Team !")){
+                    main.scoreboard.getTeam("Red").addPlayer(player);
+                    player.sendMessage("§cYou joined the Red Team");
+                }
+            }
+            if(player.getItemInHand().getType() == Material.GREEN_WOOL){
+                if(player.getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase("§2Click to join the §aGreen Team !")){
+                    main.scoreboard.getTeam("Green").addPlayer(player);
+                    player.sendMessage("§aYou joined the Green Team");
+                }
+            }
+            if(player.getItemInHand().getType() == Material.YELLOW_WOOL){
+                if(player.getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase("§6Click to join the §eYellow Team !")){
+                    main.scoreboard.getTeam("Yellow").addPlayer(player);
+                    player.sendMessage("§eYou joined the Yellow Team");
+                }
+            }
+        }
+    }
 }
-

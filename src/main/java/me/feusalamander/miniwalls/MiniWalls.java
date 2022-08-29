@@ -5,10 +5,14 @@ import me.feusalamander.miniwalls.commands.mw;
 import me.feusalamander.miniwalls.listeners.DMGlistener;
 import me.feusalamander.miniwalls.listeners.listener;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +20,11 @@ public final class MiniWalls extends JavaPlugin{
     private List<Player> players = new ArrayList<>();
     private List<Location> spawns = new ArrayList<>();
     private MWstates state;
+    public Scoreboard scoreboard;
+    Team blue;
+    Team red;
+    Team green;
+    Team yellow;
 
     @Override
     public void onEnable() {
@@ -26,6 +35,20 @@ public final class MiniWalls extends JavaPlugin{
         getServer().getPluginManager().registerEvents(new DMGlistener(this), this);
         setState(MWstates.WAITING);
         saveDefaultConfig();
+        scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
+        blue = scoreboard.registerNewTeam("Blue");
+        blue.setPrefix("§9Blue ");
+        blue.setAllowFriendlyFire(false);
+        red = scoreboard.registerNewTeam("Red");
+        red.setPrefix("§cRed ");
+        red.setAllowFriendlyFire(false);
+        green = scoreboard.registerNewTeam("Green");
+        green.setPrefix("§aGreen ");
+        green.setAllowFriendlyFire(false);
+        yellow = scoreboard.registerNewTeam("Yellow");
+        yellow.setPrefix("§eYellow ");
+        yellow.setAllowFriendlyFire(false);
+
         //load spawns
         World world = Bukkit.getWorld("world");
         spawns.add(new Location(world, getConfig().getInt("Locations.bases.base1.x"), getConfig().getInt("Locations.bases.base1.y"), getConfig().getInt("Locations.bases.base1.z")));
