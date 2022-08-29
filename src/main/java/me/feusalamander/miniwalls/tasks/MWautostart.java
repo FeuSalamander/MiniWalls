@@ -66,7 +66,13 @@ public class MWautostart extends BukkitRunnable{
                 Location spawnyellow  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Bases.YellowBase.x"), main.getConfig().getInt("Locations.Bases.YellowBase.y"), main.getConfig().getInt("Locations.Bases.YellowBase.z"));
                 player.setGameMode(GameMode.SURVIVAL);
                 player.getInventory().clear();
-                player.getInventory().setItemInMainHand(new ItemStack(Material.STONE_SWORD));
+                player.getInventory().setItem( 0, new ItemStack(Material.STONE_SWORD));
+                player.getInventory().setItem( 1, new ItemStack(Material.BOW));
+                player.getInventory().setItem( 0, new ItemStack(Material.ARROW, 5));
+                player.getInventory().setHelmet( new ItemStack(Material.LEATHER_HELMET));
+                player.getInventory().setChestplate( new ItemStack(Material.LEATHER_CHESTPLATE));
+                player.getInventory().setLeggings( new ItemStack(Material.LEATHER_LEGGINGS));
+                player.getInventory().setBoots( new ItemStack(Material.DIAMOND_BOOTS));
                 player.updateInventory();
                 if(main.scoreboard.getTeam("Blue").hasPlayer(player)){
                     player.teleport(spawnblue);
