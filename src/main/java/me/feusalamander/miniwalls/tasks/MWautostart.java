@@ -77,7 +77,8 @@ public class MWautostart extends BukkitRunnable{
                 }else if(main.scoreboard.getTeam("Yellow").hasPlayer(player)){
                     player.teleport(spawnyellow);
                 }else{
-                    Bukkit.broadcastMessage("error");
+                    main.eliminate(player);
+                    player.sendMessage("§4You didn't choose a team");
                 }
             }
             MWgamecycle cycle = new MWgamecycle(main);

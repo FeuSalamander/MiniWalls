@@ -97,7 +97,6 @@ public final class MiniWalls extends JavaPlugin{
                 winner.getInventory().clear();
                 winner.setLevel(0);
                 winner.setHealth(20);
-
         }
     }
     }
