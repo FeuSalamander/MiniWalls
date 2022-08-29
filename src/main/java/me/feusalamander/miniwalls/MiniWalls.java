@@ -86,7 +86,7 @@ public final class MiniWalls extends JavaPlugin{
     }
     public void checkWin() {
         if(activeteams.size() <= 1){
-            Bukkit.broadcastMessage("§6The "+scoreboard.getTeam(activeteams.get(0)).getPrefix()+"Team §6Won the game");
+            Bukkit.broadcastMessage(scoreboard.getTeam(activeteams.get(0)).getPrefix()+"Team §6Won the game");
             setState(MWstates.WAITING);
             for(int i = 0; i < getPlayers().size(); i++)
             {
