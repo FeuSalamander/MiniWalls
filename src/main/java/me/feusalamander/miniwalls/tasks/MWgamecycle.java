@@ -2,17 +2,9 @@ package me.feusalamander.miniwalls.tasks;
 
 import me.feusalamander.miniwalls.MiniWalls;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.Server;
-import org.bukkit.World;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import java.awt.*;
-import java.io.Console;
-
 public class MWgamecycle extends BukkitRunnable {
     private MiniWalls main;
     private int timer = 300;
@@ -34,6 +26,10 @@ public class MWgamecycle extends BukkitRunnable {
             Bukkit.dispatchCommand(console, command);
             String wall2 = "fill "+main.getConfig().getInt("Walls.wall2.cord1.x")+" "+main.getConfig().getInt("Walls.wall2.cord1.y")+" "+main.getConfig().getInt("Walls.wall2.cord1.z")+" "+main.getConfig().getInt("Walls.wall2.cord2.x")+" "+main.getConfig().getInt("Walls.wall2.cord2.y")+" "+main.getConfig().getInt("Walls.wall2.cord2.z")+" minecraft:bedrock";
             Bukkit.dispatchCommand(console, wall2);
+            main.activeteams.add("Blue");
+            main.activeteams.add("Red");
+            main.activeteams.add("Green");
+            main.activeteams.add("Yellow");
         }
         if(timer == 290){
             for(Player list : main.getPlayers()) {

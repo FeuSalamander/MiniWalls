@@ -5,9 +5,7 @@ import me.feusalamander.miniwalls.commands.mw;
 import me.feusalamander.miniwalls.listeners.DMGlistener;
 import me.feusalamander.miniwalls.listeners.listener;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
@@ -18,8 +16,7 @@ import java.util.List;
 
 public final class MiniWalls extends JavaPlugin{
     private List<Player> players = new ArrayList<>();
-    private List<Location> spawns = new ArrayList<>();
-    private List<String> activeteams = new ArrayList<>();
+    public List<String> activeteams = new ArrayList<>();
     private MWstates state;
     public Scoreboard scoreboard;
     Team blue;
@@ -61,36 +58,51 @@ public final class MiniWalls extends JavaPlugin{
     public List<Player> getPlayers(){
         return players;
     }
-    public List<Location> getSpawns(){
-        return spawns;
-    }
     public void eliminate(Player player) {
         if(players.contains(player)) players.remove(player);
         player.sendMessage("§4You got eliminated");
         Location lobby  = new Location(Bukkit.getWorld("world"), getConfig().getInt("Locations.Lobby.x"), getConfig().getInt("Locations.Lobby.y"), getConfig().getInt("Locations.Lobby.z"));
         player.teleport(lobby);
-        checkWin();
         player.getInventory().clear();
         player.setLevel(0);
         player.setHealth(20);
-
+        scoreboard.getTeam("Blue").removePlayer(player);
+        scoreboard.getTeam("Red").removePlayer(player);
+        scoreboard.getTeam("Green").removePlayer(player);
+        scoreboard.getTeam("Yellow").removePlayer(player);
+        if(scoreboard.getTeam("Blue").getSize() == 0){
+            activeteams.remove("Blue");
+        }
+        if(scoreboard.getTeam("Red").getSize() == 0){
+            activeteams.remove("Red");
+        }
+        if(scoreboard.getTeam("Green").getSize() == 0){
+            activeteams.remove("Green");
+        }
+        if(scoreboard.getTeam("Yellow").getSize() == 0){
+            activeteams.remove("Yellow");
+        }
+        checkWin();
     }
     public void checkWin() {
-        if(players.size() <= 1){
-            Player winner = players.get(0);
-            Bukkit.broadcastMessage("§6"+winner.getName()+" §6Won the game");
-            Location lobby  = new Location(Bukkit.getWorld("world"), getConfig().getInt("Locations.Lobby.x"), getConfig().getInt("Locations.Lobby.y"), getConfig().getInt("Locations.Lobby.z"));
-            winner.teleport(lobby);
-            getPlayers().remove(winner);
+        if(activeteams.size() <= 1){
+            Bukkit.broadcastMessage("§6The "+scoreboard.getTeam(activeteams.get(0)).getPrefix()+"Team §6Won the game");
             setState(MWstates.WAITING);
-            winner.getInventory().clear();
-            winner.setLevel(0);
-            winner.setHealth(20);
+            for(int i = 0; i < getPlayers().size(); i++)
+            {
+                Player winner = getPlayers().get(i);
+                Location lobby  = new Location(Bukkit.getWorld("world"), getConfig().getInt("Locations.Lobby.x"), getConfig().getInt("Locations.Lobby.y"), getConfig().getInt("Locations.Lobby.z"));
+                winner.teleport(lobby);
+                getPlayers().remove(winner);
+                winner.getInventory().clear();
+                winner.setLevel(0);
+                winner.setHealth(20);
+
         }
+    }
     }
 
     @Override
     public void onDisable() {
         getLogger().info( "MiniWalls by FeuSalamander is shutting down !");
-    }
-}
+    }}
