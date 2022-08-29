@@ -60,12 +60,25 @@ public class MWautostart extends BukkitRunnable{
             for(int i = 0; i < main.getPlayers().size(); i++)
             {
                 Player player = main.getPlayers().get(i);
-                Location spawn = main.getSpawns().get(i);
-                player.teleport(spawn);
+                Location spawnblue  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Bases.BlueBase.x"), main.getConfig().getInt("Locations.Bases.BlueBase.y"), main.getConfig().getInt("Locations.Bases.BlueBase.z"));
+                Location spawnred  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Bases.RedBase.x"), main.getConfig().getInt("Locations.Bases.RedBase.y"), main.getConfig().getInt("Locations.Bases.RedBase.z"));
+                Location spawngreen  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Bases.GreenBase.x"), main.getConfig().getInt("Locations.Bases.GreenBase.y"), main.getConfig().getInt("Locations.Bases.GreenBase.z"));
+                Location spawnyellow  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Bases.YellowBase.x"), main.getConfig().getInt("Locations.Bases.YellowBase.y"), main.getConfig().getInt("Locations.Bases.YellowBase.z"));
                 player.setGameMode(GameMode.SURVIVAL);
                 player.getInventory().clear();
                 player.getInventory().setItemInMainHand(new ItemStack(Material.STONE_SWORD));
                 player.updateInventory();
+                if(main.scoreboard.getTeam("Blue").hasPlayer(player)){
+                    player.teleport(spawnblue);
+                }else if(main.scoreboard.getTeam("Red").hasPlayer(player)){
+                    player.teleport(spawnred);
+                }else if(main.scoreboard.getTeam("Green").hasPlayer(player)){
+                    player.teleport(spawngreen);
+                }else if(main.scoreboard.getTeam("Yellow").hasPlayer(player)){
+                    player.teleport(spawnyellow);
+                }else{
+                    Bukkit.broadcastMessage("error");
+                }
             }
             MWgamecycle cycle = new MWgamecycle(main);
             cycle.runTaskTimer(main, 0, 20);

@@ -19,6 +19,7 @@ import java.util.List;
 public final class MiniWalls extends JavaPlugin{
     private List<Player> players = new ArrayList<>();
     private List<Location> spawns = new ArrayList<>();
+    private List<String> activeteams = new ArrayList<>();
     private MWstates state;
     public Scoreboard scoreboard;
     Team blue;
@@ -48,17 +49,6 @@ public final class MiniWalls extends JavaPlugin{
         yellow = scoreboard.registerNewTeam("Yellow");
         yellow.setPrefix("§eYellow ");
         yellow.setAllowFriendlyFire(false);
-
-        //load spawns
-        World world = Bukkit.getWorld("world");
-        spawns.add(new Location(world, getConfig().getInt("Locations.bases.base1.x"), getConfig().getInt("Locations.bases.base1.y"), getConfig().getInt("Locations.bases.base1.z")));
-        spawns.add(new Location(world, getConfig().getInt("Locations.bases.base2.x"), getConfig().getInt("Locations.bases.base2.y"), getConfig().getInt("Locations.bases.base2.z")));
-        spawns.add(new Location(world, getConfig().getInt("Locations.bases.base3.x"), getConfig().getInt("Locations.bases.base3.y"), getConfig().getInt("Locations.bases.base3.z")));
-        spawns.add(new Location(world, getConfig().getInt("Locations.bases.base4.x"), getConfig().getInt("Locations.bases.base4.y"), getConfig().getInt("Locations.bases.base4.z")));
-        spawns.add(new Location(world, getConfig().getInt("Locations.bases.base5.x"), getConfig().getInt("Locations.bases.base5.y"), getConfig().getInt("Locations.bases.base5.z")));
-        spawns.add(new Location(world, getConfig().getInt("Locations.bases.base6.x"), getConfig().getInt("Locations.bases.base6.y"), getConfig().getInt("Locations.bases.base6.z")));
-        spawns.add(new Location(world, getConfig().getInt("Locations.bases.base7.x"), getConfig().getInt("Locations.bases.base7.y"), getConfig().getInt("Locations.bases.base7.z")));
-        spawns.add(new Location(world, getConfig().getInt("Locations.bases.base8.x"), getConfig().getInt("Locations.bases.base8.y"), getConfig().getInt("Locations.bases.base8.z")));
     }
 
     public void setState(MWstates state){
@@ -83,6 +73,7 @@ public final class MiniWalls extends JavaPlugin{
         player.getInventory().clear();
         player.setLevel(0);
         player.setHealth(20);
+
     }
     public void checkWin() {
         if(players.size() <= 1){

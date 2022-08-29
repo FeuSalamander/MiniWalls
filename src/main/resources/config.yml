@@ -8,35 +8,19 @@ Locations:
    y: 0
    z: 0
   Bases: #This is where the players are teleported when the game start
-   Base1:
+   BlueBase:
      x: 0
      y: 0
      z: 0
-   Base2:
+   RedBase:
      x: 0
      y: 0
      z: 0
-   Base3:
+   GreenBase:
      x: 0
      y: 0
      z: 0
-   Base4:
-     x: 0
-     y: 0
-     z: 0
-   Base5:
-     x: 0
-     y: 0
-     z: 0
-   Base6:
-     x: 0
-     y: 0
-     z: 0
-   Base7:
-     x: 0
-     y: 0
-     z: 0
-   Base8:
+   YellowBase:
      x: 0
      y: 0
      z: 0
