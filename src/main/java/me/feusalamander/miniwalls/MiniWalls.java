@@ -1,19 +1,16 @@
 package me.feusalamander.miniwalls;
-
 import me.feusalamander.miniwalls.commands.MWTab;
 import me.feusalamander.miniwalls.commands.mw;
 import me.feusalamander.miniwalls.listeners.DMGlistener;
+import me.feusalamander.miniwalls.listeners.MapReset;
 import me.feusalamander.miniwalls.listeners.listener;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.*;
-
-import java.awt.print.Paper;
 import java.util.ArrayList;
 import java.util.List;
-
 public final class MiniWalls extends JavaPlugin{
     private List<Player> players = new ArrayList<>();
     public List<String> activeteams = new ArrayList<>();
@@ -24,7 +21,6 @@ public final class MiniWalls extends JavaPlugin{
     Team green;
     Team yellow;
     Team playerss;
-
     @Override
     public void onEnable() {
         getLogger().info( "Mini Walls by FeuSalamander is working !");
@@ -32,6 +28,7 @@ public final class MiniWalls extends JavaPlugin{
         getCommand("mw").setTabCompleter(new MWTab());
         getServer().getPluginManager().registerEvents(new listener(this), this);
         getServer().getPluginManager().registerEvents(new DMGlistener(this), this);
+        getServer().getPluginManager().registerEvents(new MapReset(this), this);
         setState(MWstates.WAITING);
         saveDefaultConfig();
         scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
@@ -55,7 +52,7 @@ public final class MiniWalls extends JavaPlugin{
         objective.getScore("Map: §a"+getConfig().getString("map")).setScore(6);
         objective.getScore("players: ").setScore(5);
         objective.getScore("§e").setScore(4);
-        objective.getScore("Version: §7v1").setScore(3);
+        objective.getScore("Version: §7v1.0").setScore(3);
         objective.getScore("§a").setScore(2);
         objective.getScore("§e"+getConfig().getString("server")).setScore(1);
     }
@@ -102,6 +99,9 @@ public final class MiniWalls extends JavaPlugin{
             Bukkit.broadcastMessage(scoreboard.getTeam(activeteams.get(0)).getPrefix()+"Team §6Won the game");
             setState(MWstates.WAITING);
             activeteams.clear();
+            if(getConfig().getInt("reset") == 0){
+                getConfig().set("reset", 1);
+            }
             for(int i = 0; i < getPlayers().size(); i++)
             {
                 Player winner = getPlayers().get(i);
