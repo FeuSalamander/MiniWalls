@@ -21,6 +21,8 @@ public class MWautostart extends BukkitRunnable{
         for(Player pls : main.getPlayers()){
             pls.setLevel(timer);
         }
+        main.scoreboard.getTeam("playerss").setSuffix("§a" +main.getPlayers().size()+ "/§a8");
+        main.scoreboard.getTeam("playerss").setPrefix("Waiting ");
         if(main.getPlayers().size() < main.getConfig().getInt("MinPlayers")){
             cancel();
             Bukkit.broadcastMessage("§4Not enough players to start");

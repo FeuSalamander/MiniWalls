@@ -8,9 +8,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.Team;
+import org.bukkit.scoreboard.*;
 
+import java.awt.print.Paper;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +23,7 @@ public final class MiniWalls extends JavaPlugin{
     Team red;
     Team green;
     Team yellow;
+    Team playerss;
 
     @Override
     public void onEnable() {
@@ -46,6 +47,17 @@ public final class MiniWalls extends JavaPlugin{
         yellow = scoreboard.registerNewTeam("Yellow");
         yellow.setPrefix("§eYellow ");
         yellow.setAllowFriendlyFire(false);
+        playerss = scoreboard.registerNewTeam("playerss");
+        playerss.addEntry("players: ");
+        Objective objective = scoreboard.registerNewObjective("MiniWalls", "dummy", "   §e§lMiniWalls   ");
+        objective.setDisplaySlot(DisplaySlot.SIDEBAR);
+        objective.getScore("").setScore(7);
+        objective.getScore("Map: §a"+getConfig().getString("map")).setScore(6);
+        objective.getScore("players: ").setScore(5);
+        objective.getScore("§e").setScore(4);
+        objective.getScore("Version: §7v0.1").setScore(3);
+        objective.getScore("§a").setScore(2);
+        objective.getScore("§e"+getConfig().getString("server")).setScore(1);
     }
 
     public void setState(MWstates state){

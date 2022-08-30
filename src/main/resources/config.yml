@@ -44,3 +44,5 @@ Walls:
       y: 0
       z: 0
 MinPlayers: 2 #Minimum players needed to start the game
+map: miniwalls #the name of the map in the scoreboard
+server: play.miniwalls.net #your server name

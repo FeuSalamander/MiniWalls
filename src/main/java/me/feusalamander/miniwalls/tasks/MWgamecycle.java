@@ -16,6 +16,8 @@ public class MWgamecycle extends BukkitRunnable {
     public void run() {
         for(Player pls : main.getPlayers()){
             pls.setLevel(timer);
+            main.scoreboard.getTeam("playerss").setSuffix("§a" +main.getPlayers().size()+ "/§a8");
+            main.scoreboard.getTeam("playerss").setPrefix("Alive ");
         }
         if(main.getPlayers().size() <= 1){
             cancel();

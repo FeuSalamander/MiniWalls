@@ -63,6 +63,8 @@ public class listener implements Listener {
                 ywool.setItemMeta(wooly);
                 player.getInventory().setItem(8, ywool);
                 e.getPlayer().setScoreboard(main.scoreboard);
+                main.scoreboard.getTeam("playerss").setSuffix("§a" +main.getPlayers().size()+ "/§a8");
+                main.scoreboard.getTeam("playerss").setPrefix("Waiting ");
             }
             if(main.isState(MWstates.WAITING)&& main.getPlayers().size() >= main.getConfig().getInt("MinPlayers"))
             {
@@ -78,6 +80,7 @@ public class listener implements Listener {
         Player player = e.getPlayer();
             Location lobby  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Lobby.x"), main.getConfig().getInt("Locations.Lobby.y"), main.getConfig().getInt("Locations.Lobby.z"));
             player.teleport(lobby);
+            player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
             if(main.getPlayers().contains(player)){
                 player.teleport(lobby);
                 main.scoreboard.getTeam("Blue").removePlayer(player);
@@ -109,6 +112,7 @@ public class listener implements Listener {
             Location lobby  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Lobby.x"), main.getConfig().getInt("Locations.Lobby.y"), main.getConfig().getInt("Locations.Lobby.z"));
             if(main.getPlayers().contains(player)){
                 player.teleport(lobby);
+                player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
                 main.scoreboard.getTeam("Blue").removePlayer(player);
                 main.scoreboard.getTeam("Red").removePlayer(player);
                 main.scoreboard.getTeam("Green").removePlayer(player);
