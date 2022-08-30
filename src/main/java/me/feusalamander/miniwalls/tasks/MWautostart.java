@@ -32,24 +32,28 @@ public class MWautostart extends BukkitRunnable{
         {
             for(Player list : main.getPlayers()) {
                 list.sendMessage("§aThe Game is starting in 10s");
+                list.sendTitle("§a10", "", 1, 10, 1);
             }
         }
         if(timer == 3)
         {
             for(Player list : main.getPlayers()) {
                 list.sendMessage("§eThe Game is starting in 3s");
+                list.sendTitle("§e3", "", 1, 20, 1);
             }
         }
         if(timer == 2)
         {
             for(Player list : main.getPlayers()) {
                 list.sendMessage("§6The Game is starting in 2s");
+                list.sendTitle("§62", "", 1, 20, 1);
             }
         }
         if(timer == 1)
         {
             for(Player list : main.getPlayers()) {
                 list.sendMessage("§4The Game is starting in 1s");
+                list.sendTitle("§41", "", 1, 20, 1);
             }
         }
         if(timer == 0)
@@ -70,6 +74,8 @@ public class MWautostart extends BukkitRunnable{
                 player.getInventory().setItem( 0, new ItemStack(Material.STONE_SWORD));
                 player.getInventory().setItem( 1, new ItemStack(Material.BOW));
                 player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
+                player.getInventory().setItem( 2, new ItemStack(Material.WOODEN_PICKAXE));
+                player.getInventory().setItem( 3, new ItemStack(Material.WOODEN_AXE ));
                 if(main.scoreboard.getTeam("Blue").hasPlayer(player)){
                     ItemStack LeatherHelmet = new ItemStack(Material.LEATHER_HELMET);
                     LeatherArmorMeta meta = (LeatherArmorMeta) LeatherHelmet.getItemMeta();

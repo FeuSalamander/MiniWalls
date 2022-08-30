@@ -46,4 +46,4 @@ Walls:
 MinPlayers: 2 #Minimum players needed to start the game
 map: miniwalls #the name of the map in the scoreboard
 server: play.miniwalls.net #your server name
-reset: 0 #don't touch this, if you do you will break the map reload system
+reset: 0 #don't touch this, if you do it you will break the map reload system

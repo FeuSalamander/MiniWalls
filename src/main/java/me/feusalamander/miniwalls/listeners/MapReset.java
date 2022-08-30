@@ -53,7 +53,15 @@ public class MapReset implements Listener {
             CHANGES.add(block);
             e.setCancelled(true);
             e.getBlock().setType(Material.AIR);
-            e.getBlock().getWorld().dropItem(e.getBlock().getLocation(), new ItemStack(Material.BLACK_WOOL));
+            if(main.scoreboard.getTeam("Blue").hasPlayer(p)){
+                e.getBlock().getWorld().dropItem(e.getBlock().getLocation(), new ItemStack(Material.BLUE_WOOL));
+            }else if(main.scoreboard.getTeam("Red").hasPlayer(p)){
+                e.getBlock().getWorld().dropItem(e.getBlock().getLocation(), new ItemStack(Material.RED_WOOL));
+            }else if(main.scoreboard.getTeam("Green").hasPlayer(p)){
+                e.getBlock().getWorld().dropItem(e.getBlock().getLocation(), new ItemStack(Material.GREEN_WOOL));
+            }else if(main.scoreboard.getTeam("YELLOW").hasPlayer(p)){
+                e.getBlock().getWorld().dropItem(e.getBlock().getLocation(), new ItemStack(Material.YELLOW_WOOL));
+            }
         }
     }
     @EventHandler
