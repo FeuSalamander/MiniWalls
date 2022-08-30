@@ -94,6 +94,7 @@ public final class MiniWalls extends JavaPlugin{
         if(scoreboard.getTeam("Yellow").getSize() == 0){
             activeteams.remove("Yellow");
         }
+        player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
         checkWin();
     }
     public void checkWin() {
@@ -110,6 +111,7 @@ public final class MiniWalls extends JavaPlugin{
                 winner.getInventory().clear();
                 winner.setLevel(0);
                 winner.setHealth(20);
+                winner.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
         }
     }
     }
