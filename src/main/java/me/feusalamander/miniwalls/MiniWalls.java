@@ -55,7 +55,7 @@ public final class MiniWalls extends JavaPlugin{
         objective.getScore("Map: §a"+getConfig().getString("map")).setScore(6);
         objective.getScore("players: ").setScore(5);
         objective.getScore("§e").setScore(4);
-        objective.getScore("Version: §7v0.1").setScore(3);
+        objective.getScore("Version: §7v1").setScore(3);
         objective.getScore("§a").setScore(2);
         objective.getScore("§e"+getConfig().getString("server")).setScore(1);
     }
