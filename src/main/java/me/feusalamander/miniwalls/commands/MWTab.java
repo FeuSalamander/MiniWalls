@@ -21,6 +21,10 @@ public class MWTab implements TabCompleter {
             arguments.add("setredbase");
             arguments.add("setgreenbase");
             arguments.add("setyellowbase");
+            arguments.add("setbluevillager");
+            arguments.add("setredbasevillager");
+            arguments.add("setgreenbasevillager");
+            arguments.add("setyellowbasevillager");
             return arguments;
         }
         return  null;

@@ -36,6 +36,10 @@ public class mw implements CommandExecutor {
                 p.sendMessage("§5mw setredbase: §cSet the spawn of the §cRed §cteam");
                 p.sendMessage("§5mw setgreenbase: §cSet the spawn of the §aGreen §cteam");
                 p.sendMessage("§5mw setyellowbase: §cSet the spawn of the §eYellow §cteam");
+                p.sendMessage("§5mw setbluevillager: §cSet the spawn of the §9Blue §cvillager");
+                p.sendMessage("§5mw setredvillager: §cSet the spawn of the §cRed §cvillager");
+                p.sendMessage("§5mw setgreenvillager: §cSet the spawn of the §aGreen §cvillager");
+                p.sendMessage("§5mw setyellowvillager: §cSet the spawn of the §eYellow §cvillager");
                 p.sendMessage("§1§l---------------------------------");
             }
         }

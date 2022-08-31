@@ -6,9 +6,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -164,4 +166,63 @@ public class listener implements Listener {
                 }
             }
         }
+    @EventHandler
+    public void ondmg(EntityDamageByEntityEvent e){
+        Entity victim = e.getEntity();
+        Entity damager = e.getDamager();
+        Player player = (Player)damager;
+        if(player instanceof Player){
+            if(main.getPlayers().contains(player)){
+                if(victim.getName().equalsIgnoreCase("§9Blue Villager")){
+                    if(!main.scoreboard.getTeam("Blue").hasPlayer(player)){
+                        main.blife--;
+                        if(main.blife == 0){
+                            for(Player list : main.getPlayers()) {
+                                list.sendMessage("§9The Blue Villager died");
+                            }
+                            e.setDamage(800);
+                        }
+                    }else{
+                        e.setCancelled(true);
+                    }
+                }else if(victim.getName().equalsIgnoreCase("§cRed Villager")){
+                    if(!main.scoreboard.getTeam("Red").hasPlayer(player)){
+                        main.rlife--;
+                        if(main.rlife == 0){
+                            for(Player list : main.getPlayers()) {
+                                list.sendMessage("§cThe Red Villager died");
+                            }
+                            e.setDamage(800);
+                        }
+                    }else{
+                        e.setCancelled(true);
+                    }
+                }else if(victim.getName().equalsIgnoreCase("§aGreen Villager")){
+                    if(!main.scoreboard.getTeam("Green").hasPlayer(player)){
+                        main.glife--;
+                        if(main.glife == 0){
+                            for(Player list : main.getPlayers()) {
+                                list.sendMessage("§aThe Green Villager died");
+                            }
+                            e.setDamage(800);
+                        }
+                    }else{
+                        e.setCancelled(true);
+                    }
+                }else if(victim.getName().equalsIgnoreCase("§eYellow Villager")){
+                    if(!main.scoreboard.getTeam("Yellow").hasPlayer(player)){
+                        main.ylife--;
+                        if(main.ylife == 0){
+                            for(Player list : main.getPlayers()) {
+                                list.sendMessage("§eThe Yellow Villager died");
+                            }
+                            e.setDamage(800);
+                        }
+                    }else{
+                        e.setCancelled(true);
+                    }
+                }
+            }
+        }
+    }
 }

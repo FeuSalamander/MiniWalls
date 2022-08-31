@@ -32,6 +32,10 @@ public class HelpCommand extends SubCommands {
         player.sendMessage("§5mw setredbase: §cSet the spawn of the §cRed §cteam");
         player.sendMessage("§5mw setgreenbase: §cSet the spawn of the §aGreen §cteam");
         player.sendMessage("§5mw setyellowbase: §cSet the spawn of the §eYellow §cteam");
+        player.sendMessage("§5mw setbluevillager: §cSet the spawn of the §9Blue §cvillager");
+        player.sendMessage("§5mw setredvillager: §cSet the spawn of the §cRed §cvillager");
+        player.sendMessage("§5mw setgreenvillager: §cSet the spawn of the §aGreen §cvillager");
+        player.sendMessage("§5mw setyellowvillager: §cSet the spawn of the §eYellow §cvillager");
         player.sendMessage("§1§l---------------------------------");
     }
 }

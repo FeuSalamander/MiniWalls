@@ -14,6 +14,10 @@ import java.util.List;
 public final class MiniWalls extends JavaPlugin{
     private List<Player> players = new ArrayList<>();
     public List<String> activeteams = new ArrayList<>();
+    public int blife = 20;
+    public int rlife = 20;
+    public int glife = 20;
+    public int ylife = 20;
     private MWstates state;
     public Scoreboard scoreboard;
     Team blue;
@@ -52,7 +56,7 @@ public final class MiniWalls extends JavaPlugin{
         objective.getScore("Map: §a"+getConfig().getString("map")).setScore(6);
         objective.getScore("players: ").setScore(5);
         objective.getScore("§e").setScore(4);
-        objective.getScore("Version: §7v1.0").setScore(3);
+        objective.getScore("Version: §7v1.2").setScore(3);
         objective.getScore("§a").setScore(2);
         objective.getScore("§e"+getConfig().getString("server")).setScore(1);
     }

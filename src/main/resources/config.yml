@@ -24,6 +24,23 @@ Locations:
      x: 0
      y: 0
      z: 0
+  Villagers: #This is where the villagers spawn
+    Bluevillager:
+      x: 0
+      y: 0
+      z: 0
+    Redvillager:
+      x: 0
+      y: 0
+      z: 0
+    Greenvillager:
+      x: 0
+      y: 0
+      z: 0
+    Yellowvillager:
+      x: 0
+      y: 0
+      z: 0
 Walls:
   wall1: #Set the cords of the first wall like the fill command
     cord1:

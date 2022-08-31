@@ -121,24 +121,33 @@ public class MapReset implements Listener {
         checkWin();
     }
     public void checkWin() {
-        if(main.activeteams.size() <= 1){
-            Bukkit.broadcastMessage(main.scoreboard.getTeam(main.activeteams.get(0)).getPrefix()+"Team §6Won the game");
+        World world = Bukkit.getWorld("world");
+        if (main.activeteams.size() <= 1) {
+            Bukkit.broadcastMessage(main.scoreboard.getTeam(main.activeteams.get(0)).getPrefix() + "Team §6Won the game");
             main.setState(MWstates.WAITING);
             main.activeteams.clear();
             restore();
-            if(main.getConfig().getInt("reset") == 0){
-                main.getConfig().set("reset", 1);
-            }
-            for(int i = 0; i < main.getPlayers().size(); i++)
-            {
+            for (int i = 0; i < main.getPlayers().size(); i++) {
                 Player winner = main.getPlayers().get(i);
-                Location lobby  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Lobby.x"), main.getConfig().getInt("Locations.Lobby.y"), main.getConfig().getInt("Locations.Lobby.z"));
+                Location lobby = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Lobby.x"), main.getConfig().getInt("Locations.Lobby.y"), main.getConfig().getInt("Locations.Lobby.z"));
                 winner.teleport(lobby);
                 main.getPlayers().remove(winner);
                 winner.getInventory().clear();
                 winner.setLevel(0);
                 winner.setHealth(20);
                 winner.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
+                for (Entity entity : Bukkit.getWorld("world").getEntities()) {
+                    String entity1 = entity.getName();
+                    if(entity1.equals("§9Blue Villager")) {
+                        entity.remove();
+                    }else if(entity1.equals("§cRed Villager")) {
+                        entity.remove();
+                    }else if(entity1.equals("§aGreen Villager")) {
+                        entity.remove();
+                    }else if(entity1.equals("§eYellow Villager")) {
+                        entity.remove();
+                    }
+                }
             }
         }
     }
@@ -152,10 +161,74 @@ public class MapReset implements Listener {
                     event.setCancelled(true);
                 }else if(main.isState(MWstates.STARTING)){
                     event.setCancelled(true);
-                }else{
-                    if(player.getHealth() <= event.getDamage()){
-                        event.setDamage(0);
-                        eliminate(player);
+                }else if(player.getHealth() <= event.getDamage()){
+                    Location spawnblue  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Bases.BlueBase.x"), main.getConfig().getInt("Locations.Bases.BlueBase.y"), main.getConfig().getInt("Locations.Bases.BlueBase.z"));
+                    Location spawnred  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Bases.RedBase.x"), main.getConfig().getInt("Locations.Bases.RedBase.y"), main.getConfig().getInt("Locations.Bases.RedBase.z"));
+                    Location spawngreen  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Bases.GreenBase.x"), main.getConfig().getInt("Locations.Bases.GreenBase.y"), main.getConfig().getInt("Locations.Bases.GreenBase.z"));
+                    Location spawnyellow  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Bases.YellowBase.x"), main.getConfig().getInt("Locations.Bases.YellowBase.y"), main.getConfig().getInt("Locations.Bases.YellowBase.z"));
+                    if(main.scoreboard.getTeam("Blue").hasPlayer(player)){
+                        if(main.blife == 0){
+                            event.setDamage(0);
+                            eliminate(player);
+                            for(Player list : main.getPlayers()) {
+                                list.sendMessage("§9"+player.getName()+" has been eliminated");
+                            }
+                        }else{
+                            event.setDamage(0);
+                            player.setHealth(20);
+                            player.teleport(spawnblue);
+                            for(Player list : main.getPlayers()) {
+                                list.sendMessage("§9"+player.getName()+" has been killed");
+                            }
+                        }
+                    }
+                    if(main.scoreboard.getTeam("Red").hasPlayer(player)){
+                        if(main.rlife == 0){
+                            event.setDamage(0);
+                            eliminate(player);
+                            for(Player list : main.getPlayers()) {
+                                list.sendMessage("§c"+player.getName()+" has been eliminated");
+                            }
+                        }else{
+                            event.setDamage(0);
+                            player.setHealth(20);
+                            player.teleport(spawnred);
+                            for(Player list : main.getPlayers()) {
+                                list.sendMessage("§c"+player.getName()+" has been killed");
+                            }
+                        }
+                    }
+                    if(main.scoreboard.getTeam("Green").hasPlayer(player)){
+                        if(main.glife == 0){
+                            event.setDamage(0);
+                            eliminate(player);
+                            for(Player list : main.getPlayers()) {
+                                list.sendMessage("§a"+player.getName()+" has been eliminated");
+                            }
+                        }else{
+                            event.setDamage(0);
+                            player.setHealth(20);
+                            player.teleport(spawngreen);
+                            for(Player list : main.getPlayers()) {
+                                list.sendMessage("§a"+player.getName()+" has been killed");
+                            }
+                        }
+                    }
+                    if(main.scoreboard.getTeam("Yellow").hasPlayer(player)){
+                        if(main.ylife == 0){
+                            event.setDamage(0);
+                            eliminate(player);
+                            for(Player list : main.getPlayers()) {
+                                list.sendMessage("§e"+player.getName()+" has been eliminated");
+                            }
+                        }else{
+                            event.setDamage(0);
+                            player.setHealth(20);
+                            player.teleport(spawnyellow);
+                            for(Player list : main.getPlayers()) {
+                                list.sendMessage("§e"+player.getName()+" has been killed");
+                            }
+                        }
                     }
                 }
             }
