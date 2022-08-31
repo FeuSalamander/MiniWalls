@@ -170,8 +170,8 @@ public class listener implements Listener {
     public void ondmg(EntityDamageByEntityEvent e){
         Entity victim = e.getEntity();
         Entity damager = e.getDamager();
-        Player player = (Player)damager;
-        if(player instanceof Player){
+        if(damager instanceof Player){
+            Player player = (Player)damager;
             if(main.getPlayers().contains(player)){
                 if(victim.getName().equalsIgnoreCase("§9Blue Villager")){
                     if(!main.scoreboard.getTeam("Blue").hasPlayer(player)){

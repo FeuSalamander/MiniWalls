@@ -105,6 +105,7 @@ public class MapReset implements Listener {
         player.getInventory().clear();
         player.setLevel(0);
         player.setHealth(20);
+        player.setFoodLevel(20);
         if(main.scoreboard.getTeam("Blue").getSize() == 0){
             main.activeteams.remove("Blue");
         }
@@ -134,6 +135,7 @@ public class MapReset implements Listener {
                 main.getPlayers().remove(winner);
                 winner.getInventory().clear();
                 winner.setLevel(0);
+                winner.setFoodLevel(20);
                 winner.setHealth(20);
                 winner.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
                 for (Entity entity : Bukkit.getWorld("world").getEntities()) {
@@ -176,7 +178,9 @@ public class MapReset implements Listener {
                         }else{
                             event.setDamage(0);
                             player.setHealth(20);
+                            player.setFoodLevel(20);
                             player.teleport(spawnblue);
+                            player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 3));
                             for(Player list : main.getPlayers()) {
                                 list.sendMessage("§9"+player.getName()+" has been killed");
                             }
@@ -192,6 +196,8 @@ public class MapReset implements Listener {
                         }else{
                             event.setDamage(0);
                             player.setHealth(20);
+                            player.setFoodLevel(20);
+                            player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
                             player.teleport(spawnred);
                             for(Player list : main.getPlayers()) {
                                 list.sendMessage("§c"+player.getName()+" has been killed");
@@ -208,7 +214,9 @@ public class MapReset implements Listener {
                         }else{
                             event.setDamage(0);
                             player.setHealth(20);
+                            player.setFoodLevel(20);
                             player.teleport(spawngreen);
+                            player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
                             for(Player list : main.getPlayers()) {
                                 list.sendMessage("§a"+player.getName()+" has been killed");
                             }
@@ -225,6 +233,8 @@ public class MapReset implements Listener {
                             event.setDamage(0);
                             player.setHealth(20);
                             player.teleport(spawnyellow);
+                            player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
+                            player.setFoodLevel(20);
                             for(Player list : main.getPlayers()) {
                                 list.sendMessage("§e"+player.getName()+" has been killed");
                             }
@@ -250,11 +260,13 @@ public class MapReset implements Listener {
                 main.getPlayers().remove(player);
                 Bukkit.broadcastMessage(player.getName()+"§a left the MiniWalls game ! §7<§f" +main.getPlayers().size()+"§7/§f8§7>");
                 player.setLevel(0);
+                player.setFoodLevel(20);
                 player.getInventory().clear();
             }else if(main.isState(MWstates.STARTING)){
                 main.getPlayers().remove(player);
                 Bukkit.broadcastMessage(player.getName()+"§a left the MiniWalls game ! §7<§f" +main.getPlayers().size()+"§7/§f8§7>");
                 player.setLevel(0);
+                player.setFoodLevel(20);
                 player.getInventory().clear();
             }else{
                 eliminate(player);
@@ -281,12 +293,14 @@ public class MapReset implements Listener {
                     Bukkit.broadcastMessage(player.getName()+"§a left the MiniWalls game ! §7<§f" +main.getPlayers().size()+"§7/§f8§7>");
                     player.setLevel(0);
                     player.setHealth(20);
+                    player.setFoodLevel(20);
                     player.getInventory().clear();
                 }else if(main.isState(MWstates.STARTING)){
                     main.getPlayers().remove(player);
                     Bukkit.broadcastMessage(player.getName()+"§a leaved the MiniWalls game ! §7<§f" +main.getPlayers().size()+"§7/§f8§7>");
                     player.setLevel(0);
                     player.setHealth(20);
+                    player.setFoodLevel(20);
                     player.getInventory().clear();
                 }else{
                     eliminate(player);
