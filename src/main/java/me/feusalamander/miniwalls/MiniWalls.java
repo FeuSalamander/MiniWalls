@@ -25,6 +25,10 @@ public final class MiniWalls extends JavaPlugin{
     Team green;
     Team yellow;
     Team playerss;
+    Team bv;
+    Team rv;
+    Team gv;
+    Team yv;
     @Override
     public void onEnable() {
         getLogger().info( "Mini Walls by FeuSalamander is working !");
@@ -50,11 +54,24 @@ public final class MiniWalls extends JavaPlugin{
         yellow.setAllowFriendlyFire(false);
         playerss = scoreboard.registerNewTeam("playerss");
         playerss.addEntry("players: ");
+        bv = scoreboard.registerNewTeam("bv");
+        bv.addEntry("§7");
+        rv = scoreboard.registerNewTeam("rv");
+        rv.addEntry("§d");
+        gv = scoreboard.registerNewTeam("gv");
+        gv.addEntry("§b");
+        yv = scoreboard.registerNewTeam("yv");
+        yv.addEntry("§5");
         Objective objective = scoreboard.registerNewObjective("MiniWalls", "dummy", "   §e§lMiniWalls   ");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
-        objective.getScore("").setScore(7);
-        objective.getScore("Map: §a"+getConfig().getString("map")).setScore(6);
-        objective.getScore("players: ").setScore(5);
+        objective.getScore("").setScore(12);
+        objective.getScore("Map: §a"+getConfig().getString("map")).setScore(11);
+        objective.getScore("players: ").setScore(10);
+        objective.getScore("§9").setScore(9);
+        objective.getScore("§7").setScore(8);
+        objective.getScore("§d").setScore(7);
+        objective.getScore("§b").setScore(6);
+        objective.getScore("§5").setScore(5);
         objective.getScore("§e").setScore(4);
         objective.getScore("Version: §7v1.2").setScore(3);
         objective.getScore("§a").setScore(2);

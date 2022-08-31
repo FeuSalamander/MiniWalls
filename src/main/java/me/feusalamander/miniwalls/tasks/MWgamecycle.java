@@ -3,6 +3,7 @@ package me.feusalamander.miniwalls.tasks;
 import me.feusalamander.miniwalls.MiniWalls;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 public class MWgamecycle extends BukkitRunnable {
@@ -18,6 +19,10 @@ public class MWgamecycle extends BukkitRunnable {
             pls.setLevel(timer);
             main.scoreboard.getTeam("playerss").setSuffix("§a" +main.getPlayers().size()+ "/§a8");
             main.scoreboard.getTeam("playerss").setPrefix("Alive ");
+            main.scoreboard.getTeam("bv").setSuffix("§9Villager: "+main.blife+"§9♥");
+            main.scoreboard.getTeam("rv").setSuffix("§cVillager: "+main.rlife+"§c♥");
+            main.scoreboard.getTeam("gv").setSuffix("§aVillager: "+main.glife+"§a♥");
+            main.scoreboard.getTeam("yv").setSuffix("§eVillager: "+main.ylife+"§e♥");
         }
         if(main.getPlayers().size() <= 1){
             cancel();
@@ -42,6 +47,18 @@ public class MWgamecycle extends BukkitRunnable {
         if(timer == 0){
             for(Player list : main.getPlayers()) {
                 list.sendMessage("§0Death match enabled");
+            }
+            for (Entity entity : Bukkit.getWorld("world").getEntities()) {
+                String entity1 = entity.getName();
+                if(entity1.equals("§9Blue Villager")) {
+                    entity.remove();
+                }else if(entity1.equals("§cRed Villager")) {
+                    entity.remove();
+                }else if(entity1.equals("§aGreen Villager")) {
+                    entity.remove();
+                }else if(entity1.equals("§eYellow Villager")) {
+                    entity.remove();
+                }
             }
             cancel();
         }

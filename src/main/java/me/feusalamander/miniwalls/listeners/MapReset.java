@@ -127,6 +127,10 @@ public class MapReset implements Listener {
             Bukkit.broadcastMessage(main.scoreboard.getTeam(main.activeteams.get(0)).getPrefix() + "Team §6Won the game");
             main.setState(MWstates.WAITING);
             main.activeteams.clear();
+            main.scoreboard.getTeam("bv").setSuffix("");
+            main.scoreboard.getTeam("rv").setSuffix("");
+            main.scoreboard.getTeam("gv").setSuffix("");
+            main.scoreboard.getTeam("yv").setSuffix("");
             restore();
             for (int i = 0; i < main.getPlayers().size(); i++) {
                 Player winner = main.getPlayers().get(i);
@@ -169,7 +173,7 @@ public class MapReset implements Listener {
                     Location spawngreen  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Bases.GreenBase.x"), main.getConfig().getInt("Locations.Bases.GreenBase.y"), main.getConfig().getInt("Locations.Bases.GreenBase.z"));
                     Location spawnyellow  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Bases.YellowBase.x"), main.getConfig().getInt("Locations.Bases.YellowBase.y"), main.getConfig().getInt("Locations.Bases.YellowBase.z"));
                     if(main.scoreboard.getTeam("Blue").hasPlayer(player)){
-                        if(main.blife == 0){
+                        if(main.blife <= 0){
                             event.setDamage(0);
                             eliminate(player);
                             for(Player list : main.getPlayers()) {
@@ -187,7 +191,7 @@ public class MapReset implements Listener {
                         }
                     }
                     if(main.scoreboard.getTeam("Red").hasPlayer(player)){
-                        if(main.rlife == 0){
+                        if(main.rlife <= 0){
                             event.setDamage(0);
                             eliminate(player);
                             for(Player list : main.getPlayers()) {
@@ -205,7 +209,7 @@ public class MapReset implements Listener {
                         }
                     }
                     if(main.scoreboard.getTeam("Green").hasPlayer(player)){
-                        if(main.glife == 0){
+                        if(main.glife <= 0){
                             event.setDamage(0);
                             eliminate(player);
                             for(Player list : main.getPlayers()) {
@@ -223,7 +227,7 @@ public class MapReset implements Listener {
                         }
                     }
                     if(main.scoreboard.getTeam("Yellow").hasPlayer(player)){
-                        if(main.ylife == 0){
+                        if(main.ylife <= 0){
                             event.setDamage(0);
                             eliminate(player);
                             for(Player list : main.getPlayers()) {
