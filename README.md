@@ -7,7 +7,7 @@
 * ## Light
 * ## Auto reset of the map
 * ## Walls
-* ## And some more stuff
+* ## And more stuff
 ![](pictures/commands.png)
 * ## /mw help
 * ## /mw join
