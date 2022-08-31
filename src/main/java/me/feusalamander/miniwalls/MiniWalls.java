@@ -1,7 +1,6 @@
 package me.feusalamander.miniwalls;
 import me.feusalamander.miniwalls.commands.MWTab;
 import me.feusalamander.miniwalls.commands.mw;
-import me.feusalamander.miniwalls.listeners.DMGlistener;
 import me.feusalamander.miniwalls.listeners.MapReset;
 import me.feusalamander.miniwalls.listeners.listener;
 import org.bukkit.Bukkit;
@@ -27,7 +26,6 @@ public final class MiniWalls extends JavaPlugin{
         getCommand("mw").setExecutor(new mw());
         getCommand("mw").setTabCompleter(new MWTab());
         getServer().getPluginManager().registerEvents(new listener(this), this);
-        getServer().getPluginManager().registerEvents(new DMGlistener(this), this);
         getServer().getPluginManager().registerEvents(new MapReset(this), this);
         setState(MWstates.WAITING);
         saveDefaultConfig();
@@ -92,30 +90,7 @@ public final class MiniWalls extends JavaPlugin{
             activeteams.remove("Yellow");
         }
         player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
-        checkWin();
     }
-    public void checkWin() {
-        if(activeteams.size() <= 1){
-            Bukkit.broadcastMessage(scoreboard.getTeam(activeteams.get(0)).getPrefix()+"Team §6Won the game");
-            setState(MWstates.WAITING);
-            activeteams.clear();
-            if(getConfig().getInt("reset") == 0){
-                getConfig().set("reset", 1);
-            }
-            for(int i = 0; i < getPlayers().size(); i++)
-            {
-                Player winner = getPlayers().get(i);
-                Location lobby  = new Location(Bukkit.getWorld("world"), getConfig().getInt("Locations.Lobby.x"), getConfig().getInt("Locations.Lobby.y"), getConfig().getInt("Locations.Lobby.z"));
-                winner.teleport(lobby);
-                getPlayers().remove(winner);
-                winner.getInventory().clear();
-                winner.setLevel(0);
-                winner.setHealth(20);
-                winner.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
-        }
-    }
-    }
-
     @Override
     public void onDisable() {
         getLogger().info( "MiniWalls by FeuSalamander is shutting down !");

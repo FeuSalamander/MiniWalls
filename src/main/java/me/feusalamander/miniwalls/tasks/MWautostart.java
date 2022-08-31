@@ -76,6 +76,23 @@ public class MWautostart extends BukkitRunnable{
                 player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
                 player.getInventory().setItem( 2, new ItemStack(Material.WOODEN_PICKAXE));
                 player.getInventory().setItem( 3, new ItemStack(Material.WOODEN_AXE ));
+                if(main.scoreboard.getTeam("Blue").getSize() < 1){
+                    main.scoreboard.getTeam("Blue").addPlayer(player);
+                }else if(main.scoreboard.getTeam("Red").getSize() < 1){
+                    main.scoreboard.getTeam("Red").addPlayer(player);
+                }else if(main.scoreboard.getTeam("Green").getSize() < 1){
+                    main.scoreboard.getTeam("Green").addPlayer(player);
+                }else if(main.scoreboard.getTeam("Yellow").getSize() < 1){
+                    main.scoreboard.getTeam("Yellow").addPlayer(player);
+                }else if(main.scoreboard.getTeam("Blue").getSize() < 2){
+                    main.scoreboard.getTeam("Blue").addPlayer(player);
+                }else if(main.scoreboard.getTeam("Red").getSize() < 2){
+                    main.scoreboard.getTeam("Red").addPlayer(player);
+                }else if(main.scoreboard.getTeam("Green").getSize() < 2){
+                    main.scoreboard.getTeam("Green").addPlayer(player);
+                }else if(main.scoreboard.getTeam("Yellow").getSize() < 2){
+                    main.scoreboard.getTeam("Yellow").addPlayer(player);
+                }
                 if(main.scoreboard.getTeam("Blue").hasPlayer(player)){
                     ItemStack LeatherHelmet = new ItemStack(Material.LEATHER_HELMET);
                     LeatherArmorMeta meta = (LeatherArmorMeta) LeatherHelmet.getItemMeta();
