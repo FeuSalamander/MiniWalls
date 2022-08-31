@@ -83,7 +83,7 @@ public class listener implements Listener {
     public void onReload(PlayerCommandPreprocessEvent e) {
         Player player = e.getPlayer();
         if(e.getMessage().equalsIgnoreCase("/mw reload")){
-            if(player.hasPermission("mw.reload")){
+            if(player.hasPermission("mw.admin")){
                 player.sendMessage("The configuration file of MiniWalls got successfully reloaded");
                 main.reloadConfig();
             }else{

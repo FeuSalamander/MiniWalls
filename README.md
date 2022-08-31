@@ -10,4 +10,4 @@
 * ## /mw reload
 
 ![](pictures/permissions.png)
-## - mw.reload: Reload the config file
+## - mw.admin: Reload the config file, setup the config via commands

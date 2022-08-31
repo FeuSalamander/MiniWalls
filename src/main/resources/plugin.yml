@@ -7,4 +7,4 @@ description: a paper plugin to add the mini walls mini game
 commands:
   mw:
     description: Show the help of the MiniWalls plugin
-    permissions: mw.reload
+    permissions: mw.admin

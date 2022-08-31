@@ -1,14 +1,11 @@
 package me.feusalamander.miniwalls.commands;
-
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
 import java.util.ArrayList;
 import java.util.List;
-
 public class MWTab implements TabCompleter {
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -18,6 +15,12 @@ public class MWTab implements TabCompleter {
             arguments.add("join");
             arguments.add("leave");
             arguments.add("reload");
+            arguments.add("setspawn");
+            arguments.add("setlobby");
+            arguments.add("setbluebase");
+            arguments.add("setredbase");
+            arguments.add("setgreenbase");
+            arguments.add("setyellowbase");
             return arguments;
         }
         return  null;

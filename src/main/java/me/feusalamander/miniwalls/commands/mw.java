@@ -1,21 +1,16 @@
 package me.feusalamander.miniwalls.commands;
-import me.feusalamander.miniwalls.subcommands.HelpCommand;
-import me.feusalamander.miniwalls.subcommands.LeaveCommand;
-import me.feusalamander.miniwalls.subcommands.Reloadcommand;
+import me.feusalamander.miniwalls.subcommands.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import me.feusalamander.miniwalls.subcommands.JoinCommand;
+
 import java.util.ArrayList;
 public class mw implements CommandExecutor {
     private ArrayList<SubCommands> subcommands = new ArrayList<>();
     public mw(){
-        subcommands.add(new JoinCommand());
         subcommands.add(new HelpCommand());
-        subcommands.add(new LeaveCommand());
-        subcommands.add(new Reloadcommand());
     }
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String s, @NotNull String[] args){
@@ -35,6 +30,12 @@ public class mw implements CommandExecutor {
                 p.sendMessage("§5mw join: §cJoin the MiniWalls game");
                 p.sendMessage("§5mw leave: §cLeave the MiniWalls game");
                 p.sendMessage("§5mw reload: §cReload the config");
+                p.sendMessage("§5mw setspawn: §cSet the loc of the waiting room");
+                p.sendMessage("§5mw setlobby: §cSet the loc of the main lobby");
+                p.sendMessage("§5mw setbluebase: §cSet the spawn of the §9Blue §cteam");
+                p.sendMessage("§5mw setredbase: §cSet the spawn of the §cRed §cteam");
+                p.sendMessage("§5mw setgreenbase: §cSet the spawn of the §aGreen §cteam");
+                p.sendMessage("§5mw setyellowbase: §cSet the spawn of the §eYellow §cteam");
                 p.sendMessage("§1§l---------------------------------");
             }
         }
