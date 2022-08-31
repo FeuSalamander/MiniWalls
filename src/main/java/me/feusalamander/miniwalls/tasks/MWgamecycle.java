@@ -59,6 +59,10 @@ public class MWgamecycle extends BukkitRunnable {
                 }else if(entity1.equals("§eYellow Villager")) {
                     entity.remove();
                 }
+                main.blife = 0;
+                main.rlife = 0;
+                main.glife = 0;
+                main.ylife = 0;
             }
             cancel();
         }

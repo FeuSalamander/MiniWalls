@@ -4,7 +4,7 @@
 ![](pictures/features.png)
 * ## 4 Teams
 * ## Commands to configure the config
-* ## Light
+* ## Light weight
 * ## Auto reset of the map
 * ## Walls
 * ## And more stuff
