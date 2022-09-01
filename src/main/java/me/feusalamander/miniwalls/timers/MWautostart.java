@@ -1,4 +1,4 @@
-package me.feusalamander.miniwalls.tasks;
+package me.feusalamander.miniwalls.timers;
 import me.feusalamander.miniwalls.MWstates;
 import me.feusalamander.miniwalls.MiniWalls;
 import org.bukkit.*;

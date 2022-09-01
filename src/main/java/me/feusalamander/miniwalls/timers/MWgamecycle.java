@@ -1,5 +1,4 @@
-package me.feusalamander.miniwalls.tasks;
-
+package me.feusalamander.miniwalls.timers;
 import me.feusalamander.miniwalls.MiniWalls;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
@@ -66,8 +65,6 @@ public class MWgamecycle extends BukkitRunnable {
             }
             cancel();
         }
-
         timer--;
-
     }
 }
