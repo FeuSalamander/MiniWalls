@@ -7,6 +7,7 @@
 * ## Light weight
 * ## Auto reset of the map
 * ## Walls
+* ## Destructive bow
 * ## And more stuff
 ![](pictures/commands.png)
 * ## /mw help

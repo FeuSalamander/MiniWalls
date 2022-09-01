@@ -6,6 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,9 +14,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.io.BukkitObjectInputStream;
+
 import java.util.LinkedList;
 import java.util.List;
 public class MapReset implements Listener {
@@ -64,7 +68,7 @@ public class MapReset implements Listener {
                 e.getBlock().getWorld().dropItem(e.getBlock().getLocation(), new ItemStack(Material.RED_WOOL));
             }else if(main.scoreboard.getTeam("Green").hasPlayer(p)){
                 e.getBlock().getWorld().dropItem(e.getBlock().getLocation(), new ItemStack(Material.GREEN_WOOL));
-            }else if(main.scoreboard.getTeam("YELLOW").hasPlayer(p)){
+            }else if(main.scoreboard.getTeam("Yellow").hasPlayer(p)){
                 e.getBlock().getWorld().dropItem(e.getBlock().getLocation(), new ItemStack(Material.YELLOW_WOOL));
             }
         }
@@ -93,6 +97,35 @@ public class MapReset implements Listener {
             }
         }
     }
+    @EventHandler
+    public void arrow(ProjectileHitEvent e) {
+        Player player = (Player) e.getEntity().getShooter();
+        if (main.getPlayers().contains(player)) {
+            if (e.getEntity() instanceof Arrow) {
+                Arrow a = (Arrow) e.getEntity();
+                World world = e.getEntity().getWorld();
+                int radius = 1;
+                Block middle = a.getLocation().getBlock();
+                for (int x = radius; x >= -radius; x--) {
+                    for (int y = radius; y >= -radius; y--) {
+                        for (int z = radius; z >= -radius; z--) {
+                            if (middle.getRelative(x, y, z).getType() == Material.BLUE_WOOL) {
+                                middle.getRelative(x, y, z).setType(Material.AIR);
+                            }else if (middle.getRelative(x, y, z).getType() == Material.RED_WOOL) {
+                                middle.getRelative(x, y, z).setType(Material.AIR);
+                            }else if (middle.getRelative(x, y, z).getType() == Material.GREEN_WOOL) {
+                                middle.getRelative(x, y, z).setType(Material.AIR);
+                            }else if (middle.getRelative(x, y, z).getType() == Material.YELLOW_WOOL) {
+                                middle.getRelative(x, y, z).setType(Material.AIR);
+                            }
+                        }
+                    }
+                }
+                a.remove();
+            }
+        }
+    }
+
     public void eliminate(Player player) {
         if(main.getPlayers().contains(player)) main.getPlayers().remove(player);
         player.sendMessage("§4You got eliminated");
