@@ -6,20 +6,16 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.io.BukkitObjectInputStream;
-
 import java.util.LinkedList;
 import java.util.List;
 public class MapReset implements Listener {
@@ -97,35 +93,6 @@ public class MapReset implements Listener {
             }
         }
     }
-    @EventHandler
-    public void arrow(ProjectileHitEvent e) {
-        Player player = (Player) e.getEntity().getShooter();
-        if (main.getPlayers().contains(player)) {
-            if (e.getEntity() instanceof Arrow) {
-                Arrow a = (Arrow) e.getEntity();
-                World world = e.getEntity().getWorld();
-                int radius = 1;
-                Block middle = a.getLocation().getBlock();
-                for (int x = radius; x >= -radius; x--) {
-                    for (int y = radius; y >= -radius; y--) {
-                        for (int z = radius; z >= -radius; z--) {
-                            if (middle.getRelative(x, y, z).getType() == Material.BLUE_WOOL) {
-                                middle.getRelative(x, y, z).setType(Material.AIR);
-                            }else if (middle.getRelative(x, y, z).getType() == Material.RED_WOOL) {
-                                middle.getRelative(x, y, z).setType(Material.AIR);
-                            }else if (middle.getRelative(x, y, z).getType() == Material.GREEN_WOOL) {
-                                middle.getRelative(x, y, z).setType(Material.AIR);
-                            }else if (middle.getRelative(x, y, z).getType() == Material.YELLOW_WOOL) {
-                                middle.getRelative(x, y, z).setType(Material.AIR);
-                            }
-                        }
-                    }
-                }
-                a.remove();
-            }
-        }
-    }
-
     public void eliminate(Player player) {
         if(main.getPlayers().contains(player)) main.getPlayers().remove(player);
         player.sendMessage("§4You got eliminated");
@@ -191,11 +158,13 @@ public class MapReset implements Listener {
         }
     }
     @EventHandler
-    public void onDamage(EntityDamageEvent event){
+    public void onDamage(EntityDamageByEntityEvent event){
+        Entity damagers = event.getDamager();
         Entity victim = event.getEntity();
         if(main.getPlayers().contains(victim)){
             if(victim instanceof Player){
                 Player player = (Player)victim;
+                Player damager = (Player)damagers;
                 if(main.isState(MWstates.WAITING)){
                     event.setCancelled(true);
                 }else if(main.isState(MWstates.STARTING)){
@@ -219,7 +188,7 @@ public class MapReset implements Listener {
                             player.teleport(spawnblue);
                             player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 3));
                             for(Player list : main.getPlayers()) {
-                                list.sendMessage("§9"+player.getName()+" has been killed");
+                                list.sendMessage("§9"+player.getName()+" has been killed by "+damager.getName());
                             }
                         }
                     }
@@ -237,7 +206,7 @@ public class MapReset implements Listener {
                             player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
                             player.teleport(spawnred);
                             for(Player list : main.getPlayers()) {
-                                list.sendMessage("§c"+player.getName()+" has been killed");
+                                list.sendMessage("§c"+player.getName()+" has been killed by "+damager.getName());
                             }
                         }
                     }
@@ -255,7 +224,7 @@ public class MapReset implements Listener {
                             player.teleport(spawngreen);
                             player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
                             for(Player list : main.getPlayers()) {
-                                list.sendMessage("§a"+player.getName()+" has been killed");
+                                list.sendMessage("§a"+player.getName()+" has been killed by "+damager.getName());
                             }
                         }
                     }
@@ -273,7 +242,7 @@ public class MapReset implements Listener {
                             player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
                             player.setFoodLevel(20);
                             for(Player list : main.getPlayers()) {
-                                list.sendMessage("§e"+player.getName()+" has been killed");
+                                list.sendMessage("§e"+player.getName()+" has been killed by "+damager.getName());
                             }
                         }
                     }

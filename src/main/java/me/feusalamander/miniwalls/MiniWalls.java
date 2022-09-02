@@ -2,6 +2,7 @@ package me.feusalamander.miniwalls;
 import me.feusalamander.miniwalls.commands.MWTab;
 import me.feusalamander.miniwalls.commands.mw;
 import me.feusalamander.miniwalls.listeners.MapReset;
+import me.feusalamander.miniwalls.listeners.bow;
 import me.feusalamander.miniwalls.listeners.commands;
 import me.feusalamander.miniwalls.listeners.jointeam;
 import org.bukkit.Bukkit;
@@ -37,6 +38,7 @@ public final class MiniWalls extends JavaPlugin{
         getServer().getPluginManager().registerEvents(new jointeam(this), this);
         getServer().getPluginManager().registerEvents(new MapReset(this), this);
         getServer().getPluginManager().registerEvents(new commands(this), this);
+        getServer().getPluginManager().registerEvents(new bow(this), this);
         setState(MWstates.WAITING);
         saveDefaultConfig();
         scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
