@@ -1,10 +1,7 @@
 package me.feusalamander.miniwalls.listeners;
 import me.feusalamander.miniwalls.MWstates;
 import me.feusalamander.miniwalls.MiniWalls;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
@@ -20,10 +17,10 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.projectiles.ProjectileSource;
-
 import java.util.LinkedList;
 import java.util.List;
 public class MapReset implements Listener {
+    private int t = 100;
     private MiniWalls main;
     public MapReset(MiniWalls main) {
         this.main = main;
@@ -111,6 +108,7 @@ public class MapReset implements Listener {
         player.setLevel(0);
         player.setHealth(20);
         player.setFoodLevel(20);
+        player.setGameMode(GameMode.SURVIVAL);
         if(main.scoreboard.getTeam("Blue").getSize() == 0){
             main.activeteams.remove("Blue");
         }
@@ -190,9 +188,14 @@ public class MapReset implements Listener {
                             }else{
                                 event.setDamage(0);
                                 player.setHealth(20);
+                                player.setGameMode(GameMode.SPECTATOR);
+                                player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
                                 player.setFoodLevel(20);
-                                player.teleport(spawnblue);
-                                player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 3));
+                                player.sendTitle("§cYou will respawn in 5s", "", 1, 30, 1);
+                                Bukkit.getScheduler().runTaskLater(main, () -> {
+                                    player.teleport(spawnblue);
+                                    player.setGameMode(GameMode.SURVIVAL);
+                                }, t);
                                 for(Player list : main.getPlayers()) {
                                     list.sendMessage("§9"+player.getName()+" has been killed by "+damager.getName());
                                 }
@@ -208,9 +211,14 @@ public class MapReset implements Listener {
                             }else{
                                 event.setDamage(0);
                                 player.setHealth(20);
-                                player.setFoodLevel(20);
+                                player.setGameMode(GameMode.SPECTATOR);
                                 player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
-                                player.teleport(spawnred);
+                                player.setFoodLevel(20);
+                                player.sendTitle("§cYou will respawn in 5s", "", 1, 30, 1);
+                                Bukkit.getScheduler().runTaskLater(main, () -> {
+                                    player.teleport(spawnred);
+                                    player.setGameMode(GameMode.SURVIVAL);
+                                }, t);
                                 for(Player list : main.getPlayers()) {
                                     list.sendMessage("§c"+player.getName()+" has been killed by "+damager.getName());
                                 }
@@ -226,9 +234,14 @@ public class MapReset implements Listener {
                             }else{
                                 event.setDamage(0);
                                 player.setHealth(20);
-                                player.setFoodLevel(20);
-                                player.teleport(spawngreen);
+                                player.setGameMode(GameMode.SPECTATOR);
                                 player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
+                                player.setFoodLevel(20);
+                                player.sendTitle("§cYou will respawn in 5s", "", 1, 30, 1);
+                                Bukkit.getScheduler().runTaskLater(main, () -> {
+                                    player.teleport(spawngreen);
+                                    player.setGameMode(GameMode.SURVIVAL);
+                                }, t);
                                 for(Player list : main.getPlayers()) {
                                     list.sendMessage("§a"+player.getName()+" has been killed by "+damager.getName());
                                 }
@@ -244,9 +257,14 @@ public class MapReset implements Listener {
                             }else{
                                 event.setDamage(0);
                                 player.setHealth(20);
-                                player.teleport(spawnyellow);
+                                player.setGameMode(GameMode.SPECTATOR);
                                 player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
                                 player.setFoodLevel(20);
+                                player.sendTitle("§cYou will respawn in 5s", "", 1, 30, 1);
+                                Bukkit.getScheduler().runTaskLater(main, () -> {
+                                    player.teleport(spawnyellow);
+                                    player.setGameMode(GameMode.SURVIVAL);
+                                }, t);
                                 for(Player list : main.getPlayers()) {
                                     list.sendMessage("§e"+player.getName()+" has been killed by "+damager.getName());
                                 }
@@ -276,15 +294,19 @@ public class MapReset implements Listener {
                             }else{
                                 event.setDamage(0);
                                 player.setHealth(20);
+                                player.setGameMode(GameMode.SPECTATOR);
+                                player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
                                 player.setFoodLevel(20);
-                                player.teleport(spawnblue);
-                                player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 3));
+                                player.sendTitle("§cYou will respawn in 5s", "", 1, 30, 1);
+                                Bukkit.getScheduler().runTaskLater(main, () -> {
+                                    player.teleport(spawnblue);
+                                    player.setGameMode(GameMode.SURVIVAL);
+                                }, t);
                                 for(Player list : main.getPlayers()) {
                                     list.sendMessage("§9"+player.getName()+" has been killed by "+s.getName());
                                 }
                             }
-                        }
-                        if(main.scoreboard.getTeam("Red").hasPlayer(player)){
+                        }else if(main.scoreboard.getTeam("Red").hasPlayer(player)){
                             if(main.rlife <= 0){
                                 event.setDamage(0);
                                 eliminate(player);
@@ -294,15 +316,19 @@ public class MapReset implements Listener {
                             }else{
                                 event.setDamage(0);
                                 player.setHealth(20);
-                                player.setFoodLevel(20);
+                                player.setGameMode(GameMode.SPECTATOR);
                                 player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
-                                player.teleport(spawnred);
+                                player.setFoodLevel(20);
+                                player.sendTitle("§cYou will respawn in 5s", "", 1, 30, 1);
+                                Bukkit.getScheduler().runTaskLater(main, () -> {
+                                    player.teleport(spawnred);
+                                    player.setGameMode(GameMode.SURVIVAL);
+                                }, t);
                                 for(Player list : main.getPlayers()) {
                                     list.sendMessage("§c"+player.getName()+" has been killed by "+s.getName());
                                 }
                             }
-                        }
-                        if(main.scoreboard.getTeam("Green").hasPlayer(player)){
+                        }else if(main.scoreboard.getTeam("Green").hasPlayer(player)){
                             if(main.glife <= 0){
                                 event.setDamage(0);
                                 eliminate(player);
@@ -312,15 +338,19 @@ public class MapReset implements Listener {
                             }else{
                                 event.setDamage(0);
                                 player.setHealth(20);
-                                player.setFoodLevel(20);
-                                player.teleport(spawngreen);
+                                player.setGameMode(GameMode.SPECTATOR);
                                 player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
+                                player.setFoodLevel(20);
+                                player.sendTitle("§cYou will respawn in 5s", "", 1, 30, 1);
+                                Bukkit.getScheduler().runTaskLater(main, () -> {
+                                    player.teleport(spawngreen);
+                                    player.setGameMode(GameMode.SURVIVAL);
+                                }, t);
                                 for(Player list : main.getPlayers()) {
                                     list.sendMessage("§a"+player.getName()+" has been killed by "+s.getName());
                                 }
                             }
-                        }
-                        if(main.scoreboard.getTeam("Yellow").hasPlayer(player)){
+                        }else if(main.scoreboard.getTeam("Yellow").hasPlayer(player)){
                             if(main.ylife <= 0){
                                 event.setDamage(0);
                                 eliminate(player);
@@ -330,16 +360,31 @@ public class MapReset implements Listener {
                             }else{
                                 event.setDamage(0);
                                 player.setHealth(20);
-                                player.teleport(spawnyellow);
+                                player.setGameMode(GameMode.SPECTATOR);
                                 player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
                                 player.setFoodLevel(20);
+                                player.sendTitle("§cYou will respawn in 5s", "", 1, 30, 1);
+                                Bukkit.getScheduler().runTaskLater(main, () -> {
+                                    player.teleport(spawnyellow);
+                                    player.setGameMode(GameMode.SURVIVAL);
+                                }, t);
                                 for(Player list : main.getPlayers()) {
                                     list.sendMessage("§e"+player.getName()+" has been killed by "+s.getName());
                                 }
                             }
                         }
+                    }else if(player.getHealth() > event.getDamage()){
+                        double h = player.getHealth()-event.getDamage();
+                        if(main.scoreboard.getTeam("Blue").hasPlayer(player)){
+                            s.sendMessage("§9"+player.getName()+"§7 is on §c"+(int)h+" §7HP!");
+                        }else if(main.scoreboard.getTeam("Red").hasPlayer(player)){
+                            s.sendMessage("§c"+player.getName()+"§7 is on §c"+(int)h+" §7HP!");
+                        }else if(main.scoreboard.getTeam("Green").hasPlayer(player)){
+                            s.sendMessage("§a"+player.getName()+"§7 is on §c"+(int)h+" §7HP!");
+                        }else if(main.scoreboard.getTeam("Yellow").hasPlayer(player)){
+                            s.sendMessage("§e"+player.getName()+"§7 is on §c"+(int)h+" §7HP!");
+                        }
                     }
-
                 }
             }
         }
@@ -360,26 +405,31 @@ public class MapReset implements Listener {
                         Location spawnred = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Bases.RedBase.x"), main.getConfig().getInt("Locations.Bases.RedBase.y"), main.getConfig().getInt("Locations.Bases.RedBase.z"));
                         Location spawngreen = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Bases.GreenBase.x"), main.getConfig().getInt("Locations.Bases.GreenBase.y"), main.getConfig().getInt("Locations.Bases.GreenBase.z"));
                         Location spawnyellow = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Bases.YellowBase.x"), main.getConfig().getInt("Locations.Bases.YellowBase.y"), main.getConfig().getInt("Locations.Bases.YellowBase.z"));
-                        if (main.scoreboard.getTeam("Blue").hasPlayer(player)) {
+                        if(main.scoreboard.getTeam("Blue").hasPlayer(player)) {
                             if (main.blife <= 0) {
                                 event.setDamage(0);
                                 eliminate(player);
                                 for (Player list : main.getPlayers()) {
                                     list.sendMessage("§9" + player.getName() + " has been eliminated");
                                 }
-                            } else {
+                            }else{
                                 event.setDamage(0);
                                 player.setHealth(20);
+                                player.setGameMode(GameMode.SPECTATOR);
+                                player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
                                 player.setFoodLevel(20);
-                                player.teleport(spawnblue);
                                 player.setFallDistance(0);
-                                player.getInventory().setItem(8, new ItemStack(Material.ARROW, 3));
+                                player.teleport(spawnblue);
+                                player.sendTitle("§cYou will respawn in 5s", "", 1, 30, 1);
+                                Bukkit.getScheduler().runTaskLater(main, () -> {
+                                    player.teleport(spawnblue);
+                                    player.setGameMode(GameMode.SURVIVAL);
+                                }, t);
                                 for (Player list : main.getPlayers()) {
                                     list.sendMessage("§9" + player.getName() + " fell in the void");
                                 }
                             }
-                        }
-                        if (main.scoreboard.getTeam("Red").hasPlayer(player)) {
+                        }else if(main.scoreboard.getTeam("Red").hasPlayer(player)) {
                             if (main.rlife <= 0) {
                                 event.setDamage(0);
                                 eliminate(player);
@@ -389,17 +439,22 @@ public class MapReset implements Listener {
                             } else {
                                 event.setDamage(0);
                                 player.setHealth(20);
+                                player.setGameMode(GameMode.SPECTATOR);
+                                player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
                                 player.setFoodLevel(20);
-                                player.getInventory().setItem(8, new ItemStack(Material.ARROW, 5));
-                                player.teleport(spawnred);
                                 player.setFallDistance(0);
+                                player.teleport(spawnred);
+                                player.sendTitle("§cYou will respawn in 5s", "", 1, 30, 1);
+                                Bukkit.getScheduler().runTaskLater(main, () -> {
+                                    player.teleport(spawnred);
+                                    player.setGameMode(GameMode.SURVIVAL);
+                                }, t);
                                 for (Player list : main.getPlayers()) {
                                     list.sendMessage("§c" + player.getName() + " fell in the void");
                                 }
                             }
-                        }
-                        if (main.scoreboard.getTeam("Green").hasPlayer(player)) {
-                            if (main.glife <= 0) {
+                        }else if (main.scoreboard.getTeam("Green").hasPlayer(player)) {
+                            if(main.glife <= 0) {
                                 event.setDamage(0);
                                 eliminate(player);
                                 for (Player list : main.getPlayers()) {
@@ -408,16 +463,21 @@ public class MapReset implements Listener {
                             } else {
                                 event.setDamage(0);
                                 player.setHealth(20);
+                                player.setGameMode(GameMode.SPECTATOR);
+                                player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
                                 player.setFoodLevel(20);
-                                player.teleport(spawngreen);
                                 player.setFallDistance(0);
-                                player.getInventory().setItem(8, new ItemStack(Material.ARROW, 5));
+                                player.teleport(spawngreen);
+                                player.sendTitle("§cYou will respawn in 5s", "", 1, 30, 1);
+                                Bukkit.getScheduler().runTaskLater(main, () -> {
+                                    player.teleport(spawngreen);
+                                    player.setGameMode(GameMode.SURVIVAL);
+                                }, t);
                                 for (Player list : main.getPlayers()) {
                                     list.sendMessage("§a" + player.getName() + " fell in the void");
                                 }
                             }
-                        }
-                        if (main.scoreboard.getTeam("Yellow").hasPlayer(player)) {
+                        }else if(main.scoreboard.getTeam("Yellow").hasPlayer(player)) {
                             if (main.ylife <= 0) {
                                 event.setDamage(0);
                                 eliminate(player);
@@ -427,10 +487,16 @@ public class MapReset implements Listener {
                             } else {
                                 event.setDamage(0);
                                 player.setHealth(20);
-                                player.teleport(spawnyellow);
-                                player.getInventory().setItem(8, new ItemStack(Material.ARROW, 5));
+                                player.setGameMode(GameMode.SPECTATOR);
+                                player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
                                 player.setFoodLevel(20);
                                 player.setFallDistance(0);
+                                player.teleport(spawnyellow);
+                                player.sendTitle("§cYou will respawn in 5s", "", 1, 30, 1);
+                                Bukkit.getScheduler().runTaskLater(main, () -> {
+                                    player.teleport(spawnyellow);
+                                    player.setGameMode(GameMode.SURVIVAL);
+                                }, t);
                                 for (Player list : main.getPlayers()) {
                                     list.sendMessage("§e" + player.getName() + " fell in the void");
                                 }
