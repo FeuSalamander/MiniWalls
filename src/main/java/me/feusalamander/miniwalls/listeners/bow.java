@@ -2,6 +2,7 @@ package me.feusalamander.miniwalls.listeners;
 
 import me.feusalamander.miniwalls.MiniWalls;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -29,16 +30,20 @@ public class bow implements Listener {
                         for (int z = radius; z >= -radius; z--) {
                             if (middle.getRelative(x, y, z).getType() == Material.BLUE_WOOL) {
                                 middle.getRelative(x, y, z).setType(Material.AIR);
-                                middle.getRelative(x, y, z).getWorld().playSound(middle.getRelative(x, y, z).getLocation(), Sound.BLOCK_WOOL_BREAK, 5, 1);
+                                middle.getRelative(x, y, z).getWorld().playSound(middle.getRelative(x, y, z).getLocation(), Sound.BLOCK_WOOL_BREAK, 7, 1);
+                                middle.getRelative(x, y, z).getWorld().spawnParticle(Particle.CRIT, middle.getRelative(x, y, z).getLocation(), 25);
                             }else if (middle.getRelative(x, y, z).getType() == Material.RED_WOOL) {
                                 middle.getRelative(x, y, z).setType(Material.AIR);
-                                middle.getRelative(x, y, z).getWorld().playSound(middle.getRelative(x, y, z).getLocation(), Sound.BLOCK_WOOL_BREAK, 5, 1);
+                                middle.getRelative(x, y, z).getWorld().playSound(middle.getRelative(x, y, z).getLocation(), Sound.BLOCK_WOOL_BREAK, 7, 1);
+                                middle.getRelative(x, y, z).getWorld().spawnParticle(Particle.CRIT, middle.getRelative(x, y, z).getLocation(), 25);
                             }else if (middle.getRelative(x, y, z).getType() == Material.GREEN_WOOL) {
                                 middle.getRelative(x, y, z).setType(Material.AIR);
-                                middle.getRelative(x, y, z).getWorld().playSound(middle.getRelative(x, y, z).getLocation(), Sound.BLOCK_WOOL_BREAK, 5, 1);
+                                middle.getRelative(x, y, z).getWorld().playSound(middle.getRelative(x, y, z).getLocation(), Sound.BLOCK_WOOL_BREAK, 7, 1);
+                                middle.getRelative(x, y, z).getWorld().spawnParticle(Particle.CRIT, middle.getRelative(x, y, z).getLocation(), 25);
                             }else if (middle.getRelative(x, y, z).getType() == Material.YELLOW_WOOL) {
                                 middle.getRelative(x, y, z).setType(Material.AIR);
-                                middle.getRelative(x, y, z).getWorld().playSound(middle.getRelative(x, y, z).getLocation(), Sound.BLOCK_WOOL_BREAK, 5, 1);
+                                middle.getRelative(x, y, z).getWorld().playSound(middle.getRelative(x, y, z).getLocation(), Sound.BLOCK_WOOL_BREAK, 7, 1);
+                                middle.getRelative(x, y, z).getWorld().spawnParticle(Particle.CRIT, middle.getRelative(x, y, z).getLocation(), 25);
                             }
                         }
                     }

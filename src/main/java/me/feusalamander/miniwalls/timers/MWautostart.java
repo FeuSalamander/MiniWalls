@@ -83,7 +83,7 @@ public class MWautostart extends BukkitRunnable{
                 rr.setItemMeta(tt);
                 player.getInventory().setItem( 1, rr);
                 player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 3));
-                player.getInventory().setItem( 2, new ItemStack(Material.STONE_PICKAXE, 3));
+                player.getInventory().setItem( 2, new ItemStack(Material.STONE_PICKAXE));
                 player.getInventory().setItem( 3, new ItemStack(Material.WOODEN_AXE ));
                 player.getInventory().setItem( 4, new ItemStack(Material.WOODEN_SHOVEL));
                 if(main.scoreboard.getTeam("Blue").hasPlayer(player)){

@@ -6,16 +6,21 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.projectiles.ProjectileSource;
+
 import java.util.LinkedList;
 import java.util.List;
 public class MapReset implements Listener {
@@ -163,86 +168,272 @@ public class MapReset implements Listener {
         Entity victim = event.getEntity();
         if(main.getPlayers().contains(victim)){
             if(victim instanceof Player){
-                Player player = (Player)victim;
-                Player damager = (Player)damagers;
-                if(main.isState(MWstates.WAITING)){
+                if(damagers instanceof Player){
+                    Player player = (Player)victim;
+                    Player damager = (Player)damagers;
+                    if(main.isState(MWstates.WAITING)){
+                        event.setCancelled(true);
+                    }else if(main.isState(MWstates.STARTING)){
+                        event.setCancelled(true);
+                    }else if(player.getHealth() <= event.getDamage()){
+                        Location spawnblue  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Bases.BlueBase.x"), main.getConfig().getInt("Locations.Bases.BlueBase.y"), main.getConfig().getInt("Locations.Bases.BlueBase.z"));
+                        Location spawnred  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Bases.RedBase.x"), main.getConfig().getInt("Locations.Bases.RedBase.y"), main.getConfig().getInt("Locations.Bases.RedBase.z"));
+                        Location spawngreen  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Bases.GreenBase.x"), main.getConfig().getInt("Locations.Bases.GreenBase.y"), main.getConfig().getInt("Locations.Bases.GreenBase.z"));
+                        Location spawnyellow  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Bases.YellowBase.x"), main.getConfig().getInt("Locations.Bases.YellowBase.y"), main.getConfig().getInt("Locations.Bases.YellowBase.z"));
+                        if(main.scoreboard.getTeam("Blue").hasPlayer(player)){
+                            if(main.blife <= 0){
+                                event.setDamage(0);
+                                eliminate(player);
+                                for(Player list : main.getPlayers()) {
+                                    list.sendMessage("§9"+player.getName()+" has been eliminated");
+                                }
+                            }else{
+                                event.setDamage(0);
+                                player.setHealth(20);
+                                player.setFoodLevel(20);
+                                player.teleport(spawnblue);
+                                player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 3));
+                                for(Player list : main.getPlayers()) {
+                                    list.sendMessage("§9"+player.getName()+" has been killed by "+damager.getName());
+                                }
+                            }
+                        }
+                        if(main.scoreboard.getTeam("Red").hasPlayer(player)){
+                            if(main.rlife <= 0){
+                                event.setDamage(0);
+                                eliminate(player);
+                                for(Player list : main.getPlayers()) {
+                                    list.sendMessage("§c"+player.getName()+" has been eliminated");
+                                }
+                            }else{
+                                event.setDamage(0);
+                                player.setHealth(20);
+                                player.setFoodLevel(20);
+                                player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
+                                player.teleport(spawnred);
+                                for(Player list : main.getPlayers()) {
+                                    list.sendMessage("§c"+player.getName()+" has been killed by "+damager.getName());
+                                }
+                            }
+                        }
+                        if(main.scoreboard.getTeam("Green").hasPlayer(player)){
+                            if(main.glife <= 0){
+                                event.setDamage(0);
+                                eliminate(player);
+                                for(Player list : main.getPlayers()) {
+                                    list.sendMessage("§a"+player.getName()+" has been eliminated");
+                                }
+                            }else{
+                                event.setDamage(0);
+                                player.setHealth(20);
+                                player.setFoodLevel(20);
+                                player.teleport(spawngreen);
+                                player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
+                                for(Player list : main.getPlayers()) {
+                                    list.sendMessage("§a"+player.getName()+" has been killed by "+damager.getName());
+                                }
+                            }
+                        }
+                        if(main.scoreboard.getTeam("Yellow").hasPlayer(player)){
+                            if(main.ylife <= 0){
+                                event.setDamage(0);
+                                eliminate(player);
+                                for(Player list : main.getPlayers()) {
+                                    list.sendMessage("§e"+player.getName()+" has been eliminated");
+                                }
+                            }else{
+                                event.setDamage(0);
+                                player.setHealth(20);
+                                player.teleport(spawnyellow);
+                                player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
+                                player.setFoodLevel(20);
+                                for(Player list : main.getPlayers()) {
+                                    list.sendMessage("§e"+player.getName()+" has been killed by "+damager.getName());
+                                }
+                            }
+                        }
+                    }
+                }else if(damagers instanceof Arrow){
+                    ProjectileSource shooter = ((Arrow)event.getDamager()).getShooter();
+                    Player s = (Player)shooter;
+                    Player player = (Player)victim;
+                    if(main.isState(MWstates.WAITING)){
+                        event.setCancelled(true);
+                    }else if(main.isState(MWstates.STARTING)){
+                        event.setCancelled(true);
+                    }else if(player.getHealth() <= event.getDamage()){
+                        Location spawnblue  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Bases.BlueBase.x"), main.getConfig().getInt("Locations.Bases.BlueBase.y"), main.getConfig().getInt("Locations.Bases.BlueBase.z"));
+                        Location spawnred  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Bases.RedBase.x"), main.getConfig().getInt("Locations.Bases.RedBase.y"), main.getConfig().getInt("Locations.Bases.RedBase.z"));
+                        Location spawngreen  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Bases.GreenBase.x"), main.getConfig().getInt("Locations.Bases.GreenBase.y"), main.getConfig().getInt("Locations.Bases.GreenBase.z"));
+                        Location spawnyellow  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Bases.YellowBase.x"), main.getConfig().getInt("Locations.Bases.YellowBase.y"), main.getConfig().getInt("Locations.Bases.YellowBase.z"));
+                        if(main.scoreboard.getTeam("Blue").hasPlayer(player)){
+                            if(main.blife <= 0){
+                                event.setDamage(0);
+                                eliminate(player);
+                                for(Player list : main.getPlayers()) {
+                                    list.sendMessage("§9"+player.getName()+" has been eliminated");
+                                }
+                            }else{
+                                event.setDamage(0);
+                                player.setHealth(20);
+                                player.setFoodLevel(20);
+                                player.teleport(spawnblue);
+                                player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 3));
+                                for(Player list : main.getPlayers()) {
+                                    list.sendMessage("§9"+player.getName()+" has been killed by "+s.getName());
+                                }
+                            }
+                        }
+                        if(main.scoreboard.getTeam("Red").hasPlayer(player)){
+                            if(main.rlife <= 0){
+                                event.setDamage(0);
+                                eliminate(player);
+                                for(Player list : main.getPlayers()) {
+                                    list.sendMessage("§c"+player.getName()+" has been eliminated");
+                                }
+                            }else{
+                                event.setDamage(0);
+                                player.setHealth(20);
+                                player.setFoodLevel(20);
+                                player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
+                                player.teleport(spawnred);
+                                for(Player list : main.getPlayers()) {
+                                    list.sendMessage("§c"+player.getName()+" has been killed by "+s.getName());
+                                }
+                            }
+                        }
+                        if(main.scoreboard.getTeam("Green").hasPlayer(player)){
+                            if(main.glife <= 0){
+                                event.setDamage(0);
+                                eliminate(player);
+                                for(Player list : main.getPlayers()) {
+                                    list.sendMessage("§a"+player.getName()+" has been eliminated");
+                                }
+                            }else{
+                                event.setDamage(0);
+                                player.setHealth(20);
+                                player.setFoodLevel(20);
+                                player.teleport(spawngreen);
+                                player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
+                                for(Player list : main.getPlayers()) {
+                                    list.sendMessage("§a"+player.getName()+" has been killed by "+s.getName());
+                                }
+                            }
+                        }
+                        if(main.scoreboard.getTeam("Yellow").hasPlayer(player)){
+                            if(main.ylife <= 0){
+                                event.setDamage(0);
+                                eliminate(player);
+                                for(Player list : main.getPlayers()) {
+                                    list.sendMessage("§e"+player.getName()+" has been eliminated");
+                                }
+                            }else{
+                                event.setDamage(0);
+                                player.setHealth(20);
+                                player.teleport(spawnyellow);
+                                player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
+                                player.setFoodLevel(20);
+                                for(Player list : main.getPlayers()) {
+                                    list.sendMessage("§e"+player.getName()+" has been killed by "+s.getName());
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+    @EventHandler
+    public void onDamagevoid(EntityDamageEvent event) {
+        Entity victim = event.getEntity();
+        if (main.getPlayers().contains(victim)) {
+            if (victim instanceof Player) {
+                Player player = (Player) victim;
+                if (main.isState(MWstates.WAITING)) {
                     event.setCancelled(true);
-                }else if(main.isState(MWstates.STARTING)){
+                }else if (main.isState(MWstates.STARTING)) {
                     event.setCancelled(true);
-                }else if(player.getHealth() <= event.getDamage()){
-                    Location spawnblue  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Bases.BlueBase.x"), main.getConfig().getInt("Locations.Bases.BlueBase.y"), main.getConfig().getInt("Locations.Bases.BlueBase.z"));
-                    Location spawnred  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Bases.RedBase.x"), main.getConfig().getInt("Locations.Bases.RedBase.y"), main.getConfig().getInt("Locations.Bases.RedBase.z"));
-                    Location spawngreen  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Bases.GreenBase.x"), main.getConfig().getInt("Locations.Bases.GreenBase.y"), main.getConfig().getInt("Locations.Bases.GreenBase.z"));
-                    Location spawnyellow  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Bases.YellowBase.x"), main.getConfig().getInt("Locations.Bases.YellowBase.y"), main.getConfig().getInt("Locations.Bases.YellowBase.z"));
-                    if(main.scoreboard.getTeam("Blue").hasPlayer(player)){
-                        if(main.blife <= 0){
-                            event.setDamage(0);
-                            eliminate(player);
-                            for(Player list : main.getPlayers()) {
-                                list.sendMessage("§9"+player.getName()+" has been eliminated");
-                            }
-                        }else{
-                            event.setDamage(0);
-                            player.setHealth(20);
-                            player.setFoodLevel(20);
-                            player.teleport(spawnblue);
-                            player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 3));
-                            for(Player list : main.getPlayers()) {
-                                list.sendMessage("§9"+player.getName()+" has been killed by "+damager.getName());
-                            }
-                        }
-                    }
-                    if(main.scoreboard.getTeam("Red").hasPlayer(player)){
-                        if(main.rlife <= 0){
-                            event.setDamage(0);
-                            eliminate(player);
-                            for(Player list : main.getPlayers()) {
-                                list.sendMessage("§c"+player.getName()+" has been eliminated");
-                            }
-                        }else{
-                            event.setDamage(0);
-                            player.setHealth(20);
-                            player.setFoodLevel(20);
-                            player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
-                            player.teleport(spawnred);
-                            for(Player list : main.getPlayers()) {
-                                list.sendMessage("§c"+player.getName()+" has been killed by "+damager.getName());
+                }else if (player.getHealth() <= event.getDamage()) {
+                    if (player.getLocation().getY() <= 0) {
+                        Location spawnblue = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Bases.BlueBase.x"), main.getConfig().getInt("Locations.Bases.BlueBase.y"), main.getConfig().getInt("Locations.Bases.BlueBase.z"));
+                        Location spawnred = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Bases.RedBase.x"), main.getConfig().getInt("Locations.Bases.RedBase.y"), main.getConfig().getInt("Locations.Bases.RedBase.z"));
+                        Location spawngreen = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Bases.GreenBase.x"), main.getConfig().getInt("Locations.Bases.GreenBase.y"), main.getConfig().getInt("Locations.Bases.GreenBase.z"));
+                        Location spawnyellow = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Bases.YellowBase.x"), main.getConfig().getInt("Locations.Bases.YellowBase.y"), main.getConfig().getInt("Locations.Bases.YellowBase.z"));
+                        if (main.scoreboard.getTeam("Blue").hasPlayer(player)) {
+                            if (main.blife <= 0) {
+                                event.setDamage(0);
+                                eliminate(player);
+                                for (Player list : main.getPlayers()) {
+                                    list.sendMessage("§9" + player.getName() + " has been eliminated");
+                                }
+                            } else {
+                                event.setDamage(0);
+                                player.setHealth(20);
+                                player.setFoodLevel(20);
+                                player.teleport(spawnblue);
+                                player.setFallDistance(0);
+                                player.getInventory().setItem(8, new ItemStack(Material.ARROW, 3));
+                                for (Player list : main.getPlayers()) {
+                                    list.sendMessage("§9" + player.getName() + " fell in the void");
+                                }
                             }
                         }
-                    }
-                    if(main.scoreboard.getTeam("Green").hasPlayer(player)){
-                        if(main.glife <= 0){
-                            event.setDamage(0);
-                            eliminate(player);
-                            for(Player list : main.getPlayers()) {
-                                list.sendMessage("§a"+player.getName()+" has been eliminated");
-                            }
-                        }else{
-                            event.setDamage(0);
-                            player.setHealth(20);
-                            player.setFoodLevel(20);
-                            player.teleport(spawngreen);
-                            player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
-                            for(Player list : main.getPlayers()) {
-                                list.sendMessage("§a"+player.getName()+" has been killed by "+damager.getName());
+                        if (main.scoreboard.getTeam("Red").hasPlayer(player)) {
+                            if (main.rlife <= 0) {
+                                event.setDamage(0);
+                                eliminate(player);
+                                for (Player list : main.getPlayers()) {
+                                    list.sendMessage("§c" + player.getName() + " has been eliminated");
+                                }
+                            } else {
+                                event.setDamage(0);
+                                player.setHealth(20);
+                                player.setFoodLevel(20);
+                                player.getInventory().setItem(8, new ItemStack(Material.ARROW, 5));
+                                player.teleport(spawnred);
+                                player.setFallDistance(0);
+                                for (Player list : main.getPlayers()) {
+                                    list.sendMessage("§c" + player.getName() + " fell in the void");
+                                }
                             }
                         }
-                    }
-                    if(main.scoreboard.getTeam("Yellow").hasPlayer(player)){
-                        if(main.ylife <= 0){
-                            event.setDamage(0);
-                            eliminate(player);
-                            for(Player list : main.getPlayers()) {
-                                list.sendMessage("§e"+player.getName()+" has been eliminated");
+                        if (main.scoreboard.getTeam("Green").hasPlayer(player)) {
+                            if (main.glife <= 0) {
+                                event.setDamage(0);
+                                eliminate(player);
+                                for (Player list : main.getPlayers()) {
+                                    list.sendMessage("§a" + player.getName() + " has been eliminated");
+                                }
+                            } else {
+                                event.setDamage(0);
+                                player.setHealth(20);
+                                player.setFoodLevel(20);
+                                player.teleport(spawngreen);
+                                player.setFallDistance(0);
+                                player.getInventory().setItem(8, new ItemStack(Material.ARROW, 5));
+                                for (Player list : main.getPlayers()) {
+                                    list.sendMessage("§a" + player.getName() + " fell in the void");
+                                }
                             }
-                        }else{
-                            event.setDamage(0);
-                            player.setHealth(20);
-                            player.teleport(spawnyellow);
-                            player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
-                            player.setFoodLevel(20);
-                            for(Player list : main.getPlayers()) {
-                                list.sendMessage("§e"+player.getName()+" has been killed by "+damager.getName());
+                        }
+                        if (main.scoreboard.getTeam("Yellow").hasPlayer(player)) {
+                            if (main.ylife <= 0) {
+                                event.setDamage(0);
+                                eliminate(player);
+                                for (Player list : main.getPlayers()) {
+                                    list.sendMessage("§e" + player.getName() + " has been eliminated");
+                                }
+                            } else {
+                                event.setDamage(0);
+                                player.setHealth(20);
+                                player.teleport(spawnyellow);
+                                player.getInventory().setItem(8, new ItemStack(Material.ARROW, 5));
+                                player.setFoodLevel(20);
+                                player.setFallDistance(0);
+                                for (Player list : main.getPlayers()) {
+                                    list.sendMessage("§e" + player.getName() + " fell in the void");
+                                }
                             }
                         }
                     }
