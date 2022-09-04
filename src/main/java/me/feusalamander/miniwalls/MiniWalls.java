@@ -1,6 +1,7 @@
 package me.feusalamander.miniwalls;
 import me.feusalamander.miniwalls.commands.MWTab;
 import me.feusalamander.miniwalls.commands.mw;
+import me.feusalamander.miniwalls.datafile.PlayerData;
 import me.feusalamander.miniwalls.listeners.MapReset;
 import me.feusalamander.miniwalls.listeners.bow;
 import me.feusalamander.miniwalls.listeners.commands;
@@ -39,8 +40,10 @@ public final class MiniWalls extends JavaPlugin{
         getServer().getPluginManager().registerEvents(new MapReset(this), this);
         getServer().getPluginManager().registerEvents(new commands(this), this);
         getServer().getPluginManager().registerEvents(new bow(this), this);
+        getServer().getPluginManager().registerEvents(new PlayerData(this), this);
         setState(MWstates.WAITING);
         saveDefaultConfig();
+        saveConfig();
         scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
         blue = scoreboard.registerNewTeam("Blue");
         blue.setPrefix("§9Blue ");
@@ -79,11 +82,9 @@ public final class MiniWalls extends JavaPlugin{
         objective.getScore("§a").setScore(2);
         objective.getScore("§e"+getConfig().getString("server")).setScore(1);
     }
-
     public void setState(MWstates state){
         this.state = state;
     }
-
     public boolean isState(MWstates state){
         return this.state == state;
     }
