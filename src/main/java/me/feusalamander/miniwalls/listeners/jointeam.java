@@ -99,6 +99,7 @@ public class jointeam implements Listener {
                 if(victim.getName().equalsIgnoreCase("§9Blue Villager")){
                     if(!main.scoreboard.getTeam("Blue").hasPlayer(player)){
                         main.blife--;
+                        player.damage(3);
                         if(main.blife == 0){
                             for(Player list : main.getPlayers()) {
                                 list.sendMessage("§9The Blue Villager died");
@@ -111,6 +112,7 @@ public class jointeam implements Listener {
                 }else if(victim.getName().equalsIgnoreCase("§cRed Villager")){
                     if(!main.scoreboard.getTeam("Red").hasPlayer(player)){
                         main.rlife--;
+                        player.damage(3);
                         if(main.rlife == 0){
                             for(Player list : main.getPlayers()) {
                                 list.sendMessage("§cThe Red Villager died");
@@ -123,6 +125,7 @@ public class jointeam implements Listener {
                 }else if(victim.getName().equalsIgnoreCase("§aGreen Villager")){
                     if(!main.scoreboard.getTeam("Green").hasPlayer(player)){
                         main.glife--;
+                        player.damage(3);
                         if(main.glife == 0){
                             for(Player list : main.getPlayers()) {
                                 list.sendMessage("§aThe Green Villager died");
@@ -135,6 +138,7 @@ public class jointeam implements Listener {
                 }else if(victim.getName().equalsIgnoreCase("§eYellow Villager")){
                     if(!main.scoreboard.getTeam("Yellow").hasPlayer(player)){
                         main.ylife--;
+                        player.damage(3);
                         if(main.ylife == 0){
                             for(Player list : main.getPlayers()) {
                                 list.sendMessage("§eThe Yellow Villager died");
