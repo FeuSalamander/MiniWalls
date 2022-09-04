@@ -1,9 +1,7 @@
 package me.feusalamander.miniwalls.listeners;
 import me.feusalamander.miniwalls.MWstates;
 import me.feusalamander.miniwalls.MiniWalls;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -99,7 +97,16 @@ public class jointeam implements Listener {
                 if(victim.getName().equalsIgnoreCase("§9Blue Villager")){
                     if(!main.scoreboard.getTeam("Blue").hasPlayer(player)){
                         main.blife--;
-                        player.damage(3);
+                        if(player.getHealth() > 4){
+                            player.damage(3);
+                        }
+                        for(OfflinePlayer team : main.scoreboard.getTeam("Blue").getPlayers()){
+                            if(team.isOnline()){
+                                Player p = (Player) team;
+                                p.sendMessage("§9Your Villager is attacked");
+                                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10, 1);
+                            }
+                        }
                         if(main.blife == 0){
                             for(Player list : main.getPlayers()) {
                                 list.sendMessage("§9The Blue Villager died");
@@ -112,7 +119,16 @@ public class jointeam implements Listener {
                 }else if(victim.getName().equalsIgnoreCase("§cRed Villager")){
                     if(!main.scoreboard.getTeam("Red").hasPlayer(player)){
                         main.rlife--;
-                        player.damage(3);
+                        if(player.getHealth() > 4){
+                            player.damage(3);
+                        }
+                        for(OfflinePlayer team : main.scoreboard.getTeam("Red").getPlayers()){
+                            if(team.isOnline()){
+                                Player p = (Player) team;
+                                p.sendMessage("§cYour Villager is attacked");
+                                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10, 1);
+                            }
+                        }
                         if(main.rlife == 0){
                             for(Player list : main.getPlayers()) {
                                 list.sendMessage("§cThe Red Villager died");
@@ -125,7 +141,16 @@ public class jointeam implements Listener {
                 }else if(victim.getName().equalsIgnoreCase("§aGreen Villager")){
                     if(!main.scoreboard.getTeam("Green").hasPlayer(player)){
                         main.glife--;
-                        player.damage(3);
+                        if(player.getHealth() > 4){
+                            player.damage(3);
+                        }
+                        for(OfflinePlayer team : main.scoreboard.getTeam("Blue").getPlayers()){
+                            if(team.isOnline()){
+                                Player p = (Player) team;
+                                p.sendMessage("§aYour Villager is attacked");
+                                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10, 1);
+                            }
+                        }
                         if(main.glife == 0){
                             for(Player list : main.getPlayers()) {
                                 list.sendMessage("§aThe Green Villager died");
@@ -138,7 +163,16 @@ public class jointeam implements Listener {
                 }else if(victim.getName().equalsIgnoreCase("§eYellow Villager")){
                     if(!main.scoreboard.getTeam("Yellow").hasPlayer(player)){
                         main.ylife--;
-                        player.damage(3);
+                        if(player.getHealth() > 4){
+                            player.damage(3);
+                        }
+                        for(OfflinePlayer team : main.scoreboard.getTeam("Blue").getPlayers()){
+                            if(team.isOnline()){
+                                Player p = (Player) team;
+                                p.sendMessage("§eYour Villager is attacked");
+                                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10, 1);
+                            }
+                        }
                         if(main.ylife == 0){
                             for(Player list : main.getPlayers()) {
                                 list.sendMessage("§eThe Yellow Villager died");
