@@ -1,6 +1,7 @@
 package me.feusalamander.miniwalls.listeners;
 import me.feusalamander.miniwalls.MWstates;
 import me.feusalamander.miniwalls.MiniWalls;
+import me.feusalamander.miniwalls.datafile.PlayerData;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Arrow;
