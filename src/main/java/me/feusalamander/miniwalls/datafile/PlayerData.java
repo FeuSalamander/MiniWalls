@@ -6,12 +6,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-
 import java.io.File;
 import java.io.IOException;
-
 public class PlayerData implements Listener{
-    private MiniWalls main;
+    private static MiniWalls main;
     public PlayerData(MiniWalls main) {
         this.main = main;
     }
@@ -45,7 +43,7 @@ public class PlayerData implements Listener{
     }
     public File getPlayerDataFile(Player p){
         if(existPlayerData(p)){
-            return new File(main.getDataFolder()+"/player-data/", p.getUniqueId().toString()+".yml");
+            return new File(main.getDataFolder()+"/player-data/", p.getUniqueId()+".yml");
         }else{
             return null;
         }
