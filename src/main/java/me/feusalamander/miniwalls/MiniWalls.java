@@ -9,6 +9,8 @@ import me.feusalamander.miniwalls.listeners.jointeam;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.*;
 import java.util.ArrayList;
@@ -34,6 +36,7 @@ public final class MiniWalls extends JavaPlugin{
     @Override
     public void onEnable() {
         getLogger().info( "Mini Walls by FeuSalamander is working !");
+        PluginManager pm = Bukkit.getPluginManager();
         getCommand("mw").setExecutor(new mw());
         getCommand("mw").setTabCompleter(new MWTab());
         getServer().getPluginManager().registerEvents(new jointeam(this), this);
@@ -120,4 +123,5 @@ public final class MiniWalls extends JavaPlugin{
     @Override
     public void onDisable() {
         getLogger().info( "MiniWalls by FeuSalamander is shutting down !");
-    }}
+    }
+}
