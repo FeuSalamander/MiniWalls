@@ -71,7 +71,7 @@ public class villagerdmg implements Listener {
                             if(player.getHealth() > 4){
                                 player.damage(3);
                             }
-                            for(OfflinePlayer team : main.scoreboard.getTeam("Blue").getPlayers()){
+                            for(OfflinePlayer team : main.scoreboard.getTeam("Green").getPlayers()){
                                 if(team.isOnline()){
                                     Player p = (Player) team;
                                     p.sendMessage("§aYour Villager is attacked");
@@ -93,7 +93,7 @@ public class villagerdmg implements Listener {
                             if(player.getHealth() > 4){
                                 player.damage(3);
                             }
-                            for(OfflinePlayer team : main.scoreboard.getTeam("Blue").getPlayers()){
+                            for(OfflinePlayer team : main.scoreboard.getTeam("Yellow").getPlayers()){
                                 if(team.isOnline()){
                                     Player p = (Player) team;
                                     p.sendMessage("§eYour Villager is attacked");

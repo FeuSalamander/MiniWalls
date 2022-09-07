@@ -1,7 +1,7 @@
 package me.feusalamander.miniwalls;
 import me.feusalamander.miniwalls.commands.MWTab;
 import me.feusalamander.miniwalls.commands.mw;
-import me.feusalamander.miniwalls.datafile.PlayerData;
+import me.feusalamander.miniwalls.listeners.PlayerData;
 import me.feusalamander.miniwalls.listeners.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

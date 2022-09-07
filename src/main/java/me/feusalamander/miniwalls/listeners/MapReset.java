@@ -107,6 +107,7 @@ public class MapReset implements Listener {
         player.setLevel(0);
         player.setHealth(20);
         player.setFoodLevel(20);
+        PlayerData.setloses(player, PlayerData.getloses(player)+1);
         player.setGameMode(GameMode.SURVIVAL);
         if(main.scoreboard.getTeam("Blue").getSize() == 0){
             main.activeteams.remove("Blue");
@@ -143,6 +144,7 @@ public class MapReset implements Listener {
                 winner.setLevel(0);
                 winner.setFoodLevel(20);
                 winner.setHealth(20);
+                PlayerData.setWins(winner, PlayerData.getWins(winner)+1);
                 winner.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
                 for (Entity entity : Bukkit.getWorld("world").getEntities()) {
                     String entity1 = entity.getName();
@@ -181,6 +183,8 @@ public class MapReset implements Listener {
                             if(main.blife <= 0){
                                 event.setDamage(0);
                                 eliminate(player);
+                                PlayerData.setfinal(damager, PlayerData.getfinal(damager)+1);
+                                PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 for(Player list : main.getPlayers()) {
                                     list.sendMessage("§9"+player.getName()+" has been eliminated");
                                 }
@@ -190,6 +194,8 @@ public class MapReset implements Listener {
                                 player.setGameMode(GameMode.SPECTATOR);
                                 player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
                                 player.setFoodLevel(20);
+                                PlayerData.setkills(damager, PlayerData.getkills(damager)+1);
+                                PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 player.sendTitle("§cYou will respawn in 5s", "", 1, 30, 1);
                                 Bukkit.getScheduler().runTaskLater(main, () -> {
                                     player.teleport(spawnblue);
@@ -204,6 +210,8 @@ public class MapReset implements Listener {
                             if(main.rlife <= 0){
                                 event.setDamage(0);
                                 eliminate(player);
+                                PlayerData.setfinal(damager, PlayerData.getfinal(damager)+1);
+                                PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 for(Player list : main.getPlayers()) {
                                     list.sendMessage("§c"+player.getName()+" has been eliminated");
                                 }
@@ -213,6 +221,8 @@ public class MapReset implements Listener {
                                 player.setGameMode(GameMode.SPECTATOR);
                                 player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
                                 player.setFoodLevel(20);
+                                PlayerData.setkills(damager, PlayerData.getkills(damager)+1);
+                                PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 player.sendTitle("§cYou will respawn in 5s", "", 1, 30, 1);
                                 Bukkit.getScheduler().runTaskLater(main, () -> {
                                     player.teleport(spawnred);
@@ -227,6 +237,8 @@ public class MapReset implements Listener {
                             if(main.glife <= 0){
                                 event.setDamage(0);
                                 eliminate(player);
+                                PlayerData.setfinal(damager, PlayerData.getfinal(damager)+1);
+                                PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 for(Player list : main.getPlayers()) {
                                     list.sendMessage("§a"+player.getName()+" has been eliminated");
                                 }
@@ -236,6 +248,8 @@ public class MapReset implements Listener {
                                 player.setGameMode(GameMode.SPECTATOR);
                                 player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
                                 player.setFoodLevel(20);
+                                PlayerData.setkills(damager, PlayerData.getkills(damager)+1);
+                                PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 player.sendTitle("§cYou will respawn in 5s", "", 1, 30, 1);
                                 Bukkit.getScheduler().runTaskLater(main, () -> {
                                     player.teleport(spawngreen);
@@ -250,6 +264,8 @@ public class MapReset implements Listener {
                             if(main.ylife <= 0){
                                 event.setDamage(0);
                                 eliminate(player);
+                                PlayerData.setfinal(damager, PlayerData.getfinal(damager)+1);
+                                PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 for(Player list : main.getPlayers()) {
                                     list.sendMessage("§e"+player.getName()+" has been eliminated");
                                 }
@@ -259,6 +275,8 @@ public class MapReset implements Listener {
                                 player.setGameMode(GameMode.SPECTATOR);
                                 player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
                                 player.setFoodLevel(20);
+                                PlayerData.setkills(damager, PlayerData.getkills(damager)+1);
+                                PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 player.sendTitle("§cYou will respawn in 5s", "", 1, 30, 1);
                                 Bukkit.getScheduler().runTaskLater(main, () -> {
                                     player.teleport(spawnyellow);
@@ -287,6 +305,8 @@ public class MapReset implements Listener {
                             if(main.blife <= 0){
                                 event.setDamage(0);
                                 eliminate(player);
+                                PlayerData.setfinal(s, PlayerData.getfinal(s)+1);
+                                PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 for(Player list : main.getPlayers()) {
                                     list.sendMessage("§9"+player.getName()+" has been eliminated");
                                 }
@@ -296,6 +316,8 @@ public class MapReset implements Listener {
                                 player.setGameMode(GameMode.SPECTATOR);
                                 player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
                                 player.setFoodLevel(20);
+                                PlayerData.setkills(s, PlayerData.getkills(s)+1);
+                                PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 player.sendTitle("§cYou will respawn in 5s", "", 1, 30, 1);
                                 Bukkit.getScheduler().runTaskLater(main, () -> {
                                     player.teleport(spawnblue);
@@ -309,6 +331,8 @@ public class MapReset implements Listener {
                             if(main.rlife <= 0){
                                 event.setDamage(0);
                                 eliminate(player);
+                                PlayerData.setfinal(s, PlayerData.getfinal(s)+1);
+                                PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 for(Player list : main.getPlayers()) {
                                     list.sendMessage("§c"+player.getName()+" has been eliminated");
                                 }
@@ -318,6 +342,8 @@ public class MapReset implements Listener {
                                 player.setGameMode(GameMode.SPECTATOR);
                                 player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
                                 player.setFoodLevel(20);
+                                PlayerData.setkills(s, PlayerData.getkills(s)+1);
+                                PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 player.sendTitle("§cYou will respawn in 5s", "", 1, 30, 1);
                                 Bukkit.getScheduler().runTaskLater(main, () -> {
                                     player.teleport(spawnred);
@@ -331,6 +357,8 @@ public class MapReset implements Listener {
                             if(main.glife <= 0){
                                 event.setDamage(0);
                                 eliminate(player);
+                                PlayerData.setfinal(s, PlayerData.getfinal(s)+1);
+                                PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 for(Player list : main.getPlayers()) {
                                     list.sendMessage("§a"+player.getName()+" has been eliminated");
                                 }
@@ -340,6 +368,8 @@ public class MapReset implements Listener {
                                 player.setGameMode(GameMode.SPECTATOR);
                                 player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
                                 player.setFoodLevel(20);
+                                PlayerData.setkills(s, PlayerData.getkills(s)+1);
+                                PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 player.sendTitle("§cYou will respawn in 5s", "", 1, 30, 1);
                                 Bukkit.getScheduler().runTaskLater(main, () -> {
                                     player.teleport(spawngreen);
@@ -353,6 +383,8 @@ public class MapReset implements Listener {
                             if(main.ylife <= 0){
                                 event.setDamage(0);
                                 eliminate(player);
+                                PlayerData.setfinal(s, PlayerData.getfinal(s)+1);
+                                PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 for(Player list : main.getPlayers()) {
                                     list.sendMessage("§e"+player.getName()+" has been eliminated");
                                 }
@@ -362,6 +394,8 @@ public class MapReset implements Listener {
                                 player.setGameMode(GameMode.SPECTATOR);
                                 player.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
                                 player.setFoodLevel(20);
+                                PlayerData.setkills(s, PlayerData.getkills(s)+1);
+                                PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 player.sendTitle("§cYou will respawn in 5s", "", 1, 30, 1);
                                 Bukkit.getScheduler().runTaskLater(main, () -> {
                                     player.teleport(spawnyellow);
@@ -408,6 +442,7 @@ public class MapReset implements Listener {
                             if (main.blife <= 0) {
                                 event.setDamage(0);
                                 eliminate(player);
+                                PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 for (Player list : main.getPlayers()) {
                                     list.sendMessage("§9" + player.getName() + " has been eliminated");
                                 }
@@ -419,6 +454,7 @@ public class MapReset implements Listener {
                                 player.setFoodLevel(20);
                                 player.setFallDistance(0);
                                 player.teleport(spawnblue);
+                                PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 player.sendTitle("§cYou will respawn in 5s", "", 1, 30, 1);
                                 Bukkit.getScheduler().runTaskLater(main, () -> {
                                     player.teleport(spawnblue);
@@ -432,6 +468,7 @@ public class MapReset implements Listener {
                             if (main.rlife <= 0) {
                                 event.setDamage(0);
                                 eliminate(player);
+                                PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 for (Player list : main.getPlayers()) {
                                     list.sendMessage("§c" + player.getName() + " has been eliminated");
                                 }
@@ -443,6 +480,7 @@ public class MapReset implements Listener {
                                 player.setFoodLevel(20);
                                 player.setFallDistance(0);
                                 player.teleport(spawnred);
+                                PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 player.sendTitle("§cYou will respawn in 5s", "", 1, 30, 1);
                                 Bukkit.getScheduler().runTaskLater(main, () -> {
                                     player.teleport(spawnred);
@@ -456,6 +494,7 @@ public class MapReset implements Listener {
                             if(main.glife <= 0) {
                                 event.setDamage(0);
                                 eliminate(player);
+                                PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 for (Player list : main.getPlayers()) {
                                     list.sendMessage("§a" + player.getName() + " has been eliminated");
                                 }
@@ -467,6 +506,7 @@ public class MapReset implements Listener {
                                 player.setFoodLevel(20);
                                 player.setFallDistance(0);
                                 player.teleport(spawngreen);
+                                PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 player.sendTitle("§cYou will respawn in 5s", "", 1, 30, 1);
                                 Bukkit.getScheduler().runTaskLater(main, () -> {
                                     player.teleport(spawngreen);
@@ -480,6 +520,7 @@ public class MapReset implements Listener {
                             if (main.ylife <= 0) {
                                 event.setDamage(0);
                                 eliminate(player);
+                                PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 for (Player list : main.getPlayers()) {
                                     list.sendMessage("§e" + player.getName() + " has been eliminated");
                                 }
@@ -491,6 +532,7 @@ public class MapReset implements Listener {
                                 player.setFoodLevel(20);
                                 player.setFallDistance(0);
                                 player.teleport(spawnyellow);
+                                PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 player.sendTitle("§cYou will respawn in 5s", "", 1, 30, 1);
                                 Bukkit.getScheduler().runTaskLater(main, () -> {
                                     player.teleport(spawnyellow);
@@ -532,6 +574,7 @@ public class MapReset implements Listener {
                 player.getInventory().clear();
             }else{
                 eliminate(player);
+                PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                 for(Player list : main.getPlayers()) {
                     list.sendMessage("§e"+player.getName()+"§eleft the game MiniWalls");
                 }
@@ -566,6 +609,7 @@ public class MapReset implements Listener {
                     player.getInventory().clear();
                 }else{
                     eliminate(player);
+                    PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                     for(Player list : main.getPlayers()) {
                         list.sendMessage("§e"+player.getName()+"§eleft the game MiniWalls");
                     }
