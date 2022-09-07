@@ -8,6 +8,7 @@
 * ## Auto reset of the map
 * ## Walls
 * ## Destructive bow
+* ## Player Stats
 * ## And more stuff
 ![](pictures/commands.png)
 * ## /mw help
