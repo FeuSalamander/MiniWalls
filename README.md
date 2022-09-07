@@ -13,6 +13,7 @@
 * ## /mw help
 * ## /mw join
 * ## /mw leave
+* ## /mw stats
 * ## /mw reload
 ![](pictures/permissions.png)
 ## - mw.admin: Reload the config file, setup the config via commands

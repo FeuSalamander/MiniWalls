@@ -1,10 +1,9 @@
 name: MiniWalls
-version: 1.4
+version: 1.5
 main: me.feusalamander.miniwalls.MiniWalls
 api-version: 1.18
 authors: [ FeuSalamander ]
 description: a paper plugin to add the mini walls mini game
-softdepend: [PlaceholderAPI]
 commands:
   mw:
     description: Show the help of the MiniWalls plugin

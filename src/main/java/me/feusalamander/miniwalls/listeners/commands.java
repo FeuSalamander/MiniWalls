@@ -2,14 +2,13 @@ package me.feusalamander.miniwalls.listeners;
 import me.feusalamander.miniwalls.MWstates;
 import me.feusalamander.miniwalls.MiniWalls;
 import me.feusalamander.miniwalls.timers.MWautostart;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 public class commands implements Listener {
@@ -77,6 +76,50 @@ public class commands implements Listener {
                 main.setState(MWstates.STARTING);
 
             }
+        }else if (e.getMessage().equalsIgnoreCase("/mw stats")) {
+            Inventory inv = Bukkit.createInventory(null, 27, ChatColor.GOLD+"§l"+player.getName()+"'s Stats");
+            //kills
+            ItemStack sword = new ItemStack(Material.IRON_SWORD);
+            ItemMeta swordM = sword.getItemMeta();
+            swordM.setDisplayName("§7Kills: §f"+PlayerData.getkills(player));
+            sword.setItemMeta(swordM);
+            inv.setItem(12, sword);
+            //wins
+            ItemStack wins = new ItemStack(Material.GOLD_INGOT);
+            ItemMeta winsM = wins.getItemMeta();
+            winsM.setDisplayName("§7Wins: §f"+PlayerData.getWins(player));
+            wins.setItemMeta(winsM);
+            inv.setItem(3, wins);
+            //loses
+            ItemStack loses = new ItemStack(Material.COAL);
+            ItemMeta losesM = loses.getItemMeta();
+            losesM.setDisplayName("§7Loses: §f"+PlayerData.getloses(player));
+            loses.setItemMeta(losesM);
+            inv.setItem(5, loses);
+            player.openInventory(inv);
+            //deaths
+            ItemStack death = new ItemStack(Material.WITHER_SKELETON_SKULL);
+            ItemMeta deathM = death.getItemMeta();
+            deathM.setDisplayName("§7Deaths: §f"+PlayerData.getdeath(player));
+            death.setItemMeta(deathM);
+            inv.setItem(14, death);
+            //finals
+            ItemStack finals = new ItemStack(Material.DIAMOND_SWORD);
+            ItemMeta finalsM = finals.getItemMeta();
+            finalsM.setDisplayName("§7Final Kills: §f"+PlayerData.getfinal(player));
+            finals.setItemMeta(finalsM);
+            inv.setItem(13, finals);
+            //ratio
+            ItemStack ratio = new ItemStack(Material.GLASS);
+            ItemMeta ratioM = ratio.getItemMeta();
+            if(PlayerData.getdeath(player) == 0){
+                ratioM.setDisplayName("§7Ratio K/D: §f"+PlayerData.getkills(player));
+            }else{
+                ratioM.setDisplayName("§7Ratio K/D: §f"+PlayerData.getkills(player)/PlayerData.getdeath(player));
+            }
+            ratio.setItemMeta(ratioM);
+            inv.setItem(22, ratio);
+            player.openInventory(inv);
         }else if (e.getMessage().equalsIgnoreCase("/mw setspawn")) {
             if (player.hasPermission("mw.admin")) {
                 main.getConfig().set("Locations.Spawn.x", player.getLocation().getX());
@@ -86,7 +129,7 @@ public class commands implements Listener {
             } else {
                 player.sendMessage("You don't have the permission");
             }
-        } else if (e.getMessage().equalsIgnoreCase("/mw setlobby")) {
+        }else if (e.getMessage().equalsIgnoreCase("/mw setlobby")) {
             if (player.hasPermission("mw.admin")) {
                 main.getConfig().set("Locations.Lobby.x", player.getLocation().getX());
                 main.getConfig().set("Locations.Lobby.y", player.getLocation().getY());
@@ -192,6 +235,34 @@ public class commands implements Listener {
                 main.reloadConfig();
             }else{
                 player.sendMessage("You don't have the permission");
+            }
+        }
+    }
+    @EventHandler
+    public void onClick(InventoryClickEvent e){
+        Inventory inv = e.getInventory();
+        if(inv.getSize() == 27){
+            Player player = (Player) e.getWhoClicked();
+            ItemStack current = e.getCurrentItem();
+            if(current == null) return;
+            if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Kills: §f"+PlayerData.getkills(player))){
+                e.setCancelled(true);
+            }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Wins: §f"+PlayerData.getWins(player))){
+                e.setCancelled(true);
+            }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Loses: §f"+PlayerData.getloses(player))){
+                e.setCancelled(true);
+            }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Deaths: §f"+PlayerData.getdeath(player))){
+                e.setCancelled(true);
+            }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Final Kills: §f"+PlayerData.getfinal(player))){
+                e.setCancelled(true);
+            }else if(PlayerData.getdeath(player) == 0){
+                if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Ratio K/D: §f"+PlayerData.getkills(player))){
+                    e.setCancelled(true);
+                }
+            }else{
+                if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Ratio K/D: §f"+PlayerData.getkills(player)/PlayerData.getdeath(player))){
+                    e.setCancelled(true);
+                }
             }
         }
     }
