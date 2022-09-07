@@ -2,22 +2,18 @@ package me.feusalamander.miniwalls.listeners;
 import me.feusalamander.miniwalls.MWstates;
 import me.feusalamander.miniwalls.MiniWalls;
 import org.bukkit.*;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.ItemStack;
 public class jointeam implements Listener {
     private MiniWalls main;
     public jointeam(MiniWalls main) {
         this.main = main;
     }
     @EventHandler
-    public  void jointeam(PlayerInteractEvent e){
+    public void jointeam(PlayerInteractEvent e){
         Player player = e.getPlayer();
-        ItemStack item = e.getItem();
         if(main.getPlayers().contains(player)){
             if(player.getItemInHand().getType() == Material.BLUE_WOOL){
                 if(player.getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase("§1Click to join the §9Blue Team !")){
@@ -87,103 +83,4 @@ public class jointeam implements Listener {
                 }
             }
         }
-    @EventHandler
-    public void ondmg(EntityDamageByEntityEvent e){
-        Entity victim = e.getEntity();
-        Entity damager = e.getDamager();
-        if(damager instanceof Player){
-            Player player = (Player)damager;
-            if(main.getPlayers().contains(player)){
-                if(victim.getName().equalsIgnoreCase("§9Blue Villager")){
-                    if(!main.scoreboard.getTeam("Blue").hasPlayer(player)){
-                        main.blife--;
-                        if(player.getHealth() > 4){
-                            player.damage(3);
-                        }
-                        for(OfflinePlayer team : main.scoreboard.getTeam("Blue").getPlayers()){
-                            if(team.isOnline()){
-                                Player p = (Player) team;
-                                p.sendMessage("§9Your Villager is attacked");
-                                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10, 1);
-                            }
-                        }
-                        if(main.blife == 0){
-                            for(Player list : main.getPlayers()) {
-                                list.sendMessage("§9The Blue Villager died");
-                            }
-                            e.setDamage(800);
-                        }
-                    }else{
-                        e.setCancelled(true);
-                    }
-                }else if(victim.getName().equalsIgnoreCase("§cRed Villager")){
-                    if(!main.scoreboard.getTeam("Red").hasPlayer(player)){
-                        main.rlife--;
-                        if(player.getHealth() > 4){
-                            player.damage(3);
-                        }
-                        for(OfflinePlayer team : main.scoreboard.getTeam("Red").getPlayers()){
-                            if(team.isOnline()){
-                                Player p = (Player) team;
-                                p.sendMessage("§cYour Villager is attacked");
-                                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10, 1);
-                            }
-                        }
-                        if(main.rlife == 0){
-                            for(Player list : main.getPlayers()) {
-                                list.sendMessage("§cThe Red Villager died");
-                            }
-                            e.setDamage(800);
-                        }
-                    }else{
-                        e.setCancelled(true);
-                    }
-                }else if(victim.getName().equalsIgnoreCase("§aGreen Villager")){
-                    if(!main.scoreboard.getTeam("Green").hasPlayer(player)){
-                        main.glife--;
-                        if(player.getHealth() > 4){
-                            player.damage(3);
-                        }
-                        for(OfflinePlayer team : main.scoreboard.getTeam("Blue").getPlayers()){
-                            if(team.isOnline()){
-                                Player p = (Player) team;
-                                p.sendMessage("§aYour Villager is attacked");
-                                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10, 1);
-                            }
-                        }
-                        if(main.glife == 0){
-                            for(Player list : main.getPlayers()) {
-                                list.sendMessage("§aThe Green Villager died");
-                            }
-                            e.setDamage(800);
-                        }
-                    }else{
-                        e.setCancelled(true);
-                    }
-                }else if(victim.getName().equalsIgnoreCase("§eYellow Villager")){
-                    if(!main.scoreboard.getTeam("Yellow").hasPlayer(player)){
-                        main.ylife--;
-                        if(player.getHealth() > 4){
-                            player.damage(3);
-                        }
-                        for(OfflinePlayer team : main.scoreboard.getTeam("Blue").getPlayers()){
-                            if(team.isOnline()){
-                                Player p = (Player) team;
-                                p.sendMessage("§eYour Villager is attacked");
-                                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 10, 1);
-                            }
-                        }
-                        if(main.ylife == 0){
-                            for(Player list : main.getPlayers()) {
-                                list.sendMessage("§eThe Yellow Villager died");
-                            }
-                            e.setDamage(800);
-                        }
-                    }else{
-                        e.setCancelled(true);
-                    }
-                }
-            }
-        }
-    }
 }
