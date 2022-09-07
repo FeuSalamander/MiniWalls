@@ -1,5 +1,4 @@
 package me.feusalamander.miniwalls.listeners;
-import me.clip.placeholderapi.PlaceholderAPI;
 import me.feusalamander.miniwalls.MWstates;
 import me.feusalamander.miniwalls.MiniWalls;
 import me.feusalamander.miniwalls.timers.MWautostart;
@@ -13,8 +12,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.util.io.BukkitObjectInputStream;
-
 public class commands implements Listener {
     private MiniWalls main;
 
