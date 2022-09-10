@@ -11,7 +11,11 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.text.DecimalFormat;
+
 public class commands implements Listener {
+    double number = 1;
     private MiniWalls main;
 
     public commands(MiniWalls main) {
@@ -77,7 +81,7 @@ public class commands implements Listener {
 
             }
         }else if (e.getMessage().equalsIgnoreCase("/mw stats")) {
-            Inventory inv = Bukkit.createInventory(null, 27, ChatColor.GOLD+"§l"+player.getName()+"'s Stats");
+            Inventory inv = Bukkit.createInventory(null, 27, ChatColor.GOLD + "§l" + e.getPlayer().getName() + "'s Stats");
             //kills
             ItemStack sword = new ItemStack(Material.IRON_SWORD);
             ItemMeta swordM = sword.getItemMeta();
@@ -115,7 +119,10 @@ public class commands implements Listener {
             if(PlayerData.getdeath(player) == 0){
                 ratioM.setDisplayName("§7Ratio K/D: §f"+PlayerData.getkills(player));
             }else{
-                ratioM.setDisplayName("§7Ratio K/D: §f"+(float)PlayerData.getkills(player)/PlayerData.getdeath(player));
+                number = (float)PlayerData.getkills(player)/PlayerData.getdeath(player);
+                DecimalFormat format = new DecimalFormat("0.00");
+                String output = format.format(number);
+                ratioM.setDisplayName("§7Ratio K/D: §f"+output);
             }
             ratio.setItemMeta(ratioM);
             inv.setItem(22, ratio);
@@ -241,7 +248,7 @@ public class commands implements Listener {
     @EventHandler
     public void onClick(InventoryClickEvent e){
         Inventory inv = e.getInventory();
-        if(e.getView().getTitle() == ChatColor.GOLD+"§l"+e.getWhoClicked().getName()+"'s Stats"){
+        if(e.getView().getTitle().equals(ChatColor.GOLD + "§l" + e.getWhoClicked().getName() + "'s Stats")){
             Player player = (Player) e.getWhoClicked();
             ItemStack current = e.getCurrentItem();
             if(current == null) return;
@@ -260,7 +267,9 @@ public class commands implements Listener {
                     e.setCancelled(true);
                 }
             }else{
-                if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Ratio K/D: §f"+(float)PlayerData.getkills(player)/PlayerData.getdeath(player))){
+                DecimalFormat format = new DecimalFormat("0.00");
+                String output = format.format(number);
+                if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Ratio K/D: §f"+output)){
                     e.setCancelled(true);
                 }
             }
