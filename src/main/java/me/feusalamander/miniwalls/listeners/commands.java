@@ -115,7 +115,7 @@ public class commands implements Listener {
             if(PlayerData.getdeath(player) == 0){
                 ratioM.setDisplayName("§7Ratio K/D: §f"+PlayerData.getkills(player));
             }else{
-                ratioM.setDisplayName("§7Ratio K/D: §f"+PlayerData.getkills(player)/PlayerData.getdeath(player));
+                ratioM.setDisplayName("§7Ratio K/D: §f"+(float)PlayerData.getkills(player)/PlayerData.getdeath(player));
             }
             ratio.setItemMeta(ratioM);
             inv.setItem(22, ratio);
@@ -241,7 +241,7 @@ public class commands implements Listener {
     @EventHandler
     public void onClick(InventoryClickEvent e){
         Inventory inv = e.getInventory();
-        if(inv.getSize() == 27){
+        if(e.getView().getTitle() == ChatColor.GOLD+"§l"+e.getWhoClicked().getName()+"'s Stats"){
             Player player = (Player) e.getWhoClicked();
             ItemStack current = e.getCurrentItem();
             if(current == null) return;
@@ -260,7 +260,7 @@ public class commands implements Listener {
                     e.setCancelled(true);
                 }
             }else{
-                if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Ratio K/D: §f"+PlayerData.getkills(player)/PlayerData.getdeath(player))){
+                if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Ratio K/D: §f"+(float)PlayerData.getkills(player)/PlayerData.getdeath(player))){
                     e.setCancelled(true);
                 }
             }
