@@ -19,6 +19,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.util.Objects;
+import java.util.UUID;
 
 public class commands implements Listener {
     double number = 1;
@@ -133,7 +134,7 @@ public class commands implements Listener {
             ratio.setItemMeta(ratioM);
             inv.setItem(22, ratio);
             player.openInventory(inv);
-        }else if (e.getMessage().equalsIgnoreCase("/mw leaderboard")) {
+        }else if (e.getMessage().equalsIgnoreCase("/mw leaderboard kills")) {
             File fi = new File(main.getDataFolder(), "stats.yml");
             YamlConfiguration config = YamlConfiguration.loadConfiguration(fi);
             ConfigurationSection cf = config.getConfigurationSection("players");
@@ -148,7 +149,8 @@ public class commands implements Listener {
                     .limit(2)
                     .forEach(f -> {
                         int points = ((MemorySection) f.getValue()).getInt("kills");
-                        player.sendMessage(Bukkit.getPlayer(f.toString())+" "+points);
+                        OfflinePlayer s = Bukkit.getOfflinePlayer(UUID.fromString(f.getKey()));
+                        player.sendMessage(s.getName()+" "+points);
                     });
         }else if (e.getMessage().equalsIgnoreCase("/mw setspawn")) {
             if (player.hasPermission("mw.admin")) {

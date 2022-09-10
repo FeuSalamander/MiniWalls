@@ -14,6 +14,7 @@ public class MWTab implements TabCompleter {
             arguments.add("help");
             arguments.add("join");
             arguments.add("stats");
+            arguments.add("leaderboard");
             arguments.add("leave");
             arguments.add("reload");
             arguments.add("setspawn");
@@ -28,6 +29,6 @@ public class MWTab implements TabCompleter {
             arguments.add("setyellowbasevillager");
             return arguments;
         }
-        return  null;
+        return null;
     }
 }
