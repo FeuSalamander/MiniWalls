@@ -8,6 +8,8 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.*;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 public final class MiniWalls extends JavaPlugin{
@@ -42,6 +44,9 @@ public final class MiniWalls extends JavaPlugin{
         setState(MWstates.WAITING);
         saveDefaultConfig();
         saveConfig();
+        if(!PlayerData.existPlayerData()){
+            PlayerData.createPlayerData();
+        }
         scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
         blue = scoreboard.registerNewTeam("Blue");
         blue.setPrefix("§9Blue ");

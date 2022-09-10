@@ -12,31 +12,24 @@ public class PlayerData implements Listener{
     public PlayerData(MiniWalls main) {
         this.main = main;
     }
-    public static boolean existPlayerData(Player p){
-        File f = new File(main.getDataFolder()+"/player-data/", p.getUniqueId().toString()+".yml");
+    public static boolean existPlayerData(){
+        File f = new File(main.getDataFolder(), "stats.yml");
         if(f.exists()){
             return  true;
         }else{
             return false;
         }
     }
-    public void createPlayerData(Player p){
-        if(!existPlayerData(p)){
-            File f = new File(main.getDataFolder()+"/player-data/", p.getUniqueId().toString()+".yml");
-            File folder = new File(main.getDataFolder()+"/player-data/", "");
-            folder.mkdirs();
+    public static void createPlayerData(){
+        if(!existPlayerData()){
+            File f = new File(main.getDataFolder(), "stats.yml");
             try{
                 f.createNewFile();
             }catch (IOException e){
                 e.printStackTrace();
             }
             YamlConfiguration config = YamlConfiguration.loadConfiguration(f);
-            config.set("playername", p.getName());
-            config.set("wins", 0);
-            config.set("loses", 0);
-            config.set("kills", 0);
-            config.set("finalkills", 0);
-            config.set("deaths", 0);
+            config.set("players", 0);
             try{
                 config.save(f);
             }catch (IOException e){
@@ -45,21 +38,21 @@ public class PlayerData implements Listener{
         }
     }
     public static File getPlayerDataFile(Player p){
-        if(existPlayerData(p)){
-            return new File(main.getDataFolder()+"/player-data/", p.getUniqueId()+".yml");
+        if(existPlayerData()){
+            return new File(main.getDataFolder(), "stats.yml");
         }else{
             return null;
         }
     }
     public static int getWins(Player p){
-        File f = getPlayerDataFile(p);
+        File f = new File(main.getDataFolder(), "stats.yml");
         YamlConfiguration config = YamlConfiguration.loadConfiguration(f);
-        return Integer.parseInt(config.get("wins").toString());
+        return Integer.parseInt(config.get("players."+p.getUniqueId()+".wins").toString());
     }
     public static void setWins(Player p, int wins){
         File f = getPlayerDataFile(p);
         YamlConfiguration config = YamlConfiguration.loadConfiguration(f);
-        config.set("wins", wins);
+        config.set("players."+p.getUniqueId()+".wins", wins);
         try{
             config.save(f);
         }catch (IOException e){
@@ -69,12 +62,12 @@ public class PlayerData implements Listener{
     public static int getkills(Player p){
         File f = getPlayerDataFile(p);
         YamlConfiguration config = YamlConfiguration.loadConfiguration(f);
-        return Integer.parseInt(config.get("kills").toString());
+        return Integer.parseInt(config.get("players."+p.getUniqueId()+".kills").toString());
     }
     public static void setkills(Player p, int kills){
         File f = getPlayerDataFile(p);
         YamlConfiguration config = YamlConfiguration.loadConfiguration(f);
-        config.set("kills", kills);
+        config.set("players."+p.getUniqueId()+".kills", kills);
         try{
             config.save(f);
         }catch (IOException e){
@@ -84,12 +77,12 @@ public class PlayerData implements Listener{
     public static int getdeath(Player p){
         File f = getPlayerDataFile(p);
         YamlConfiguration config = YamlConfiguration.loadConfiguration(f);
-        return Integer.parseInt(config.get("deaths").toString());
+        return Integer.parseInt(config.get("players."+p.getUniqueId()+".deaths").toString());
     }
     public static void setdeath(Player p, int death){
         File f = getPlayerDataFile(p);
         YamlConfiguration config = YamlConfiguration.loadConfiguration(f);
-        config.set("deaths", death);
+        config.set("players."+p.getUniqueId()+".deaths", death);
         try{
             config.save(f);
         }catch (IOException e){
@@ -99,12 +92,12 @@ public class PlayerData implements Listener{
     public static int getloses(Player p){
         File f = getPlayerDataFile(p);
         YamlConfiguration config = YamlConfiguration.loadConfiguration(f);
-        return Integer.parseInt(config.get("loses").toString());
+        return Integer.parseInt(config.get("players."+p.getUniqueId()+".loses").toString());
     }
     public static void setloses(Player p, int death){
         File f = getPlayerDataFile(p);
         YamlConfiguration config = YamlConfiguration.loadConfiguration(f);
-        config.set("loses", death);
+        config.set("players."+p.getUniqueId()+".loses", death);
         try{
             config.save(f);
         }catch (IOException e){
@@ -114,12 +107,12 @@ public class PlayerData implements Listener{
     public static int getfinal(Player p){
         File f = getPlayerDataFile(p);
         YamlConfiguration config = YamlConfiguration.loadConfiguration(f);
-        return Integer.parseInt(config.get("finalkills").toString());
+        return Integer.parseInt(config.get("players."+p.getUniqueId()+".finalkills").toString());
     }
     public static void setfinal(Player p, int death){
         File f = getPlayerDataFile(p);
         YamlConfiguration config = YamlConfiguration.loadConfiguration(f);
-        config.set("finalkills", death);
+        config.set("players."+p.getUniqueId()+".finalkills", death);
         try{
             config.save(f);
         }catch (IOException e){
@@ -127,9 +120,18 @@ public class PlayerData implements Listener{
         }
     }
     @EventHandler
-    public void onJoin(PlayerJoinEvent e){
-        if(!existPlayerData(e.getPlayer())){
-            createPlayerData(e.getPlayer());
+    public void onJoin(PlayerJoinEvent e) throws IOException {
+        Player p = e.getPlayer();
+        File f = new File(main.getDataFolder(), "stats.yml");
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(f);
+        if(config.get("players."+p.getUniqueId()+".playername") == null){
+            config.set("players."+p.getUniqueId()+".playername", p.getName());
+            config.set("players."+p.getUniqueId()+".wins", 0);
+            config.set("players."+p.getUniqueId()+".loses", 0);
+            config.set("players."+p.getUniqueId()+".kills", 0);
+            config.set("players."+p.getUniqueId()+".finalkills", 0);
+            config.set("players."+p.getUniqueId()+".deaths", 0);
+            config.save(f);
         }
     }
 }
