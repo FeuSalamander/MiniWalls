@@ -8,8 +8,6 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.*;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 public final class MiniWalls extends JavaPlugin{

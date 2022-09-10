@@ -3,6 +3,10 @@ import me.feusalamander.miniwalls.MWstates;
 import me.feusalamander.miniwalls.MiniWalls;
 import me.feusalamander.miniwalls.timers.MWautostart;
 import org.bukkit.*;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.MemorySection;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,7 +16,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.io.File;
 import java.text.DecimalFormat;
+import java.util.Objects;
 
 public class commands implements Listener {
     double number = 1;
@@ -127,6 +133,23 @@ public class commands implements Listener {
             ratio.setItemMeta(ratioM);
             inv.setItem(22, ratio);
             player.openInventory(inv);
+        }else if (e.getMessage().equalsIgnoreCase("/mw leaderboard")) {
+            File fi = new File(main.getDataFolder(), "stats.yml");
+            YamlConfiguration config = YamlConfiguration.loadConfiguration(fi);
+            ConfigurationSection cf = config.getConfigurationSection("players");
+            cf.getValues(false)
+                    .entrySet()
+                    .stream()
+                    .sorted((a1, a2) -> {
+                        int points1 = ((MemorySection) a1.getValue()).getInt("kills");
+                        int points2 = ((MemorySection) a2.getValue()).getInt("kills");
+                        return points2 - points1;
+                    })
+                    .limit(2)
+                    .forEach(f -> {
+                        int points = ((MemorySection) f.getValue()).getInt("kills");
+                        player.sendMessage(Bukkit.getPlayer(f.toString())+" "+points);
+                    });
         }else if (e.getMessage().equalsIgnoreCase("/mw setspawn")) {
             if (player.hasPermission("mw.admin")) {
                 main.getConfig().set("Locations.Spawn.x", player.getLocation().getX());
@@ -145,7 +168,7 @@ public class commands implements Listener {
             } else {
                 player.sendMessage("You don't have the permission");
             }
-        } else if (e.getMessage().equalsIgnoreCase("/mw setbluebase")) {
+        }else if (e.getMessage().equalsIgnoreCase("/mw setbluebase")) {
             if (player.hasPermission("mw.admin")) {
                 main.getConfig().set("Locations.Bases.BlueBase.x", player.getLocation().getX());
                 main.getConfig().set("Locations.Bases.BlueBase.y", player.getLocation().getY());

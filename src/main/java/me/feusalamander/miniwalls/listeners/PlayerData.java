@@ -37,7 +37,7 @@ public class PlayerData implements Listener{
             }
         }
     }
-    public static File getPlayerDataFile(Player p){
+    public static File getPlayerDataFile(){
         if(existPlayerData()){
             return new File(main.getDataFolder(), "stats.yml");
         }else{
@@ -50,7 +50,7 @@ public class PlayerData implements Listener{
         return Integer.parseInt(config.get("players."+p.getUniqueId()+".wins").toString());
     }
     public static void setWins(Player p, int wins){
-        File f = getPlayerDataFile(p);
+        File f = getPlayerDataFile();
         YamlConfiguration config = YamlConfiguration.loadConfiguration(f);
         config.set("players."+p.getUniqueId()+".wins", wins);
         try{
@@ -60,12 +60,12 @@ public class PlayerData implements Listener{
         }
     }
     public static int getkills(Player p){
-        File f = getPlayerDataFile(p);
+        File f = getPlayerDataFile();
         YamlConfiguration config = YamlConfiguration.loadConfiguration(f);
         return Integer.parseInt(config.get("players."+p.getUniqueId()+".kills").toString());
     }
     public static void setkills(Player p, int kills){
-        File f = getPlayerDataFile(p);
+        File f = getPlayerDataFile();
         YamlConfiguration config = YamlConfiguration.loadConfiguration(f);
         config.set("players."+p.getUniqueId()+".kills", kills);
         try{
@@ -75,12 +75,12 @@ public class PlayerData implements Listener{
         }
     }
     public static int getdeath(Player p){
-        File f = getPlayerDataFile(p);
+        File f = getPlayerDataFile();
         YamlConfiguration config = YamlConfiguration.loadConfiguration(f);
         return Integer.parseInt(config.get("players."+p.getUniqueId()+".deaths").toString());
     }
     public static void setdeath(Player p, int death){
-        File f = getPlayerDataFile(p);
+        File f = getPlayerDataFile();
         YamlConfiguration config = YamlConfiguration.loadConfiguration(f);
         config.set("players."+p.getUniqueId()+".deaths", death);
         try{
@@ -90,12 +90,12 @@ public class PlayerData implements Listener{
         }
     }
     public static int getloses(Player p){
-        File f = getPlayerDataFile(p);
+        File f = getPlayerDataFile();
         YamlConfiguration config = YamlConfiguration.loadConfiguration(f);
         return Integer.parseInt(config.get("players."+p.getUniqueId()+".loses").toString());
     }
     public static void setloses(Player p, int death){
-        File f = getPlayerDataFile(p);
+        File f = getPlayerDataFile();
         YamlConfiguration config = YamlConfiguration.loadConfiguration(f);
         config.set("players."+p.getUniqueId()+".loses", death);
         try{
@@ -105,12 +105,12 @@ public class PlayerData implements Listener{
         }
     }
     public static int getfinal(Player p){
-        File f = getPlayerDataFile(p);
+        File f = getPlayerDataFile();
         YamlConfiguration config = YamlConfiguration.loadConfiguration(f);
         return Integer.parseInt(config.get("players."+p.getUniqueId()+".finalkills").toString());
     }
     public static void setfinal(Player p, int death){
-        File f = getPlayerDataFile(p);
+        File f = getPlayerDataFile();
         YamlConfiguration config = YamlConfiguration.loadConfiguration(f);
         config.set("players."+p.getUniqueId()+".finalkills", death);
         try{
