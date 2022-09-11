@@ -13,8 +13,7 @@ public class MWTab implements TabCompleter {
             List<String> arguments = new ArrayList<>();
             arguments.add("help");
             arguments.add("join");
-            arguments.add("stats");
-            arguments.add("leaderboard");
+            arguments.add("gui");
             arguments.add("leave");
             arguments.add("reload");
             arguments.add("setspawn");

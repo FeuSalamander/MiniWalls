@@ -11,10 +11,10 @@
 * ## Player Stats
 * ## And more stuff
 ![](pictures/commands.png)
+* ## /mw gui
 * ## /mw help
 * ## /mw join
 * ## /mw leave
-* ## /mw stats
 * ## /mw reload
 ![](pictures/permissions.png)
 ## - mw.admin: Reload the config file, setup the config via commands

@@ -5,21 +5,22 @@ import me.feusalamander.miniwalls.timers.MWautostart;
 import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemorySection;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
 import java.io.File;
 import java.text.DecimalFormat;
-import java.util.Objects;
+import java.util.ArrayList;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class commands implements Listener {
     double number = 1;
@@ -87,52 +88,90 @@ public class commands implements Listener {
                 main.setState(MWstates.STARTING);
 
             }
-        }else if (e.getMessage().equalsIgnoreCase("/mw stats")) {
-            Inventory inv = Bukkit.createInventory(null, 27, ChatColor.GOLD + "§l" + e.getPlayer().getName() + "'s Stats");
-            //kills
-            ItemStack sword = new ItemStack(Material.IRON_SWORD);
-            ItemMeta swordM = sword.getItemMeta();
-            swordM.setDisplayName("§7Kills: §f"+PlayerData.getkills(player));
-            sword.setItemMeta(swordM);
-            inv.setItem(12, sword);
-            //wins
-            ItemStack wins = new ItemStack(Material.GOLD_INGOT);
-            ItemMeta winsM = wins.getItemMeta();
-            winsM.setDisplayName("§7Wins: §f"+PlayerData.getWins(player));
-            wins.setItemMeta(winsM);
-            inv.setItem(3, wins);
-            //loses
-            ItemStack loses = new ItemStack(Material.COAL);
-            ItemMeta losesM = loses.getItemMeta();
-            losesM.setDisplayName("§7Loses: §f"+PlayerData.getloses(player));
-            loses.setItemMeta(losesM);
-            inv.setItem(5, loses);
-            player.openInventory(inv);
-            //deaths
-            ItemStack death = new ItemStack(Material.WITHER_SKELETON_SKULL);
-            ItemMeta deathM = death.getItemMeta();
-            deathM.setDisplayName("§7Deaths: §f"+PlayerData.getdeath(player));
-            death.setItemMeta(deathM);
-            inv.setItem(14, death);
-            //finals
-            ItemStack finals = new ItemStack(Material.DIAMOND_SWORD);
-            ItemMeta finalsM = finals.getItemMeta();
-            finalsM.setDisplayName("§7Final Kills: §f"+PlayerData.getfinal(player));
-            finals.setItemMeta(finalsM);
-            inv.setItem(13, finals);
-            //ratio
-            ItemStack ratio = new ItemStack(Material.GLASS);
-            ItemMeta ratioM = ratio.getItemMeta();
+        }else if (e.getMessage().equalsIgnoreCase("/mw gui")){
+            Inventory inv = Bukkit.createInventory(null, 27, ChatColor.GOLD + "MiniWalls");
+            //join
+            ItemStack br = new ItemStack(Material.BEDROCK);
+            ItemMeta brM = br.getItemMeta();
+            brM.setDisplayName(ChatColor.GOLD+"Click to join MiniWalls");
+            brM.addEnchant(Enchantment.DURABILITY, 1, true);
+            brM.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            br.setItemMeta(brM);
+            inv.setItem(13, br);
+            //stats
+            ItemStack stat = new ItemStack(Material.PAPER);
+            ItemMeta statM = stat.getItemMeta();
+            statM.setDisplayName(ChatColor.GREEN+"Your Stats");
+            ArrayList<String> lore = new ArrayList<>();
+            lore.add("§7Wins: §f"+PlayerData.getWins(player));
+            lore.add("§7Loses: §f"+PlayerData.getloses(player));
+            lore.add("§7Kills: §f"+PlayerData.getkills(player));
+            lore.add("§7Final Kills: §f"+PlayerData.getfinal(player));
+            lore.add("§7Deaths: §f"+PlayerData.getdeath(player));
             if(PlayerData.getdeath(player) == 0){
-                ratioM.setDisplayName("§7Ratio K/D: §f"+PlayerData.getkills(player));
+                lore.add("§7Ratio K/D: §f"+PlayerData.getkills(player));
             }else{
                 number = (float)PlayerData.getkills(player)/PlayerData.getdeath(player);
                 DecimalFormat format = new DecimalFormat("0.00");
                 String output = format.format(number);
-                ratioM.setDisplayName("§7Ratio K/D: §f"+output);
+                lore.add("§7Ratio K/D: §f"+output);
             }
-            ratio.setItemMeta(ratioM);
-            inv.setItem(22, ratio);
+            statM.setLore(lore);
+            stat.setItemMeta(statM);
+            inv.setItem(4, stat);
+            //kills
+            AtomicInteger pos = new AtomicInteger(1);
+            ItemStack k = new ItemStack(Material.GOLDEN_SWORD);
+            ItemMeta kM = k.getItemMeta();
+            kM.setDisplayName(ChatColor.GOLD+"Kills Leaderboard");
+            ArrayList<String> lo = new ArrayList<>();
+            File fi = new File(main.getDataFolder(), "stats.yml");
+            YamlConfiguration config = YamlConfiguration.loadConfiguration(fi);
+            ConfigurationSection cf = config.getConfigurationSection("players");
+            cf.getValues(false)
+                    .entrySet()
+                    .stream()
+                    .sorted((a1, a2) -> {
+                        int points1 = ((MemorySection) a1.getValue()).getInt("kills");
+                        int points2 = ((MemorySection) a2.getValue()).getInt("kills");
+                        return points2 - points1;
+                    })
+                    .limit(5)
+                    .forEach(f -> {
+                        int points = ((MemorySection) f.getValue()).getInt("kills");
+                        OfflinePlayer s = Bukkit.getOfflinePlayer(UUID.fromString(f.getKey()));
+                        lo.add("§6"+pos+". §b"+s.getName()+" §e"+points);
+                        pos.getAndIncrement();
+                    });
+            kM.setLore(lo);
+            kM.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            k.setItemMeta(kM);
+            inv.setItem(21, k);
+            //wins
+            AtomicInteger pos1 = new AtomicInteger(1);
+            ItemStack w = new ItemStack(Material.GOLDEN_HELMET);
+            ItemMeta wM = w.getItemMeta();
+            wM.setDisplayName(ChatColor.GOLD+"Wins Leaderboard");
+            ArrayList<String> low = new ArrayList<>();
+            cf.getValues(false)
+                    .entrySet()
+                    .stream()
+                    .sorted((a1, a2) -> {
+                        int points1 = ((MemorySection) a1.getValue()).getInt("wins");
+                        int points2 = ((MemorySection) a2.getValue()).getInt("wins");
+                        return points2 - points1;
+                    })
+                    .limit(5)
+                    .forEach(f -> {
+                        int points = ((MemorySection) f.getValue()).getInt("wins");
+                        OfflinePlayer s = Bukkit.getOfflinePlayer(UUID.fromString(f.getKey()));
+                        low.add("§6"+pos1+". §b"+s.getName()+" §e"+points);
+                        pos1.getAndIncrement();
+                    });
+            wM.setLore(low);
+            wM.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            w.setItemMeta(wM);
+            inv.setItem(23, w);
             player.openInventory(inv);
         }else if (e.getMessage().equalsIgnoreCase("/mw leaderboard kills")) {
             File fi = new File(main.getDataFolder(), "stats.yml");
@@ -246,6 +285,7 @@ public class commands implements Listener {
             player.sendMessage("§1§l---------------------------------");
             player.sendMessage("    §4All the commands of the mini walls plugin");
             player.sendMessage("");
+            player.sendMessage("§5mw gui: §cOpen the Gui to see the leaderboard, the stats and play");
             player.sendMessage("§5mw help: §cShow this help");
             player.sendMessage("§5mw join: §cJoin the MiniWalls game");
             player.sendMessage("§5mw leave: §cLeave the MiniWalls game");
@@ -273,30 +313,19 @@ public class commands implements Listener {
     @EventHandler
     public void onClick(InventoryClickEvent e){
         Inventory inv = e.getInventory();
-        if(e.getView().getTitle().equals(ChatColor.GOLD + "§l" + e.getWhoClicked().getName() + "'s Stats")){
+        if(e.getView().getTitle().equals(ChatColor.GOLD + "MiniWalls")){
             Player player = (Player) e.getWhoClicked();
             ItemStack current = e.getCurrentItem();
             if(current == null) return;
-            if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Kills: §f"+PlayerData.getkills(player))){
+            if(current.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GOLD+"Click to join MiniWalls")){
                 e.setCancelled(true);
-            }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Wins: §f"+PlayerData.getWins(player))){
+                player.chat("/mw join");
+            }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GREEN+"Your Stats")) {
                 e.setCancelled(true);
-            }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Loses: §f"+PlayerData.getloses(player))){
+            }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GOLD+"Kills Leaderboard")) {
                 e.setCancelled(true);
-            }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Deaths: §f"+PlayerData.getdeath(player))){
+            }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GOLD+"Wins Leaderboard")) {
                 e.setCancelled(true);
-            }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Final Kills: §f"+PlayerData.getfinal(player))){
-                e.setCancelled(true);
-            }else if(PlayerData.getdeath(player) == 0){
-                if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Ratio K/D: §f"+PlayerData.getkills(player))){
-                    e.setCancelled(true);
-                }
-            }else{
-                DecimalFormat format = new DecimalFormat("0.00");
-                String output = format.format(number);
-                if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Ratio K/D: §f"+output)){
-                    e.setCancelled(true);
-                }
             }
         }
     }

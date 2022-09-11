@@ -13,6 +13,7 @@ public class mw implements CommandExecutor {
                 p.sendMessage("§1§l---------------------------------");
                 p.sendMessage("    §4All the commands of the mini walls plugin");
                 p.sendMessage("");
+                p.sendMessage("§5mw gui: §cOpen the Gui to see the leaderboard, the stats and to play");
                 p.sendMessage("§5mw help: §cShow this help");
                 p.sendMessage("§5mw join: §cJoin the MiniWalls game");
                 p.sendMessage("§5mw leave: §cLeave the MiniWalls game");
