@@ -3,6 +3,7 @@ import me.feusalamander.miniwalls.MWstates;
 import me.feusalamander.miniwalls.MiniWalls;
 import me.feusalamander.miniwalls.timers.MWautostart;
 import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -173,24 +174,6 @@ public class commands implements Listener {
             w.setItemMeta(wM);
             inv.setItem(23, w);
             player.openInventory(inv);
-        }else if (e.getMessage().equalsIgnoreCase("/mw leaderboard kills")) {
-            File fi = new File(main.getDataFolder(), "stats.yml");
-            YamlConfiguration config = YamlConfiguration.loadConfiguration(fi);
-            ConfigurationSection cf = config.getConfigurationSection("players");
-            cf.getValues(false)
-                    .entrySet()
-                    .stream()
-                    .sorted((a1, a2) -> {
-                        int points1 = ((MemorySection) a1.getValue()).getInt("kills");
-                        int points2 = ((MemorySection) a2.getValue()).getInt("kills");
-                        return points2 - points1;
-                    })
-                    .limit(2)
-                    .forEach(f -> {
-                        int points = ((MemorySection) f.getValue()).getInt("kills");
-                        OfflinePlayer s = Bukkit.getOfflinePlayer(UUID.fromString(f.getKey()));
-                        player.sendMessage(s.getName()+" "+points);
-                    });
         }else if (e.getMessage().equalsIgnoreCase("/mw setspawn")) {
             if (player.hasPermission("mw.admin")) {
                 main.getConfig().set("Locations.Spawn.x", player.getLocation().getX());

@@ -22,7 +22,6 @@ public class bow implements Listener {
         if (main.getPlayers().contains(player)) {
             if (e.getEntity() instanceof Arrow) {
                 Arrow a = (Arrow) e.getEntity();
-                World world = e.getEntity().getWorld();
                 int radius = 1;
                 Block middle = a.getLocation().getBlock();
                 for (int x = radius; x >= -radius; x--) {

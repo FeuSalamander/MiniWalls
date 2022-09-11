@@ -1,6 +1,10 @@
 package me.feusalamander.miniwalls.timers;
 import me.feusalamander.miniwalls.MiniWalls;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.block.Block;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -21,7 +25,7 @@ public class MWgamecycle extends BukkitRunnable {
             main.scoreboard.getTeam("bv").setSuffix("§9Villager: "+main.blife+"§9♥");
             main.scoreboard.getTeam("rv").setSuffix("§cVillager: "+main.rlife+"§c♥");
             main.scoreboard.getTeam("gv").setSuffix("§aVillager: "+main.glife+"§a♥");
-            main.scoreboard.getTeam("yv").setSuffix("§eVillager: "+main.ylife+"§e♥");
+            main.scoreboard.getTeam("yv").setSuffix("§eVillager: "+main.ylife+"§e♥");                                                                        
         }
         if(main.getPlayers().size() <= 1){
             cancel();
@@ -63,6 +67,7 @@ public class MWgamecycle extends BukkitRunnable {
                 main.glife = 0;
                 main.ylife = 0;
             }
+            // TODO: 11/09/2022 Map destruction at deathmatch
             cancel();
         }
         timer--;
