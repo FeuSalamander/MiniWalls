@@ -291,6 +291,7 @@ public class commands implements Listener {
             }else{
                 player.sendMessage("You don't have the permission");
             }
+        }else if(e.getMessage().equalsIgnoreCase("/test")){
         }
     }
     @EventHandler

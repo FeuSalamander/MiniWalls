@@ -2,9 +2,7 @@ package me.feusalamander.miniwalls.timers;
 import me.feusalamander.miniwalls.MiniWalls;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.Particle;
-import org.bukkit.Sound;
-import org.bukkit.block.Block;
+import org.bukkit.World;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -31,21 +29,15 @@ public class MWgamecycle extends BukkitRunnable {
             cancel();
         }
         if(timer == 300){
-            ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-            String command = "fill "+main.getConfig().getInt("Walls.wall1.cord1.x")+" "+main.getConfig().getInt("Walls.wall1.cord1.y")+" "+main.getConfig().getInt("Walls.wall1.cord1.z")+" "+main.getConfig().getInt("Walls.wall1.cord2.x")+" "+main.getConfig().getInt("Walls.wall1.cord2.y")+" "+main.getConfig().getInt("Walls.wall1.cord2.z")+" minecraft:bedrock";
-            Bukkit.dispatchCommand(console, command);
-            String wall2 = "fill "+main.getConfig().getInt("Walls.wall2.cord1.x")+" "+main.getConfig().getInt("Walls.wall2.cord1.y")+" "+main.getConfig().getInt("Walls.wall2.cord1.z")+" "+main.getConfig().getInt("Walls.wall2.cord2.x")+" "+main.getConfig().getInt("Walls.wall2.cord2.y")+" "+main.getConfig().getInt("Walls.wall2.cord2.z")+" minecraft:bedrock";
-            Bukkit.dispatchCommand(console, wall2);
+            wall(Material.BEDROCK);
+            wall2(Material.BEDROCK);
         }
         if(timer == 290){
             for(Player list : main.getPlayers()) {
                 list.sendMessage("§4The Walls have fallen");
-                ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-                String command = "fill "+main.getConfig().getInt("Walls.wall1.cord1.x")+" "+main.getConfig().getInt("Walls.wall1.cord1.y")+" "+main.getConfig().getInt("Walls.wall1.cord1.z")+" "+main.getConfig().getInt("Walls.wall1.cord2.x")+" "+main.getConfig().getInt("Walls.wall1.cord2.y")+" "+main.getConfig().getInt("Walls.wall1.cord2.z")+" minecraft:air";
-                Bukkit.dispatchCommand(console, command);
-                String wall2 = "fill "+main.getConfig().getInt("Walls.wall2.cord1.x")+" "+main.getConfig().getInt("Walls.wall2.cord1.y")+" "+main.getConfig().getInt("Walls.wall2.cord1.z")+" "+main.getConfig().getInt("Walls.wall2.cord2.x")+" "+main.getConfig().getInt("Walls.wall2.cord2.y")+" "+main.getConfig().getInt("Walls.wall2.cord2.z")+" minecraft:air";
-                Bukkit.dispatchCommand(console, wall2);
             }
+            wall(Material.AIR);
+            wall2(Material.AIR);
         }
         if(timer == 0){
             for(Player list : main.getPlayers()) {
@@ -67,9 +59,52 @@ public class MWgamecycle extends BukkitRunnable {
                 main.glife = 0;
                 main.ylife = 0;
             }
-            // TODO: 11/09/2022 Map destruction at deathmatch
+            // TODO: 11/09/2022 Map destruction at deathmatch https://www.youtube.com/watch?v=T359WIJ5Ocg
+
             cancel();
         }
         timer--;
+    }
+    private void wall(Material m){
+        World w = Bukkit.getWorld("world");
+        int x = main.getConfig().getInt("Walls.wall1.cord1.x");
+        int y = main.getConfig().getInt("Walls.wall1.cord1.y");
+        int z = main.getConfig().getInt("Walls.wall1.cord1.z");
+        int x2 = main.getConfig().getInt("Walls.wall1.cord2.x");
+        int y2 = main.getConfig().getInt("Walls.wall1.cord2.y");
+        int z2 = main.getConfig().getInt("Walls.wall1.cord2.z");
+        int zi = Math.abs(z-z2);
+        int xi = Math.abs(x-x2);
+        int yi = Math.abs(y-y2);
+        for(int i = 0; i < zi; i++){
+            w.getBlockAt(x, y, z+i).setType(m);
+            for(int u = 0; u < xi; u++){
+                w.getBlockAt(x+u, y, z+i).setType(m);
+                for(int n = 0; n < yi; n++){
+                    w.getBlockAt(x+u, y+n, z+i).setType(m);
+                }
+            }
+        }
+    }
+    private void wall2(Material m){
+        World w = Bukkit.getWorld("world");
+        int x = main.getConfig().getInt("Walls.wall2.cord1.x");
+        int y = main.getConfig().getInt("Walls.wall2.cord1.y");
+        int z = main.getConfig().getInt("Walls.wall2.cord1.z");
+        int x2 = main.getConfig().getInt("Walls.wall2.cord2.x");
+        int y2 = main.getConfig().getInt("Walls.wall2.cord2.y");
+        int z2 = main.getConfig().getInt("Walls.wall2.cord2.z");
+        int zi = Math.abs(z-z2);
+        int xi = Math.abs(x-x2);
+        int yi = Math.abs(y-y2);
+        for(int i = 0; i < zi; i++){
+            w.getBlockAt(x, y, z+i).setType(m);
+            for(int u = 0; u < xi; u++){
+                w.getBlockAt(x+u, y, z+i).setType(m);
+                for(int n = 0; n < yi; n++){
+                    w.getBlockAt(x+u, y+n, z+i).setType(m);
+                }
+            }
+        }
     }
 }
