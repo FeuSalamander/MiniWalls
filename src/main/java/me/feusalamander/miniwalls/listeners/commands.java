@@ -292,6 +292,15 @@ public class commands implements Listener {
                 player.sendMessage("You don't have the permission");
             }
         }else if(e.getMessage().equalsIgnoreCase("/test")){
+            for(double t = 0; t<100; t+=0.1){
+                float radius = 7;
+                float x = radius*(float)Math.sin(t);
+                float z = radius*(float)Math.cos(t);
+                Block loc = player.getLocation().getBlock();
+                player.getLocation().getWorld().getBlockAt(loc.getX() + (int)x, loc.getY(), loc.getZ() + (int)z).setType(Material.BEDROCK);
+                player.getLocation().getWorld().getBlockAt(loc.getX() + (int)x, loc.getY() -1, loc.getZ() + (int)z).setType(Material.BEDROCK);
+                player.getLocation().getWorld().getBlockAt(loc.getX() + (int)x, loc.getY() -2, loc.getZ() + (int)z).setType(Material.BEDROCK);
+            }
         }
     }
     @EventHandler

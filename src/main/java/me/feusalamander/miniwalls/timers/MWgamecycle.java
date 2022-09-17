@@ -60,7 +60,6 @@ public class MWgamecycle extends BukkitRunnable {
                 main.ylife = 0;
             }
             // TODO: 11/09/2022 Map destruction at deathmatch https://www.youtube.com/watch?v=T359WIJ5Ocg
-
             cancel();
         }
         timer--;
@@ -76,11 +75,11 @@ public class MWgamecycle extends BukkitRunnable {
         int zi = Math.abs(z-z2);
         int xi = Math.abs(x-x2);
         int yi = Math.abs(y-y2);
-        for(int i = 0; i < zi; i++){
+        for(int i = 0; i <= zi; i++){
             w.getBlockAt(x, y, z+i).setType(m);
-            for(int u = 0; u < xi; u++){
+            for(int u = 0; u <= xi; u++){
                 w.getBlockAt(x+u, y, z+i).setType(m);
-                for(int n = 0; n < yi; n++){
+                for(int n = 0; n <= yi; n++){
                     w.getBlockAt(x+u, y+n, z+i).setType(m);
                 }
             }
