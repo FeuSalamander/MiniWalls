@@ -32,6 +32,8 @@ public final class MiniWalls extends JavaPlugin{
     @Override
     public void onEnable() {
         getLogger().info( "Mini Walls by FeuSalamander is working !");
+        int pluginId = 16460;
+        Metrics metrics = new Metrics(this, pluginId);
         getCommand("mw").setExecutor(new mw());
         getCommand("mw").setTabCompleter(new MWTab());
         getServer().getPluginManager().registerEvents(new jointeam(this), this);
@@ -80,7 +82,7 @@ public final class MiniWalls extends JavaPlugin{
         objective.getScore("§b").setScore(6);
         objective.getScore("§5").setScore(5);
         objective.getScore("§e").setScore(4);
-        objective.getScore("Version: §7v1.9").setScore(3);
+        objective.getScore("Version: §7v2.0").setScore(3);
         objective.getScore("§a").setScore(2);
         objective.getScore("§e"+getConfig().getString("server")).setScore(1);
     }

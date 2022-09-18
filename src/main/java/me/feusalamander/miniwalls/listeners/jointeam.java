@@ -1,11 +1,14 @@
 package me.feusalamander.miniwalls.listeners;
 import me.feusalamander.miniwalls.MWstates;
 import me.feusalamander.miniwalls.MiniWalls;
+import me.feusalamander.miniwalls.UpdateChecker;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+
 public class jointeam implements Listener {
     private MiniWalls main;
     public jointeam(MiniWalls main) {
@@ -76,11 +79,21 @@ public class jointeam implements Listener {
                             main.eliminate(player);
                             for(Player list : main.getPlayers()) {
                                 list.sendMessage("§e"+player.getName()+"§eleft the game MiniWalls");
-                                }
                             }
                         }
                     }
                 }
             }
         }
+    }
+    @EventHandler
+    public void onjoin(PlayerJoinEvent e){
+        if(e.getPlayer().isOp()){
+            new UpdateChecker(main, 104675).getVersion(version -> {
+                if (!(main.getDescription().getVersion().equals(version))){
+                    e.getPlayer().sendMessage(ChatColor.DARK_RED+"There is a new update for MiniWalls available !");
+                }
+            });
+        }
+    }
 }

@@ -6,14 +6,14 @@
 
     <groupId>me.feusalamander</groupId>
     <artifactId>MiniWalls</artifactId>
-    <version>1.8</version>
+    <version>1.9</version>
     <packaging>jar</packaging>
 
     <name>MiniWalls</name>
 
     <description>a paper plugin to add the mini walls mini game</description>
     <properties>
-        <java.version>1.9</java.version>
+        <java.version>2.0</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
