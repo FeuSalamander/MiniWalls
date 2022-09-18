@@ -24,7 +24,7 @@ public class MapReset implements Listener {
     public MapReset(MiniWalls main) {
         this.main = main;
     }
-    private List<String> CHANGES = new LinkedList<String>();
+    public static List<String> CHANGES = new LinkedList<String>();
     private List<String> CHANGES2 = new LinkedList<String>();
     public void restore(){
         int blockss = 0;

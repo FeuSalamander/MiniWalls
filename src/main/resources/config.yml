@@ -60,6 +60,13 @@ Walls:
       x: 0
       y: 0
       z: 0
+Destruction: #all the settings for the map destruction at the death-match
+  center: #here put the coords of the center of the map but put the y 20 blocks above than the ground
+    x: 0
+    y: 0
+    z: 0
+  radius: 10 #here put how many block are between the center of the map and the border of the map because the map will be destroyed in a circle
+  deep: 2 #here put how many blocks are between the center y and the lowest block y of the map
 MinPlayers: 2 #Minimum players needed to start the game
 map: miniwalls #the name of the map in the scoreboard
 server: play.miniwalls.net #your server name

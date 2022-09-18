@@ -3,7 +3,6 @@ import me.feusalamander.miniwalls.MiniWalls;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -40,6 +39,9 @@ public class MWgamecycle extends BukkitRunnable {
             wall2(Material.AIR);
         }
         if(timer == 0){
+            MWdestroy cycle = new MWdestroy(main);
+            cycle.runTaskTimer(main, 0, 60);
+            main.r = main.getConfig().getInt("Destruction.radius");
             for(Player list : main.getPlayers()) {
                 list.sendMessage("§0Death match enabled");
             }
@@ -59,7 +61,6 @@ public class MWgamecycle extends BukkitRunnable {
                 main.glife = 0;
                 main.ylife = 0;
             }
-            // TODO: 11/09/2022 Map destruction at deathmatch https://www.youtube.com/watch?v=T359WIJ5Ocg
             cancel();
         }
         timer--;
@@ -76,6 +77,7 @@ public class MWgamecycle extends BukkitRunnable {
         int xi = Math.abs(x-x2);
         int yi = Math.abs(y-y2);
         for(int i = 0; i <= zi; i++){
+            assert w != null;
             w.getBlockAt(x, y, z+i).setType(m);
             for(int u = 0; u <= xi; u++){
                 w.getBlockAt(x+u, y, z+i).setType(m);

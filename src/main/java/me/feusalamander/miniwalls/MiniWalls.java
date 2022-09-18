@@ -17,6 +17,7 @@ public final class MiniWalls extends JavaPlugin{
     public int rlife = 20;
     public int glife = 20;
     public int ylife = 20;
+    public int r = getConfig().getInt("Destruction.radius");
     private MWstates state;
     public Scoreboard scoreboard;
     Team blue;

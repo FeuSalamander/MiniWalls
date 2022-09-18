@@ -2,8 +2,9 @@ package me.feusalamander.miniwalls.listeners;
 import me.feusalamander.miniwalls.MWstates;
 import me.feusalamander.miniwalls.MiniWalls;
 import me.feusalamander.miniwalls.timers.MWautostart;
+import me.feusalamander.miniwalls.timers.MWdestroy;
+import me.feusalamander.miniwalls.timers.MWgamecycle;
 import org.bukkit.*;
-import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -17,10 +18,13 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.scheduler.BukkitRunnable;
+
 import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class commands implements Listener {
@@ -32,7 +36,7 @@ public class commands implements Listener {
     }
 
     @EventHandler
-    public void setspawn(PlayerCommandPreprocessEvent e) {
+    public void setspawn(PlayerCommandPreprocessEvent e) throws InterruptedException {
         Player player = e.getPlayer();
         if (e.getMessage().equalsIgnoreCase("/mw join")){
             if(!main.isState(MWstates.WAITING))
@@ -290,16 +294,6 @@ public class commands implements Listener {
                 main.reloadConfig();
             }else{
                 player.sendMessage("You don't have the permission");
-            }
-        }else if(e.getMessage().equalsIgnoreCase("/test")){
-            for(double t = 0; t<100; t+=0.1){
-                float radius = 7;
-                float x = radius*(float)Math.sin(t);
-                float z = radius*(float)Math.cos(t);
-                Block loc = player.getLocation().getBlock();
-                player.getLocation().getWorld().getBlockAt(loc.getX() + (int)x, loc.getY(), loc.getZ() + (int)z).setType(Material.BEDROCK);
-                player.getLocation().getWorld().getBlockAt(loc.getX() + (int)x, loc.getY() -1, loc.getZ() + (int)z).setType(Material.BEDROCK);
-                player.getLocation().getWorld().getBlockAt(loc.getX() + (int)x, loc.getY() -2, loc.getZ() + (int)z).setType(Material.BEDROCK);
             }
         }
     }
