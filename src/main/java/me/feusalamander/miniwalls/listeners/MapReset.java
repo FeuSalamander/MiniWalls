@@ -25,7 +25,8 @@ public class MapReset implements Listener {
         this.main = main;
     }
     public static List<String> CHANGES = new LinkedList<String>();
-    private List<String> CHANGES2 = new LinkedList<String>();
+    private final List<String> CHANGES2 = new LinkedList<String>();
+    public static List<String> CHANGES3 = new LinkedList<String>();
     public void restore(){
         int blockss = 0;
         for(String b : CHANGES2){
@@ -39,6 +40,16 @@ public class MapReset implements Listener {
         }
         int blocks = 0;
         for(String b : CHANGES){
+            String[] blockdata = b.split(":");
+            Material id = Material.valueOf((blockdata[0]));
+            World world = Bukkit.getWorld(blockdata[1]);
+            int x = Integer.parseInt(blockdata[2]);
+            int y = Integer.parseInt(blockdata[3]);
+            int z = Integer.parseInt(blockdata[4]);
+            world.getBlockAt(x, y, z).setType(id);
+            blocks++;
+        }
+        for(String b : CHANGES3){
             String[] blockdata = b.split(":");
             Material id = Material.valueOf((blockdata[0]));
             World world = Bukkit.getWorld(blockdata[1]);

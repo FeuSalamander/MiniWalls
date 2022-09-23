@@ -2,8 +2,6 @@ package me.feusalamander.miniwalls.listeners;
 import me.feusalamander.miniwalls.MWstates;
 import me.feusalamander.miniwalls.MiniWalls;
 import me.feusalamander.miniwalls.timers.MWautostart;
-import me.feusalamander.miniwalls.timers.MWdestroy;
-import me.feusalamander.miniwalls.timers.MWgamecycle;
 import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemorySection;
@@ -18,15 +16,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.scheduler.BukkitRunnable;
-
 import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
-
 public class commands implements Listener {
     double number = 1;
     private MiniWalls main;
@@ -36,7 +30,7 @@ public class commands implements Listener {
     }
 
     @EventHandler
-    public void setspawn(PlayerCommandPreprocessEvent e) throws InterruptedException {
+    public void setspawn(PlayerCommandPreprocessEvent e){
         Player player = e.getPlayer();
         if (e.getMessage().equalsIgnoreCase("/mw join")){
             if(!main.isState(MWstates.WAITING))

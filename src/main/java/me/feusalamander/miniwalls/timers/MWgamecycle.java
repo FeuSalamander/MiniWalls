@@ -38,7 +38,7 @@ public class MWgamecycle extends BukkitRunnable {
             wall(Material.AIR);
             wall2(Material.AIR);
         }
-        if(timer == 0){
+        if(timer == 280){
             MWdestroy cycle = new MWdestroy(main);
             cycle.runTaskTimer(main, 0, 60);
             main.r = main.getConfig().getInt("Destruction.radius");
