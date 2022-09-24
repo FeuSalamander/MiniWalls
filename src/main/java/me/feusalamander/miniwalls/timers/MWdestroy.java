@@ -35,9 +35,7 @@ public class MWdestroy extends BukkitRunnable {
                 Location loc = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Destruction.center.x"), main.getConfig().getInt("Destruction.center.y"), main.getConfig().getInt("Destruction.center.z"));
                 for(int i = 0; i <= main.getConfig().getInt("Destruction.deep"); i++){
                     Block b = loc.getWorld().getBlockAt((int)loc.getX() + (int)x, (int)loc.getY()-i, (int)loc.getZ() + (int)z);
-                    String block = b.getType() + ":" + b.getWorld().getName() +
-                            ":" + b.getX() + ":" + b.getY() + ":" + b.getZ();
-                    MapReset.CHANGES3.add(block);
+                    MapReset.CHANGES3.add(b.getState());
                 }
             }
             main.r--;

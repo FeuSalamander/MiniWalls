@@ -3,6 +3,7 @@ import me.feusalamander.miniwalls.MWstates;
 import me.feusalamander.miniwalls.MiniWalls;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -24,50 +25,27 @@ public class MapReset implements Listener {
     public MapReset(MiniWalls main) {
         this.main = main;
     }
-    public static List<String> CHANGES = new LinkedList<String>();
-    private final List<String> CHANGES2 = new LinkedList<String>();
-    public static List<String> CHANGES3 = new LinkedList<String>();
+    public static List<BlockState> CHANGES = new LinkedList<>();
+    private final List<BlockState> CHANGES2 = new LinkedList<>();
+    public static List<BlockState> CHANGES3 = new LinkedList<>();
     public void restore(){
         int blockss = 0;
-        for(String b : CHANGES2){
-            String[] blockdata = b.split(":");
-            World world = Bukkit.getWorld(blockdata[0]);
-            int x = Integer.parseInt(blockdata[1]);
-            int y = Integer.parseInt(blockdata[2]);
-            int z = Integer.parseInt(blockdata[3]);
-            world.getBlockAt(x, y, z).setType(Material.AIR);
-            blockss++;
+        for(BlockState b : CHANGES2){
+            b.update(true, false);
         }
         int blocks = 0;
-        for(String b : CHANGES){
-            String[] blockdata = b.split(":");
-            Material id = Material.valueOf((blockdata[0]));
-            World world = Bukkit.getWorld(blockdata[1]);
-            int x = Integer.parseInt(blockdata[2]);
-            int y = Integer.parseInt(blockdata[3]);
-            int z = Integer.parseInt(blockdata[4]);
-            world.getBlockAt(x, y, z).setType(id);
-            blocks++;
+        for(BlockState b : CHANGES){
+            b.update(true, false);
         }
-        for(String b : CHANGES3){
-            String[] blockdata = b.split(":");
-            Material id = Material.valueOf((blockdata[0]));
-            World world = Bukkit.getWorld(blockdata[1]);
-            int x = Integer.parseInt(blockdata[2]);
-            int y = Integer.parseInt(blockdata[3]);
-            int z = Integer.parseInt(blockdata[4]);
-            world.getBlockAt(x, y, z).setType(id);
-            blocks++;
+        for(BlockState b : CHANGES3){
+            b.update(true, false);
         }
     }
     @EventHandler
     public void onBlockb(BlockBreakEvent e){
-        Block b = e.getBlock();
         Player p = e.getPlayer();
         if(main.getPlayers().contains(p)){
-            String block = b.getType() + ":" + b.getWorld().getName() +
-                    ":" + b.getX() + ":" + b.getY() + ":" + b.getZ();
-            CHANGES.add(block);
+            CHANGES.add(e.getBlock().getState());
             e.setCancelled(true);
             e.getBlock().setType(Material.AIR);
             if(main.scoreboard.getTeam("Blue").hasPlayer(p)){
@@ -87,21 +65,13 @@ public class MapReset implements Listener {
         Player p = e.getPlayer();
         if(main.getPlayers().contains(p)){
             if(e.getBlock().getType() == Material.BLUE_WOOL){
-                String block = b.getWorld().getName() +
-                        ":" + b.getX() + ":" + b.getY() + ":" + b.getZ();
-                CHANGES2.add(block);
+                CHANGES.add(e.getBlock().getState());
             }else if(e.getBlock().getType() == Material.RED_WOOL){
-                String block = b.getWorld().getName() +
-                        ":" + b.getX() + ":" + b.getY() + ":" + b.getZ();
-                CHANGES2.add(block);
+                CHANGES.add(e.getBlock().getState());
             }else if(e.getBlock().getType() == Material.GREEN_WOOL){
-                String block = b.getWorld().getName() +
-                        ":" + b.getX() + ":" + b.getY() + ":" + b.getZ();
-                CHANGES2.add(block);
+                CHANGES.add(e.getBlock().getState());
             }else if(e.getBlock().getType() == Material.YELLOW_WOOL){
-                String block = b.getWorld().getName() +
-                        ":" + b.getX() + ":" + b.getY() + ":" + b.getZ();
-                CHANGES2.add(block);
+                CHANGES.add(e.getBlock().getState());
             }
         }
     }
