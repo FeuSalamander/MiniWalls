@@ -32,17 +32,13 @@ public class commands implements Listener {
     @EventHandler
     public void setspawn(PlayerCommandPreprocessEvent e){
         Player player = e.getPlayer();
-        if (e.getMessage().equalsIgnoreCase("/mw join")){
-            if(!main.isState(MWstates.WAITING))
-            {
-                if(!main.getPlayers().contains(player)){
-                    Location lobby  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Lobby.x"), main.getConfig().getInt("Locations.Lobby.y"), main.getConfig().getInt("Locations.Lobby.z"));
-                    player.teleport(lobby);
-                    player.sendMessage("§7The game is already started !");
-                    return;
-                }
-            }
-            if(!main.getPlayers().contains(player)) {
+        if(e.getMessage().equalsIgnoreCase("/mw join")){
+            if(!(main.isState(MWstates.STARTING) || main.isState(MWstates.WAITING))) {
+                Location lobby  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Lobby.x"), main.getConfig().getInt("Locations.Lobby.y"), main.getConfig().getInt("Locations.Lobby.z"));
+                player.teleport(lobby);
+                player.sendMessage("§7The game is already started !");
+                return;
+            }else if(!main.getPlayers().contains(player)) {
                 main.getPlayers().add(player);
                 Location spawn  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Spawn.x"), main.getConfig().getInt("Locations.Spawn.y"), main.getConfig().getInt("Locations.Spawn.z"));
                 player.teleport(spawn);
