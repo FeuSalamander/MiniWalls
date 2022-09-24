@@ -26,8 +26,8 @@ public class MWdestroy extends BukkitRunnable {
                     Block b = loc.getWorld().getBlockAt((int)loc.getX() + (int)x, (int)loc.getY()-i, (int)loc.getZ() + (int)z);
                     if(!(b.getType() == Material.AIR)){
                         MapReset.CHANGES.add(b.getState());
+                        b.setType(Material.AIR);
                     }
-                    b.setType(Material.AIR);
                 }
             }
             main.r--;
