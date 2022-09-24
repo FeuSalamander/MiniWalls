@@ -2,7 +2,6 @@ package me.feusalamander.miniwalls.listeners;
 import me.feusalamander.miniwalls.MWstates;
 import me.feusalamander.miniwalls.MiniWalls;
 import org.bukkit.*;
-import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
@@ -20,24 +19,18 @@ import org.bukkit.projectiles.ProjectileSource;
 import java.util.LinkedList;
 import java.util.List;
 public class MapReset implements Listener {
-    private int t = 100;
-    private MiniWalls main;
+    private final int t = 100;
+    private final MiniWalls main;
     public MapReset(MiniWalls main) {
         this.main = main;
     }
     public static List<BlockState> CHANGES = new LinkedList<>();
     private final List<BlockState> CHANGES2 = new LinkedList<>();
-    public static List<BlockState> CHANGES3 = new LinkedList<>();
     public void restore(){
-        int blockss = 0;
         for(BlockState b : CHANGES2){
-            b.update(true, false);
+            b.getWorld().setType(b.getX(), b.getY(), b.getZ(), Material.AIR);
         }
-        int blocks = 0;
         for(BlockState b : CHANGES){
-            b.update(true, false);
-        }
-        for(BlockState b : CHANGES3){
             b.update(true, false);
         }
     }
@@ -61,17 +54,16 @@ public class MapReset implements Listener {
     }
     @EventHandler
     public void onBlockp(BlockPlaceEvent e){
-        Block b = e.getBlock();
         Player p = e.getPlayer();
         if(main.getPlayers().contains(p)){
             if(e.getBlock().getType() == Material.BLUE_WOOL){
-                CHANGES.add(e.getBlock().getState());
+                CHANGES2.add(e.getBlock().getState());
             }else if(e.getBlock().getType() == Material.RED_WOOL){
-                CHANGES.add(e.getBlock().getState());
+                CHANGES2.add(e.getBlock().getState());
             }else if(e.getBlock().getType() == Material.GREEN_WOOL){
-                CHANGES.add(e.getBlock().getState());
+                CHANGES2.add(e.getBlock().getState());
             }else if(e.getBlock().getType() == Material.YELLOW_WOOL){
-                CHANGES.add(e.getBlock().getState());
+                CHANGES2.add(e.getBlock().getState());
             }
         }
     }
@@ -331,9 +323,7 @@ public class MapReset implements Listener {
                                         player.sendTitle("§c3", "", 1, 20, 1);
                                         Bukkit.getScheduler().runTaskLater(main, () -> {
                                             player.sendTitle("§c2", "", 1, 20, 1);
-                                            Bukkit.getScheduler().runTaskLater(main, () -> {
-                                                player.sendTitle("§c1", "", 1, 20, 1);
-                                            }, 20);
+                                            Bukkit.getScheduler().runTaskLater(main, () -> player.sendTitle("§c1", "", 1, 20, 1), 20);
                                         }, 20);
                                     }, 20);
                                 }, 20);
