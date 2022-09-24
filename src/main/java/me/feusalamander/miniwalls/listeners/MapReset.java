@@ -100,6 +100,7 @@ public class MapReset implements Listener {
     public void checkWin() {
         World world = Bukkit.getWorld("world");
         if (main.activeteams.size() <= 1) {
+            restore();
             Bukkit.broadcastMessage(main.scoreboard.getTeam(main.activeteams.get(0)).getPrefix() + "Team §6Won the game");
             main.setState(MWstates.WAITING);
             main.activeteams.clear();
@@ -107,7 +108,6 @@ public class MapReset implements Listener {
             main.scoreboard.getTeam("rv").setSuffix("");
             main.scoreboard.getTeam("gv").setSuffix("");
             main.scoreboard.getTeam("yv").setSuffix("");
-            restore();
             for (int i = 0; i < main.getPlayers().size(); i++) {
                 Player winner = main.getPlayers().get(i);
                 Location lobby = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Lobby.x"), main.getConfig().getInt("Locations.Lobby.y"), main.getConfig().getInt("Locations.Lobby.z"));

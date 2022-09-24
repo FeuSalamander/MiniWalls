@@ -16,6 +16,9 @@ public class MWdestroy extends BukkitRunnable {
 
     @Override
     public void run() {
+        if(main.isState(MWstates.WAITING) || main.isState(MWstates.STARTING)){
+            cancel();
+        }
         if(main.r > 0){
             for(double t = 0; t<50; t+=0.1){
                 float radius = main.r;
@@ -40,9 +43,6 @@ public class MWdestroy extends BukkitRunnable {
         if(timer == 0 && main.r > 0){
             timer = 10;
         }else if(timer == 0){
-            cancel();
-        }
-        if(main.isState(MWstates.WAITING) || main.isState(MWstates.STARTING)){
             cancel();
         }
     }
