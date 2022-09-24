@@ -1,6 +1,7 @@
 package me.feusalamander.miniwalls.timers;
 import me.feusalamander.miniwalls.MiniWalls;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
@@ -78,11 +79,58 @@ public class MWgamecycle extends BukkitRunnable {
         int yi = Math.abs(y-y2);
         for(int i = 0; i <= zi; i++){
             assert w != null;
-            w.getBlockAt(x, y, z+i).setType(m);
-            for(int u = 0; u <= xi; u++){
-                w.getBlockAt(x+u, y, z+i).setType(m);
-                for(int n = 0; n <= yi; n++){
-                    w.getBlockAt(x+u, y+n, z+i).setType(m);
+            if(z-z2 >= 0){
+                w.getBlockAt(x, y, z+i).setType(m);
+                for(int u = 0; u <= xi; u++){
+                    if(x-x2 >= 0){
+                        w.getBlockAt(x+u, y, z+i).setType(m);
+                        for(int n = 0; n <= yi; n++){
+                            if(y-y2 >= 0){
+                                w.getBlockAt(x+u, y+n, z+i).setType(m);
+                            }
+                            if(y-y2 < 0){
+                                w.getBlockAt(x+u, y-n, z+i).setType(m);
+                            }
+                        }
+                    }
+                    if(x-x2 < 0){
+                        w.getBlockAt(x-u, y, z+i).setType(m);
+                        for(int n = 0; n <= yi; n++){
+                            if(y-y2 >= 0){
+                                w.getBlockAt(x-u, y+n, z+i).setType(m);
+                            }
+                            if(y-y2 < 0){
+                                w.getBlockAt(x-u, y-n, z+i).setType(m);
+                            }
+                        }
+                    }
+                }
+            }
+            if(z-z2 < 0){
+                w.getBlockAt(x, y, z-i).setType(m);
+                for(int u = 0; u <= xi; u++){
+                    if(x-x2 >= 0){
+                        w.getBlockAt(x+u, y, z-i).setType(m);
+                        for(int n = 0; n <= yi; n++){
+                            if(y-y2 >= 0){
+                                w.getBlockAt(x+u, y+n, z-i).setType(m);
+                            }
+                            if(y-y2 < 0){
+                                w.getBlockAt(x+u, y-n, z-i).setType(m);
+                            }
+                        }
+                    }
+                    if(x-x2 < 0){
+                        w.getBlockAt(x-u, y, z-i).setType(m);
+                        for(int n = 0; n <= yi; n++){
+                            if(y-y2 >= 0){
+                                w.getBlockAt(x-u, y+n, z-i).setType(m);
+                            }
+                            if(y-y2 < 0){
+                                w.getBlockAt(x-u, y-n, z-i).setType(m);
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -98,12 +146,60 @@ public class MWgamecycle extends BukkitRunnable {
         int zi = Math.abs(z-z2);
         int xi = Math.abs(x-x2);
         int yi = Math.abs(y-y2);
-        for(int i = 0; i < zi; i++){
-            w.getBlockAt(x, y, z+i).setType(m);
-            for(int u = 0; u < xi; u++){
-                w.getBlockAt(x+u, y, z+i).setType(m);
-                for(int n = 0; n < yi; n++){
-                    w.getBlockAt(x+u, y+n, z+i).setType(m);
+        for(int i = 0; i <= zi; i++){
+            assert w != null;
+            if(z-z2 >= 0){
+                w.getBlockAt(x, y, z+i).setType(m);
+                for(int u = 0; u <= xi; u++){
+                    if(x-x2 >= 0){
+                        w.getBlockAt(x+u, y, z+i).setType(m);
+                        for(int n = 0; n <= yi; n++){
+                            if(y-y2 >= 0){
+                                w.getBlockAt(x+u, y+n, z+i).setType(m);
+                            }
+                            if(y-y2 < 0){
+                                w.getBlockAt(x+u, y-n, z+i).setType(m);
+                            }
+                        }
+                    }
+                    if(x-x2 < 0){
+                        w.getBlockAt(x-u, y, z+i).setType(m);
+                        for(int n = 0; n <= yi; n++){
+                            if(y-y2 >= 0){
+                                w.getBlockAt(x-u, y+n, z+i).setType(m);
+                            }
+                            if(y-y2 < 0){
+                                w.getBlockAt(x-u, y-n, z+i).setType(m);
+                            }
+                        }
+                    }
+                }
+            }
+            if(z-z2 < 0){
+                w.getBlockAt(x, y, z-i).setType(m);
+                for(int u = 0; u <= xi; u++){
+                    if(x-x2 >= 0){
+                        w.getBlockAt(x+u, y, z-i).setType(m);
+                        for(int n = 0; n <= yi; n++){
+                            if(y-y2 >= 0){
+                                w.getBlockAt(x+u, y+n, z-i).setType(m);
+                            }
+                            if(y-y2 < 0){
+                                w.getBlockAt(x+u, y-n, z-i).setType(m);
+                            }
+                        }
+                    }
+                    if(x-x2 < 0){
+                        w.getBlockAt(x-u, y, z-i).setType(m);
+                        for(int n = 0; n <= yi; n++){
+                            if(y-y2 >= 0){
+                                w.getBlockAt(x-u, y+n, z-i).setType(m);
+                            }
+                            if(y-y2 < 0){
+                                w.getBlockAt(x-u, y-n, z-i).setType(m);
+                            }
+                        }
+                    }
                 }
             }
         }
