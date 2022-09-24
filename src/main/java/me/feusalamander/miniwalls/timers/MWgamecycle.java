@@ -74,63 +74,22 @@ public class MWgamecycle extends BukkitRunnable {
         int x2 = main.getConfig().getInt("Walls.wall1.cord2.x");
         int y2 = main.getConfig().getInt("Walls.wall1.cord2.y");
         int z2 = main.getConfig().getInt("Walls.wall1.cord2.z");
-        int zi = Math.abs(z-z2);
-        int xi = Math.abs(x-x2);
-        int yi = Math.abs(y-y2);
+        int mx = Math.max(x, x2);
+        int my = Math.max(y, y2);
+        int mz = Math.max(z, z2);
+        int mix = Math.min(x, x2);
+        int miy = Math.min(y, y2);
+        int miz = Math.min(z, z2);
+        int zi = Math.abs(mz - miz);
+        int xi = Math.abs(mx - mix);
+        int yi = Math.abs(my - miy);
         for(int i = 0; i <= zi; i++){
             assert w != null;
-            if(z-z2 >= 0){
-                w.getBlockAt(x, y, z+i).setType(m);
-                for(int u = 0; u <= xi; u++){
-                    if(x-x2 >= 0){
-                        w.getBlockAt(x+u, y, z+i).setType(m);
-                        for(int n = 0; n <= yi; n++){
-                            if(y-y2 >= 0){
-                                w.getBlockAt(x+u, y+n, z+i).setType(m);
-                            }
-                            if(y-y2 < 0){
-                                w.getBlockAt(x+u, y-n, z+i).setType(m);
-                            }
-                        }
-                    }
-                    if(x-x2 < 0){
-                        w.getBlockAt(x-u, y, z+i).setType(m);
-                        for(int n = 0; n <= yi; n++){
-                            if(y-y2 >= 0){
-                                w.getBlockAt(x-u, y+n, z+i).setType(m);
-                            }
-                            if(y-y2 < 0){
-                                w.getBlockAt(x-u, y-n, z+i).setType(m);
-                            }
-                        }
-                    }
-                }
-            }
-            if(z-z2 < 0){
-                w.getBlockAt(x, y, z-i).setType(m);
-                for(int u = 0; u <= xi; u++){
-                    if(x-x2 >= 0){
-                        w.getBlockAt(x+u, y, z-i).setType(m);
-                        for(int n = 0; n <= yi; n++){
-                            if(y-y2 >= 0){
-                                w.getBlockAt(x+u, y+n, z-i).setType(m);
-                            }
-                            if(y-y2 < 0){
-                                w.getBlockAt(x+u, y-n, z-i).setType(m);
-                            }
-                        }
-                    }
-                    if(x-x2 < 0){
-                        w.getBlockAt(x-u, y, z-i).setType(m);
-                        for(int n = 0; n <= yi; n++){
-                            if(y-y2 >= 0){
-                                w.getBlockAt(x-u, y+n, z-i).setType(m);
-                            }
-                            if(y-y2 < 0){
-                                w.getBlockAt(x-u, y-n, z-i).setType(m);
-                            }
-                        }
-                    }
+            w.getBlockAt(mix, miy, miz+i).setType(m);
+            for(int u = 0; u <= xi; u++){
+                w.getBlockAt(mix+u, miy, miz+i).setType(m);
+                for(int n = 0; n <= yi; n++){
+                    w.getBlockAt(mix+u, miy+n, miz+i).setType(m);
                 }
             }
         }
@@ -143,63 +102,22 @@ public class MWgamecycle extends BukkitRunnable {
         int x2 = main.getConfig().getInt("Walls.wall2.cord2.x");
         int y2 = main.getConfig().getInt("Walls.wall2.cord2.y");
         int z2 = main.getConfig().getInt("Walls.wall2.cord2.z");
-        int zi = Math.abs(z-z2);
-        int xi = Math.abs(x-x2);
-        int yi = Math.abs(y-y2);
+        int mx = Math.max(x, x2);
+        int my = Math.max(y, y2);
+        int mz = Math.max(z, z2);
+        int mix = Math.min(x, x2);
+        int miy = Math.min(y, y2);
+        int miz = Math.min(z, z2);
+        int zi = Math.abs(mz - miz);
+        int xi = Math.abs(mx - mix);
+        int yi = Math.abs(my - miy);
         for(int i = 0; i <= zi; i++){
             assert w != null;
-            if(z-z2 >= 0){
-                w.getBlockAt(x, y, z+i).setType(m);
-                for(int u = 0; u <= xi; u++){
-                    if(x-x2 >= 0){
-                        w.getBlockAt(x+u, y, z+i).setType(m);
-                        for(int n = 0; n <= yi; n++){
-                            if(y-y2 >= 0){
-                                w.getBlockAt(x+u, y+n, z+i).setType(m);
-                            }
-                            if(y-y2 < 0){
-                                w.getBlockAt(x+u, y-n, z+i).setType(m);
-                            }
-                        }
-                    }
-                    if(x-x2 < 0){
-                        w.getBlockAt(x-u, y, z+i).setType(m);
-                        for(int n = 0; n <= yi; n++){
-                            if(y-y2 >= 0){
-                                w.getBlockAt(x-u, y+n, z+i).setType(m);
-                            }
-                            if(y-y2 < 0){
-                                w.getBlockAt(x-u, y-n, z+i).setType(m);
-                            }
-                        }
-                    }
-                }
-            }
-            if(z-z2 < 0){
-                w.getBlockAt(x, y, z-i).setType(m);
-                for(int u = 0; u <= xi; u++){
-                    if(x-x2 >= 0){
-                        w.getBlockAt(x+u, y, z-i).setType(m);
-                        for(int n = 0; n <= yi; n++){
-                            if(y-y2 >= 0){
-                                w.getBlockAt(x+u, y+n, z-i).setType(m);
-                            }
-                            if(y-y2 < 0){
-                                w.getBlockAt(x+u, y-n, z-i).setType(m);
-                            }
-                        }
-                    }
-                    if(x-x2 < 0){
-                        w.getBlockAt(x-u, y, z-i).setType(m);
-                        for(int n = 0; n <= yi; n++){
-                            if(y-y2 >= 0){
-                                w.getBlockAt(x-u, y+n, z-i).setType(m);
-                            }
-                            if(y-y2 < 0){
-                                w.getBlockAt(x-u, y-n, z-i).setType(m);
-                            }
-                        }
-                    }
+            w.getBlockAt(mix, miy, miz+i).setType(m);
+            for(int u = 0; u <= xi; u++){
+                w.getBlockAt(mix+u, miy, miz+i).setType(m);
+                for(int n = 0; n <= yi; n++){
+                    w.getBlockAt(mix+u, miy+n, miz+i).setType(m);
                 }
             }
         }
