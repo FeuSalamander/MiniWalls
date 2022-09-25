@@ -1,11 +1,12 @@
 package me.feusalamander.miniwalls.timers;
 import me.feusalamander.miniwalls.MiniWalls;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 public class MWgamecycle extends BukkitRunnable {
     private MiniWalls main;
@@ -17,6 +18,7 @@ public class MWgamecycle extends BukkitRunnable {
     @Override
     public void run() {
         for(Player pls : main.getPlayers()){
+            pls.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 1, 1, false, true));
             pls.setLevel(timer);
             main.scoreboard.getTeam("playerss").setSuffix("§a" +main.getPlayers().size()+ "/§a8");
             main.scoreboard.getTeam("playerss").setPrefix("Alive ");

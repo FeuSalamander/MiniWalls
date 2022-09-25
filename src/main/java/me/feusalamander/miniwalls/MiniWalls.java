@@ -129,4 +129,4 @@ public final class MiniWalls extends JavaPlugin{
 }
 // TODO: 23/09/2022 Arrow refill
 // TODO: 23/09/2022 map destruction fix (trou au centre)
-// TODO: 24/09/2022 regen effect 
+// TODO: 25/09/2022 gui to config
