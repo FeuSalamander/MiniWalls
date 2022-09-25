@@ -18,7 +18,10 @@ public class MWgamecycle extends BukkitRunnable {
     @Override
     public void run() {
         for(Player pls : main.getPlayers()){
-            pls.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 1, 1, false, true));
+            if(pls.getFoodLevel() < 20){
+                pls.setFoodLevel(20);
+            }
+            pls.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 25, 0));
             pls.setLevel(timer);
             main.scoreboard.getTeam("playerss").setSuffix("§a" +main.getPlayers().size()+ "/§a8");
             main.scoreboard.getTeam("playerss").setPrefix("Alive ");
@@ -41,7 +44,7 @@ public class MWgamecycle extends BukkitRunnable {
             wall(Material.AIR);
             wall2(Material.AIR);
         }
-        if(timer == 0){
+        if(timer == 280){
             MWdestroy cycle = new MWdestroy(main);
             cycle.runTaskTimer(main, 0, 60);
             main.r = main.getConfig().getInt("Destruction.radius");
