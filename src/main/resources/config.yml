@@ -1,12 +1,12 @@
 Locations:
+  Lobby: #This is where the main lobby is
+    x: 0
+    y: 0
+    z: 0
   Spawn: #This is where the waiting room is to join the game
     x: 0
     y: 0
     z: 0
-  Lobby: #This is where the main lobby is
-   x: 0
-   y: 0
-   z: 0
   Bases: #This is where the players are teleported when the game start
    BlueBase:
      x: 0

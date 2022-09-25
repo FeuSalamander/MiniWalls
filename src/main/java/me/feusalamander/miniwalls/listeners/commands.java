@@ -1,4 +1,5 @@
 package me.feusalamander.miniwalls.listeners;
+import me.feusalamander.miniwalls.GUI.MWconfigGui;
 import me.feusalamander.miniwalls.MWstates;
 import me.feusalamander.miniwalls.MiniWalls;
 import me.feusalamander.miniwalls.timers.MWautostart;
@@ -81,7 +82,6 @@ public class commands implements Listener {
                 MWautostart start = new MWautostart(main);
                 start.runTaskTimer(main, 0, 20);
                 main.setState(MWstates.STARTING);
-
             }
         }else if (e.getMessage().equalsIgnoreCase("/mw gui")){
             Inventory inv = Bukkit.createInventory(null, 27, ChatColor.GOLD + "MiniWalls");
@@ -168,94 +168,10 @@ public class commands implements Listener {
             w.setItemMeta(wM);
             inv.setItem(23, w);
             player.openInventory(inv);
-        }else if (e.getMessage().equalsIgnoreCase("/mw setspawn")) {
+        }else if (e.getMessage().equalsIgnoreCase("/mw configgui")) {
             if (player.hasPermission("mw.admin")) {
-                main.getConfig().set("Locations.Spawn.x", player.getLocation().getX());
-                main.getConfig().set("Locations.Spawn.y", player.getLocation().getY());
-                main.getConfig().set("Locations.Spawn.z", player.getLocation().getZ());
-                main.saveConfig();
-            } else {
-                player.sendMessage("You don't have the permission");
-            }
-        }else if (e.getMessage().equalsIgnoreCase("/mw setlobby")) {
-            if (player.hasPermission("mw.admin")) {
-                main.getConfig().set("Locations.Lobby.x", player.getLocation().getX());
-                main.getConfig().set("Locations.Lobby.y", player.getLocation().getY());
-                main.getConfig().set("Locations.Lobby.z", player.getLocation().getZ());
-                main.saveConfig();
-            } else {
-                player.sendMessage("You don't have the permission");
-            }
-        }else if (e.getMessage().equalsIgnoreCase("/mw setbluebase")) {
-            if (player.hasPermission("mw.admin")) {
-                main.getConfig().set("Locations.Bases.BlueBase.x", player.getLocation().getX());
-                main.getConfig().set("Locations.Bases.BlueBase.y", player.getLocation().getY());
-                main.getConfig().set("Locations.Bases.BlueBase.z", player.getLocation().getZ());
-                main.saveConfig();
-            } else {
-                player.sendMessage("You don't have the permission");
-            }
-        } else if (e.getMessage().equalsIgnoreCase("/mw setredbase")) {
-            if (player.hasPermission("mw.admin")) {
-                main.getConfig().set("Locations.Bases.RedBase.x", player.getLocation().getX());
-                main.getConfig().set("Locations.Bases.RedBase.y", player.getLocation().getY());
-                main.getConfig().set("Locations.Bases.RedBase.z", player.getLocation().getZ());
-                main.saveConfig();
-            } else {
-                player.sendMessage("You don't have the permission");
-            }
-        } else if (e.getMessage().equalsIgnoreCase("/mw setgreenbase")) {
-            if (player.hasPermission("mw.admin")) {
-                main.getConfig().set("Locations.Bases.GreenBase.x", player.getLocation().getX());
-                main.getConfig().set("Locations.Bases.GreenBase.y", player.getLocation().getY());
-                main.getConfig().set("Locations.Bases.GreenBase.z", player.getLocation().getZ());
-                main.saveConfig();
-            } else {
-                player.sendMessage("You don't have the permission");
-            }
-        } else if (e.getMessage().equalsIgnoreCase("/mw setyellowbase")) {
-            if (player.hasPermission("mw.admin")) {
-                main.getConfig().set("Locations.Bases.YellowBase.x", player.getLocation().getX());
-                main.getConfig().set("Locations.Bases.YellowBase.y", player.getLocation().getY());
-                main.getConfig().set("Locations.Bases.YellowBase.z", player.getLocation().getZ());
-                main.saveConfig();
-            } else {
-                player.sendMessage("You don't have the permission");
-            }
-        } else if (e.getMessage().equalsIgnoreCase("/mw setbluevillager")) {
-            if (player.hasPermission("mw.admin")) {
-                main.getConfig().set("Locations.Villagers.Bluevillager.x", player.getLocation().getX());
-                main.getConfig().set("Locations.Villagers.Bluevillager.y", player.getLocation().getY());
-                main.getConfig().set("Locations.Villagers.Bluevillager.z", player.getLocation().getZ());
-                main.saveConfig();
-            } else {
-                player.sendMessage("You don't have the permission");
-            }
-        } else if (e.getMessage().equalsIgnoreCase("/mw setredvillager")) {
-            if (player.hasPermission("mw.admin")) {
-                main.getConfig().set("Locations.Villagers.Redvillager.x", player.getLocation().getX());
-                main.getConfig().set("Locations.Villagers.Redvillager.y", player.getLocation().getY());
-                main.getConfig().set("Locations.Villagers.Redvillager.z", player.getLocation().getZ());
-                main.saveConfig();
-            } else {
-                player.sendMessage("You don't have the permission");
-            }
-        } else if (e.getMessage().equalsIgnoreCase("/mw setgreenvillager")) {
-            if (player.hasPermission("mw.admin")) {
-                main.getConfig().set("Locations.Villagers.Greenvillager.x", player.getLocation().getX());
-                main.getConfig().set("Locations.Villagers.Greenvillager.y", player.getLocation().getY());
-                main.getConfig().set("Locations.Villagers.Greenvillager.z", player.getLocation().getZ());
-                main.saveConfig();
-            } else {
-                player.sendMessage("You don't have the permission");
-            }
-        } else if (e.getMessage().equalsIgnoreCase("/mw setyellowvillager")) {
-            if (player.hasPermission("mw.admin")) {
-                main.getConfig().set("Locations.Villagers.Yellowvillager.x", player.getLocation().getX());
-                main.getConfig().set("Locations.Villagers.Yellowvillager.y", player.getLocation().getY());
-                main.getConfig().set("Locations.Villagers.Yellowvillager.z", player.getLocation().getZ());
-                main.saveConfig();
-            } else {
+                MWconfigGui.config(player);
+            }else{
                 player.sendMessage("You don't have the permission");
             }
         }else if (e.getMessage().equalsIgnoreCase("/mw help")) {
@@ -267,16 +183,6 @@ public class commands implements Listener {
             player.sendMessage("§5mw join: §cJoin the MiniWalls game");
             player.sendMessage("§5mw leave: §cLeave the MiniWalls game");
             player.sendMessage("§5mw reload: §cReload the config");
-            player.sendMessage("§5mw setspawn: §cSet the loc of the waiting room");
-            player.sendMessage("§5mw setlobby: §cSet the loc of the main lobby");
-            player.sendMessage("§5mw setbluebase: §cSet the spawn of the §9Blue §cteam");
-            player.sendMessage("§5mw setredbase: §cSet the spawn of the §cRed §cteam");
-            player.sendMessage("§5mw setgreenbase: §cSet the spawn of the §aGreen §cteam");
-            player.sendMessage("§5mw setyellowbase: §cSet the spawn of the §eYellow §cteam");
-            player.sendMessage("§5mw setbluevillager: §cSet the spawn of the §9Blue §cvillager");
-            player.sendMessage("§5mw setredvillager: §cSet the spawn of the §cRed §cvillager");
-            player.sendMessage("§5mw setgreenvillager: §cSet the spawn of the §aGreen §cvillager");
-            player.sendMessage("§5mw setyellowvillager: §cSet the spawn of the §eYellow §cvillager");
             player.sendMessage("§1§l---------------------------------");
         }else if(e.getMessage().equalsIgnoreCase("/mw reload")){
             if(player.hasPermission("mw.admin")){
@@ -284,25 +190,6 @@ public class commands implements Listener {
                 main.reloadConfig();
             }else{
                 player.sendMessage("You don't have the permission");
-            }
-        }
-    }
-    @EventHandler
-    public void onClick(InventoryClickEvent e){
-        Inventory inv = e.getInventory();
-        if(e.getView().getTitle().equals(ChatColor.GOLD + "MiniWalls")){
-            Player player = (Player) e.getWhoClicked();
-            ItemStack current = e.getCurrentItem();
-            if(current == null) return;
-            if(current.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GOLD+"Click to join MiniWalls")){
-                e.setCancelled(true);
-                player.chat("/mw join");
-            }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GREEN+"Your Stats")) {
-                e.setCancelled(true);
-            }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GOLD+"Kills Leaderboard")) {
-                e.setCancelled(true);
-            }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GOLD+"Wins Leaderboard")) {
-                e.setCancelled(true);
             }
         }
     }

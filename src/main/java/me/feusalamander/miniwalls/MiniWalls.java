@@ -1,4 +1,5 @@
 package me.feusalamander.miniwalls;
+import me.feusalamander.miniwalls.GUI.MWconfigGui;
 import me.feusalamander.miniwalls.commands.MWTab;
 import me.feusalamander.miniwalls.commands.mw;
 import me.feusalamander.miniwalls.listeners.PlayerData;
@@ -43,6 +44,7 @@ public final class MiniWalls extends JavaPlugin{
         getServer().getPluginManager().registerEvents(new bow(this), this);
         getServer().getPluginManager().registerEvents(new PlayerData(this), this);
         getServer().getPluginManager().registerEvents(new villagerdmg(this), this);
+        getServer().getPluginManager().registerEvents(new MWconfigGui(this), this);
         setState(MWstates.WAITING);
         saveDefaultConfig();
         saveConfig();

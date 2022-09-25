@@ -15,17 +15,8 @@ public class MWTab implements TabCompleter {
             arguments.add("join");
             arguments.add("gui");
             arguments.add("leave");
+            arguments.add("configGui");
             arguments.add("reload");
-            arguments.add("setspawn");
-            arguments.add("setlobby");
-            arguments.add("setbluebase");
-            arguments.add("setredbase");
-            arguments.add("setgreenbase");
-            arguments.add("setyellowbase");
-            arguments.add("setbluevillager");
-            arguments.add("setredbasevillager");
-            arguments.add("setgreenbasevillager");
-            arguments.add("setyellowbasevillager");
             return arguments;
         }
         return null;
