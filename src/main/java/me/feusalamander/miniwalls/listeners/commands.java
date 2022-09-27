@@ -194,17 +194,6 @@ public class commands implements Listener {
             }else{
                 player.sendMessage("You don't have the permission");
             }
-        }else if(e.getMessage().equalsIgnoreCase("/test")){
-            Inventory inv = Bukkit.createInventory(null, InventoryType.ANVIL, "bozo");
-            player.openInventory(inv);
-        }
-    }
-    @EventHandler
-    private void anvil(PrepareAnvilEvent e){
-        if(e.getResult() != null && e.getResult().hasItemMeta() && !Objects.equals(e.getInventory().getRenameText(), "")){
-            ItemStack r = e.getResult();
-            ItemMeta m = r.getItemMeta();
-            Bukkit.broadcastMessage(m.getDisplayName());
         }
     }
 }

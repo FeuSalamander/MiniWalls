@@ -69,4 +69,4 @@ Destruction: #all the settings for the map destruction at the death-match
   deep: 2 #here put how many blocks are between the center y and the lowest block y of the map
 MinPlayers: 2 #Minimum players needed to start the game
 map: miniwalls #the name of the map in the scoreboard
-server: play.miniwalls.net #your server name
+server: play.miniwalls.net #your server ip

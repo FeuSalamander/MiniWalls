@@ -8,7 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.inventory.AnvilInventory;
+import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -62,12 +62,12 @@ public class MWconfigGui implements Listener{
         //destroy
         item(inv, "§6Death Match destroy", Material.TNT, 45, "");
         item(inv, "§7Center coords", Material.ALLIUM, 46, "§fClick to set the coords, go the config for more infos");
-        item(inv, "§7Radius", Material.PAPER, 47, "§fGo the the config to set the radius of the map");
-        item(inv, "§7Deep", Material.PAPER, 48, "§fGo the the config to set the deep of the map");
+        item(inv, "§7Radius", Material.PAPER, 47, "§fGo to the config for more infos");
+        item(inv, "§7Deep", Material.PAPER, 48, "§fGo to the config for more infos");
         //other
-        item(inv, "§6Minimum Players", Material.PAPER, 35, "§fPut an helm on your head with the Minimum Players needed to start the game");
-        item(inv, "§6Map Name", Material.PAPER, 44, "§fPut an helm on your head with the name of the map and click me");
-        item(inv, "§6Server IP", Material.PAPER, 53, "§fPut an helm on your head with the server IP and click me");
+        item(inv, "§6Minimum Players", Material.PAPER, 35, "Click to select the Minimum Players needed to start the game");
+        item(inv, "§6Map Name", Material.PAPER, 44, "");
+        item(inv, "§6Server IP", Material.PAPER, 53, "");
         //open
         p.openInventory(inv);
     }
@@ -134,38 +134,55 @@ public class MWconfigGui implements Listener{
                 main.getConfig().set("Destruction.center.z", player.getLocation().getZ());
                 main.saveConfig();
             }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Map Name")){
-                if(player.getInventory().getHelmet() != null){
-                    player.sendMessage("The map name has been set to §6"+Objects.requireNonNull(player.getInventory().getHelmet()).getItemMeta().getDisplayName());
-                    main.getConfig().set("map", Objects.requireNonNull(player.getInventory().getHelmet()).getItemMeta().getDisplayName());
-                    main.saveConfig();
-                }
+                player.openAnvil(player.getLocation(), true);
+                ItemStack i = new ItemStack(Material.PAPER);
+                ItemMeta m = i.getItemMeta();
+                ArrayList<String> l = new ArrayList<>();
+                l.add("§7Map name");
+                m.setLore(l);
+                m.setDisplayName("§7"+main.getConfig().getString("map"));
+                i.setItemMeta(m);
+                player.getOpenInventory().setItem(0, i);
             }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Server IP")){
-                if(player.getInventory().getHelmet() != null){
-                    player.sendMessage("The server IP has been set to §6"+Objects.requireNonNull(player.getInventory().getHelmet()).getItemMeta().getDisplayName());
-                    main.getConfig().set("server", Objects.requireNonNull(player.getInventory().getHelmet()).getItemMeta().getDisplayName());
-                    main.saveConfig();
-                }
+                player.openAnvil(player.getLocation(), true);
+                ItemStack i = new ItemStack(Material.PAPER);
+                ItemMeta m = i.getItemMeta();
+                ArrayList<String> l = new ArrayList<>();
+                l.add("§7Server IP");
+                m.setLore(l);
+                m.setDisplayName("§7"+main.getConfig().getString("server"));
+                i.setItemMeta(m);
+                player.getOpenInventory().setItem(0, i);
             }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Minimum Players")){
-                if(player.getInventory().getHelmet() != null){
-                    int i = Integer.parseInt(Objects.requireNonNull(player.getInventory().getHelmet()).getItemMeta().getDisplayName());
-                    player.sendMessage("The server IP has been set to §6"+i);
-                    main.getConfig().set("MinPlayers", i);
-                    main.saveConfig();
-                }
+                player.openAnvil(player.getLocation(), true);
+                ItemStack i = new ItemStack(Material.PAPER);
+                ItemMeta m = i.getItemMeta();
+                ArrayList<String> l = new ArrayList<>();
+                l.add("§7Minimum Players");
+                m.setLore(l);
+                m.setDisplayName("§7"+main.getConfig().getString("MinPlayers"));
+                i.setItemMeta(m);
+                player.getOpenInventory().setItem(0, i);
             }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Radius")){
-                if(player.getInventory().getHelmet() != null){
-                    int i = Integer.parseInt(Objects.requireNonNull(player.getInventory().getHelmet()).getItemMeta().getDisplayName());
-                    player.sendMessage("The radius has been set to §6"+i);
-                    main.getConfig().set("Destruction.radius", i);
-                    main.saveConfig();
-                }
+                player.openAnvil(player.getLocation(), true);
+                ItemStack i = new ItemStack(Material.PAPER);
+                ItemMeta m = i.getItemMeta();
+                ArrayList<String> l = new ArrayList<>();
+                l.add("§7Radius");
+                m.setLore(l);
+                m.setDisplayName("§7"+main.getConfig().getString("Destruction.radius"));
+                i.setItemMeta(m);
+                player.getOpenInventory().setItem(0, i);
             }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Deep")){
-                if(player.getInventory().getHelmet() != null){
-                    int i = Integer.parseInt(Objects.requireNonNull(player.getInventory().getHelmet()).getItemMeta().getDisplayName());
-                    player.sendMessage("The deep has been set to §6"+i);
-                    main.getConfig().set("Destruction.deep", i);
-                    main.saveConfig();
-                }
+                player.openAnvil(player.getLocation(), true);
+                ItemStack i = new ItemStack(Material.PAPER);
+                ItemMeta m = i.getItemMeta();
+                ArrayList<String> l = new ArrayList<>();
+                l.add("§7Deep");
+                m.setLore(l);
+                m.setDisplayName("§7"+main.getConfig().getString("Destruction.deep"));
+                i.setItemMeta(m);
+                player.getOpenInventory().setItem(0, i);
             }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Wall 1 First pos")){
                 item(player.getInventory(), "§6Wall 1 First pos selector", Material.BRICK, 0, "§fbreak a block to save his coords in the config");
             }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Wall 1 Second pos")){
@@ -188,6 +205,48 @@ public class MWconfigGui implements Listener{
                 e.setCancelled(true);
             }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GOLD+"Wins Leaderboard")) {
                 e.setCancelled(true);
+            }
+        }else if(e.getInventory().getType().equals(InventoryType.ANVIL) && e.getCurrentItem() != null && e.getCurrentItem().hasItemMeta() && e.getCurrentItem().getItemMeta().hasLore()){
+            if(Objects.requireNonNull(e.getCurrentItem().getItemMeta().getLore()).get(0).equalsIgnoreCase("§7Map name")){
+                e.setCancelled(true);
+                if(e.getSlot() == 2){
+                    main.getConfig().set("map", e.getCurrentItem().getItemMeta().getDisplayName());
+                    main.saveConfig();
+                    e.getWhoClicked().closeInventory();
+                    e.getWhoClicked().getInventory().remove(Material.PAPER);
+                }
+            }else if(Objects.requireNonNull(e.getCurrentItem().getItemMeta().getLore()).get(0).equalsIgnoreCase("§7Server IP")){
+                e.setCancelled(true);
+                if(e.getSlot() == 2){
+                    main.getConfig().set("server", e.getCurrentItem().getItemMeta().getDisplayName());
+                    main.saveConfig();
+                    e.getWhoClicked().closeInventory();
+                    e.getWhoClicked().getInventory().remove(Material.PAPER);
+                }
+            }else if(Objects.requireNonNull(e.getCurrentItem().getItemMeta().getLore()).get(0).equalsIgnoreCase("§7Minimum Players")){
+                e.setCancelled(true);
+                if(e.getSlot() == 2){
+                    main.getConfig().set("MinPlayers", Integer.parseInt(e.getCurrentItem().getItemMeta().getDisplayName()));
+                    main.saveConfig();
+                    e.getWhoClicked().closeInventory();
+                    e.getWhoClicked().getInventory().remove(Material.PAPER);
+                }
+            }else if(Objects.requireNonNull(e.getCurrentItem().getItemMeta().getLore()).get(0).equalsIgnoreCase("§7Radius")){
+                e.setCancelled(true);
+                if(e.getSlot() == 2){
+                    main.getConfig().set("Destruction.radius", Integer.parseInt(e.getCurrentItem().getItemMeta().getDisplayName()));
+                    main.saveConfig();
+                    e.getWhoClicked().closeInventory();
+                    e.getWhoClicked().getInventory().remove(Material.PAPER);
+                }
+            }else if(Objects.requireNonNull(e.getCurrentItem().getItemMeta().getLore()).get(0).equalsIgnoreCase("§7Deep")){
+                e.setCancelled(true);
+                if(e.getSlot() == 2){
+                    main.getConfig().set("Destruction.deep", Integer.parseInt(e.getCurrentItem().getItemMeta().getDisplayName()));
+                    main.saveConfig();
+                    e.getWhoClicked().closeInventory();
+                    e.getWhoClicked().getInventory().remove(Material.PAPER);
+                }
             }
         }
     }
