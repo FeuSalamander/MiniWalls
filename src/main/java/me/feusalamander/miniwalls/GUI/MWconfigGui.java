@@ -53,21 +53,21 @@ public class MWconfigGui implements Listener{
         item(inv, "§eYellow Villager", Material.YELLOW_TERRACOTTA, 22, "");
         //wall1
         item(inv, "§6Wall 1", Material.BRICK_WALL, 27, "");
-        item(inv, "§7First pos", Material.BRICK_SLAB, 28, "§fClick to get the item to select the block coords");
-        item(inv, "§7Second pos", Material.BRICK_SLAB, 29, "§fClick to get the item to select the block coords");
+        item(inv, "§7Wall 1 First pos", Material.BRICK_SLAB, 28, "§fClick to get the item to select the block coords");
+        item(inv, "§7Wall 1 Second pos", Material.BRICK_SLAB, 29, "§fClick to get the item to select the block coords");
         //wall2
         item(inv, "§6Wall 2", Material.BRICK_WALL, 36, "");
-        item(inv, "§7First pos", Material.BRICK_SLAB, 37, "§fClick to get the item to select the block coords");
-        item(inv, "§7Second pos", Material.BRICK_SLAB, 38, "§fClick to get the item to select the block coords");
+        item(inv, "§7Wall 2 First pos", Material.BRICK_SLAB, 37, "§fClick to get the item to select the block coords");
+        item(inv, "§7Wall 2 Second pos", Material.BRICK_SLAB, 38, "§fClick to get the item to select the block coords");
         //destroy
         item(inv, "§6Death Match destroy", Material.TNT, 45, "");
         item(inv, "§7Center coords", Material.ALLIUM, 46, "§fClick to set the coords, go the config for more infos");
         item(inv, "§7Radius", Material.PAPER, 47, "§fGo the the config to set the radius of the map");
         item(inv, "§7Deep", Material.PAPER, 48, "§fGo the the config to set the deep of the map");
         //other
-        item(inv, "§6Minimum Players", Material.PAPER, 35, "§fGo to the config to set the minimum players to start");
+        item(inv, "§6Minimum Players", Material.PAPER, 35, "§fPut an helm on your head with the Minimum Players needed to start the game");
         item(inv, "§6Map Name", Material.PAPER, 44, "§fPut an helm on your head with the name of the map and click me");
-        item(inv, "§6Server IP", Material.PAPER, 53, "§fGo to the config to set the server ip");
+        item(inv, "§6Server IP", Material.PAPER, 53, "§fPut an helm on your head with the server IP and click me");
         //open
         p.openInventory(inv);
     }
@@ -128,11 +128,52 @@ public class MWconfigGui implements Listener{
                 main.getConfig().set("Locations.Villagers.Yellowvillager.y", player.getLocation().getY());
                 main.getConfig().set("Locations.Villagers.Yellowvillager.z", player.getLocation().getZ());
                 main.saveConfig();
+            }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Center coords")){
+                main.getConfig().set("Destruction.center.x", player.getLocation().getX());
+                main.getConfig().set("Destruction.center.y", player.getLocation().getY());
+                main.getConfig().set("Destruction.center.z", player.getLocation().getZ());
+                main.saveConfig();
             }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Map Name")){
                 if(player.getInventory().getHelmet() != null){
+                    player.sendMessage("The map name has been set to §6"+Objects.requireNonNull(player.getInventory().getHelmet()).getItemMeta().getDisplayName());
                     main.getConfig().set("map", Objects.requireNonNull(player.getInventory().getHelmet()).getItemMeta().getDisplayName());
                     main.saveConfig();
                 }
+            }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Server IP")){
+                if(player.getInventory().getHelmet() != null){
+                    player.sendMessage("The server IP has been set to §6"+Objects.requireNonNull(player.getInventory().getHelmet()).getItemMeta().getDisplayName());
+                    main.getConfig().set("server", Objects.requireNonNull(player.getInventory().getHelmet()).getItemMeta().getDisplayName());
+                    main.saveConfig();
+                }
+            }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Minimum Players")){
+                if(player.getInventory().getHelmet() != null){
+                    int i = Integer.parseInt(Objects.requireNonNull(player.getInventory().getHelmet()).getItemMeta().getDisplayName());
+                    player.sendMessage("The server IP has been set to §6"+i);
+                    main.getConfig().set("MinPlayers", i);
+                    main.saveConfig();
+                }
+            }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Radius")){
+                if(player.getInventory().getHelmet() != null){
+                    int i = Integer.parseInt(Objects.requireNonNull(player.getInventory().getHelmet()).getItemMeta().getDisplayName());
+                    player.sendMessage("The radius has been set to §6"+i);
+                    main.getConfig().set("Destruction.radius", i);
+                    main.saveConfig();
+                }
+            }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Deep")){
+                if(player.getInventory().getHelmet() != null){
+                    int i = Integer.parseInt(Objects.requireNonNull(player.getInventory().getHelmet()).getItemMeta().getDisplayName());
+                    player.sendMessage("The deep has been set to §6"+i);
+                    main.getConfig().set("Destruction.deep", i);
+                    main.saveConfig();
+                }
+            }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Wall 1 First pos")){
+                item(player.getInventory(), "§6Wall 1 First pos selector", Material.BRICK, 0, "§fbreak a block to save his coords in the config");
+            }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Wall 1 Second pos")){
+                item(player.getInventory(), "§6Wall 1 Second pos selector", Material.BRICK, 1, "§fbreak a block to save his coords in the config");
+            }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Wall 2 First pos")){
+                item(player.getInventory(), "§6Wall 2 First pos selector", Material.BRICK, 2, "§fbreak a block to save his coords in the config");
+            }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Wall 2 Second pos")){
+                item(player.getInventory(), "§6Wall 2 Second pos selector", Material.BRICK, 3, "§fbreak a block to save his coords in the config");
             }
         }else if(e.getView().getTitle().equals(ChatColor.GOLD + "MiniWalls")){
             Player player = (Player) e.getWhoClicked();

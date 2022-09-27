@@ -18,6 +18,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.projectiles.ProjectileSource;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
+
 public class MapReset implements Listener {
     private final int t = 100;
     private final MiniWalls main;
@@ -49,6 +51,40 @@ public class MapReset implements Listener {
                 e.getBlock().getWorld().dropItem(e.getBlock().getLocation(), new ItemStack(Material.GREEN_WOOL));
             }else if(main.scoreboard.getTeam("Yellow").hasPlayer(p)){
                 e.getBlock().getWorld().dropItem(e.getBlock().getLocation(), new ItemStack(Material.YELLOW_WOOL));
+            }
+        }else if(p.isOp() && p.getItemInHand().getType().equals(Material.BRICK)){
+            if(p.getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase("§6Wall 1 First pos selector")){
+                e.setCancelled(true);
+                p.getItemInHand().setAmount(0);
+                p.playSound(p.getLocation(), Sound.ENTITY_ITEM_BREAK, 3, 1);
+                main.getConfig().set("Walls.wall1.cord1.x", e.getBlock().getX());
+                main.getConfig().set("Walls.wall1.cord1.y", e.getBlock().getY());
+                main.getConfig().set("Walls.wall1.cord1.z", e.getBlock().getZ());
+                main.saveConfig();
+            }else if(p.getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase("§6Wall 1 Second pos selector")){
+                e.setCancelled(true);
+                p.getItemInHand().setAmount(0);
+                p.playSound(p.getLocation(), Sound.ENTITY_ITEM_BREAK, 3, 1);
+                main.getConfig().set("Walls.wall1.cord2.x", e.getBlock().getX());
+                main.getConfig().set("Walls.wall1.cord2.y", e.getBlock().getY());
+                main.getConfig().set("Walls.wall1.cord2.z", e.getBlock().getZ());
+                main.saveConfig();
+            }else if(p.getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase("§6Wall 2 First pos selector")){
+                e.setCancelled(true);
+                p.getItemInHand().setAmount(0);
+                p.playSound(p.getLocation(), Sound.ENTITY_ITEM_BREAK, 3, 1);
+                main.getConfig().set("Walls.wall2.cord1.x", e.getBlock().getX());
+                main.getConfig().set("Walls.wall2.cord1.y", e.getBlock().getY());
+                main.getConfig().set("Walls.wall2.cord1.z", e.getBlock().getZ());
+                main.saveConfig();
+            }else if(p.getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase("§6Wall 2 Second pos selector")){
+                e.setCancelled(true);
+                p.getItemInHand().setAmount(0);
+                p.playSound(p.getLocation(), Sound.ENTITY_ITEM_BREAK, 3, 1);
+                main.getConfig().set("Walls.wall2.cord2.x", e.getBlock().getX());
+                main.getConfig().set("Walls.wall2.cord2.y", e.getBlock().getY());
+                main.getConfig().set("Walls.wall2.cord2.z", e.getBlock().getZ());
+                main.saveConfig();
             }
         }
     }

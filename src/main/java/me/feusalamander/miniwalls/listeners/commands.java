@@ -8,19 +8,22 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.io.File;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 public class commands implements Listener {
     double number = 1;
@@ -191,6 +194,17 @@ public class commands implements Listener {
             }else{
                 player.sendMessage("You don't have the permission");
             }
+        }else if(e.getMessage().equalsIgnoreCase("/test")){
+            Inventory inv = Bukkit.createInventory(null, InventoryType.ANVIL, "bozo");
+            player.openInventory(inv);
+        }
+    }
+    @EventHandler
+    private void anvil(PrepareAnvilEvent e){
+        if(e.getResult() != null && e.getResult().hasItemMeta() && !Objects.equals(e.getInventory().getRenameText(), "")){
+            ItemStack r = e.getResult();
+            ItemMeta m = r.getItemMeta();
+            Bukkit.broadcastMessage(m.getDisplayName());
         }
     }
 }
