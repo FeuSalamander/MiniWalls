@@ -1,7 +1,5 @@
 package me.feusalamander.miniwalls.listeners;
-
 import me.feusalamander.miniwalls.MiniWalls;
-import me.feusalamander.miniwalls.timers.MWgamecycle;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Arrow;
@@ -9,8 +7,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-
 public class bow implements Listener {
     private MiniWalls main;
     public bow(MiniWalls main) {
@@ -20,8 +16,7 @@ public class bow implements Listener {
     public void arrow(ProjectileHitEvent e) {
         Player player = (Player) e.getEntity().getShooter();
         if (main.getPlayers().contains(player)) {
-            if (e.getEntity() instanceof Arrow) {
-                Arrow a = (Arrow) e.getEntity();
+            if (e.getEntity() instanceof Arrow a) {
                 int radius = 1;
                 Block middle = a.getLocation().getBlock();
                 for (int x = radius; x >= -radius; x--) {
