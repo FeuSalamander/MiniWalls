@@ -564,7 +564,7 @@ public class MapReset implements Listener {
         Location spawnblue  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Bases.BlueBase.x"), main.getConfig().getInt("Locations.Bases.BlueBase.y"), main.getConfig().getInt("Locations.Bases.BlueBase.z"));
         p.setHealth(20);
         p.setGameMode(GameMode.SPECTATOR);
-        p.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
+        p.getInventory().setItem( 8, new ItemStack(Material.ARROW, 3));
         p.setFoodLevel(20);
         PlayerData.setkills(d, PlayerData.getkills(d)+1);
         PlayerData.setdeath(p, PlayerData.getdeath(p)+1);
@@ -593,7 +593,7 @@ public class MapReset implements Listener {
         Location spawnred  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Bases.RedBase.x"), main.getConfig().getInt("Locations.Bases.RedBase.y"), main.getConfig().getInt("Locations.Bases.RedBase.z"));
         p.setHealth(20);
         p.setGameMode(GameMode.SPECTATOR);
-        p.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
+        p.getInventory().setItem( 8, new ItemStack(Material.ARROW, 3));
         p.setFoodLevel(20);
         PlayerData.setkills(d, PlayerData.getkills(d)+1);
         PlayerData.setdeath(p, PlayerData.getdeath(p)+1);
@@ -622,7 +622,7 @@ public class MapReset implements Listener {
         Location spawngreen  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Bases.GreenBase.x"), main.getConfig().getInt("Locations.Bases.GreenBase.y"), main.getConfig().getInt("Locations.Bases.GreenBase.z"));
         p.setHealth(20);
         p.setGameMode(GameMode.SPECTATOR);
-        p.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
+        p.getInventory().setItem( 8, new ItemStack(Material.ARROW, 3));
         p.setFoodLevel(20);
         PlayerData.setkills(d, PlayerData.getkills(d)+1);
         PlayerData.setdeath(p, PlayerData.getdeath(p)+1);
@@ -651,7 +651,7 @@ public class MapReset implements Listener {
         Location spawnyellow  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Bases.YellowBase.x"), main.getConfig().getInt("Locations.Bases.YellowBase.y"), main.getConfig().getInt("Locations.Bases.YellowBase.z"));
         p.setHealth(20);
         p.setGameMode(GameMode.SPECTATOR);
-        p.getInventory().setItem( 8, new ItemStack(Material.ARROW, 5));
+        p.getInventory().setItem( 8, new ItemStack(Material.ARROW, 3));
         p.setFoodLevel(20);
         PlayerData.setkills(d, PlayerData.getkills(d)+1);
         PlayerData.setdeath(p, PlayerData.getdeath(p)+1);

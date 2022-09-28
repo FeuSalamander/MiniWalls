@@ -8,7 +8,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -73,68 +72,71 @@ public class MWconfigGui implements Listener{
     }
     @EventHandler
     public void onClick(InventoryClickEvent e){
+        Player p = (Player) e.getWhoClicked();
+        ItemStack current = e.getCurrentItem();
+        if(main.getPlayers().contains(p) && current != null && current.getType().equals(Material.ARROW)){
+            e.setCancelled(true);
+        }
         if(e.getView().getTitle().equals(ChatColor.GOLD + "Config Gui")){
-            Player player = (Player) e.getWhoClicked();
-            ItemStack current = e.getCurrentItem();
             if(current == null) return;
             e.setCancelled(true);
             if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Lobby")){
-                main.getConfig().set("Locations.Lobby.x", player.getLocation().getX());
-                main.getConfig().set("Locations.Lobby.y", player.getLocation().getY());
-                main.getConfig().set("Locations.Lobby.z", player.getLocation().getZ());
+                main.getConfig().set("Locations.Lobby.x", p.getLocation().getX());
+                main.getConfig().set("Locations.Lobby.y", p.getLocation().getY());
+                main.getConfig().set("Locations.Lobby.z", p.getLocation().getZ());
                 main.saveConfig();
             }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Spawn")){
-                main.getConfig().set("Locations.Spawn.x", player.getLocation().getX());
-                main.getConfig().set("Locations.Spawn.y", player.getLocation().getY());
-                main.getConfig().set("Locations.Spawn.z", player.getLocation().getZ());
+                main.getConfig().set("Locations.Spawn.x", p.getLocation().getX());
+                main.getConfig().set("Locations.Spawn.y", p.getLocation().getY());
+                main.getConfig().set("Locations.Spawn.z", p.getLocation().getZ());
                 main.saveConfig();
             }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§9Blue Spawn")){
-                main.getConfig().set("Locations.Bases.BlueBase.x", player.getLocation().getX());
-                main.getConfig().set("Locations.Bases.BlueBase.y", player.getLocation().getY());
-                main.getConfig().set("Locations.Bases.BlueBase.z", player.getLocation().getZ());
+                main.getConfig().set("Locations.Bases.BlueBase.x", p.getLocation().getX());
+                main.getConfig().set("Locations.Bases.BlueBase.y", p.getLocation().getY());
+                main.getConfig().set("Locations.Bases.BlueBase.z", p.getLocation().getZ());
                 main.saveConfig();
             }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§cRed Spawn")){
-                main.getConfig().set("Locations.Bases.RedBase.x", player.getLocation().getX());
-                main.getConfig().set("Locations.Bases.RedBase.y", player.getLocation().getY());
-                main.getConfig().set("Locations.Bases.RedBase.z", player.getLocation().getZ());
+                main.getConfig().set("Locations.Bases.RedBase.x", p.getLocation().getX());
+                main.getConfig().set("Locations.Bases.RedBase.y", p.getLocation().getY());
+                main.getConfig().set("Locations.Bases.RedBase.z", p.getLocation().getZ());
                 main.saveConfig();
             }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§aGreen Spawn")){
-                main.getConfig().set("Locations.Bases.GreenBase.x", player.getLocation().getX());
-                main.getConfig().set("Locations.Bases.GreenBase.y", player.getLocation().getY());
-                main.getConfig().set("Locations.Bases.GreenBase.z", player.getLocation().getZ());
+                main.getConfig().set("Locations.Bases.GreenBase.x", p.getLocation().getX());
+                main.getConfig().set("Locations.Bases.GreenBase.y", p.getLocation().getY());
+                main.getConfig().set("Locations.Bases.GreenBase.z", p.getLocation().getZ());
                 main.saveConfig();
             }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§eYellow Spawn")){
-                main.getConfig().set("Locations.Bases.YellowBase.x", player.getLocation().getX());
-                main.getConfig().set("Locations.Bases.YellowBase.y", player.getLocation().getY());
-                main.getConfig().set("Locations.Bases.YellowBase.z", player.getLocation().getZ());
+                main.getConfig().set("Locations.Bases.YellowBase.x", p.getLocation().getX());
+                main.getConfig().set("Locations.Bases.YellowBase.y", p.getLocation().getY());
+                main.getConfig().set("Locations.Bases.YellowBase.z", p.getLocation().getZ());
                 main.saveConfig();
             }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§9Blue Villager")){
-                main.getConfig().set("Locations.Villagers.Bluevillager.x", player.getLocation().getX());
-                main.getConfig().set("Locations.Villagers.Bluevillager.y", player.getLocation().getY());
-                main.getConfig().set("Locations.Villagers.Bluevillager.z", player.getLocation().getZ());
+                main.getConfig().set("Locations.Villagers.Bluevillager.x", p.getLocation().getX());
+                main.getConfig().set("Locations.Villagers.Bluevillager.y", p.getLocation().getY());
+                main.getConfig().set("Locations.Villagers.Bluevillager.z", p.getLocation().getZ());
                 main.saveConfig();
             }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§cRed Villager")){
-                main.getConfig().set("Locations.Villagers.Redvillager.x", player.getLocation().getX());
-                main.getConfig().set("Locations.Villagers.Redvillager.y", player.getLocation().getY());
-                main.getConfig().set("Locations.Villagers.Redvillager.z", player.getLocation().getZ());
+                main.getConfig().set("Locations.Villagers.Redvillager.x", p.getLocation().getX());
+                main.getConfig().set("Locations.Villagers.Redvillager.y", p.getLocation().getY());
+                main.getConfig().set("Locations.Villagers.Redvillager.z", p.getLocation().getZ());
                 main.saveConfig();
             }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§aGreen Villager")){
-                main.getConfig().set("Locations.Villagers.Greenvillager.x", player.getLocation().getX());
-                main.getConfig().set("Locations.Villagers.Greenvillager.y", player.getLocation().getY());
-                main.getConfig().set("Locations.Villagers.Greenvillager.z", player.getLocation().getZ());
+                main.getConfig().set("Locations.Villagers.Greenvillager.x", p.getLocation().getX());
+                main.getConfig().set("Locations.Villagers.Greenvillager.y", p.getLocation().getY());
+                main.getConfig().set("Locations.Villagers.Greenvillager.z", p.getLocation().getZ());
                 main.saveConfig();
             }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§eYellow Villager")){
-                main.getConfig().set("Locations.Villagers.Yellowvillager.x", player.getLocation().getX());
-                main.getConfig().set("Locations.Villagers.Yellowvillager.y", player.getLocation().getY());
-                main.getConfig().set("Locations.Villagers.Yellowvillager.z", player.getLocation().getZ());
+                main.getConfig().set("Locations.Villagers.Yellowvillager.x", p.getLocation().getX());
+                main.getConfig().set("Locations.Villagers.Yellowvillager.y", p.getLocation().getY());
+                main.getConfig().set("Locations.Villagers.Yellowvillager.z", p.getLocation().getZ());
                 main.saveConfig();
             }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Center coords")){
-                main.getConfig().set("Destruction.center.x", player.getLocation().getX());
-                main.getConfig().set("Destruction.center.y", player.getLocation().getY());
-                main.getConfig().set("Destruction.center.z", player.getLocation().getZ());
+                main.getConfig().set("Destruction.center.x", p.getLocation().getX());
+                main.getConfig().set("Destruction.center.y", p.getLocation().getY());
+                main.getConfig().set("Destruction.center.z", p.getLocation().getZ());
                 main.saveConfig();
             }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Map Name")){
-                player.openAnvil(player.getLocation(), true);
+                p.openAnvil(p.getLocation(), true);
                 ItemStack i = new ItemStack(Material.PAPER);
                 ItemMeta m = i.getItemMeta();
                 ArrayList<String> l = new ArrayList<>();
@@ -142,9 +144,9 @@ public class MWconfigGui implements Listener{
                 m.setLore(l);
                 m.setDisplayName("§7"+main.getConfig().getString("map"));
                 i.setItemMeta(m);
-                player.getOpenInventory().setItem(0, i);
+                p.getOpenInventory().setItem(0, i);
             }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Server IP")){
-                player.openAnvil(player.getLocation(), true);
+                p.openAnvil(p.getLocation(), true);
                 ItemStack i = new ItemStack(Material.PAPER);
                 ItemMeta m = i.getItemMeta();
                 ArrayList<String> l = new ArrayList<>();
@@ -152,9 +154,9 @@ public class MWconfigGui implements Listener{
                 m.setLore(l);
                 m.setDisplayName("§7"+main.getConfig().getString("server"));
                 i.setItemMeta(m);
-                player.getOpenInventory().setItem(0, i);
+                p.getOpenInventory().setItem(0, i);
             }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Minimum Players")){
-                player.openAnvil(player.getLocation(), true);
+                p.openAnvil(p.getLocation(), true);
                 ItemStack i = new ItemStack(Material.PAPER);
                 ItemMeta m = i.getItemMeta();
                 ArrayList<String> l = new ArrayList<>();
@@ -162,9 +164,9 @@ public class MWconfigGui implements Listener{
                 m.setLore(l);
                 m.setDisplayName("§7"+main.getConfig().getString("MinPlayers"));
                 i.setItemMeta(m);
-                player.getOpenInventory().setItem(0, i);
+                p.getOpenInventory().setItem(0, i);
             }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Radius")){
-                player.openAnvil(player.getLocation(), true);
+                p.openAnvil(p.getLocation(), true);
                 ItemStack i = new ItemStack(Material.PAPER);
                 ItemMeta m = i.getItemMeta();
                 ArrayList<String> l = new ArrayList<>();
@@ -172,9 +174,9 @@ public class MWconfigGui implements Listener{
                 m.setLore(l);
                 m.setDisplayName("§7"+main.getConfig().getString("Destruction.radius"));
                 i.setItemMeta(m);
-                player.getOpenInventory().setItem(0, i);
+                p.getOpenInventory().setItem(0, i);
             }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Deep")){
-                player.openAnvil(player.getLocation(), true);
+                p.openAnvil(p.getLocation(), true);
                 ItemStack i = new ItemStack(Material.PAPER);
                 ItemMeta m = i.getItemMeta();
                 ArrayList<String> l = new ArrayList<>();
@@ -182,23 +184,21 @@ public class MWconfigGui implements Listener{
                 m.setLore(l);
                 m.setDisplayName("§7"+main.getConfig().getString("Destruction.deep"));
                 i.setItemMeta(m);
-                player.getOpenInventory().setItem(0, i);
+                p.getOpenInventory().setItem(0, i);
             }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Wall 1 First pos")){
-                item(player.getInventory(), "§6Wall 1 First pos selector", Material.BRICK, 0, "§fbreak a block to save his coords in the config");
+                item(p.getInventory(), "§6Wall 1 First pos selector", Material.BRICK, 0, "§fbreak a block to save his coords in the config");
             }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Wall 1 Second pos")){
-                item(player.getInventory(), "§6Wall 1 Second pos selector", Material.BRICK, 1, "§fbreak a block to save his coords in the config");
+                item(p.getInventory(), "§6Wall 1 Second pos selector", Material.BRICK, 1, "§fbreak a block to save his coords in the config");
             }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Wall 2 First pos")){
-                item(player.getInventory(), "§6Wall 2 First pos selector", Material.BRICK, 2, "§fbreak a block to save his coords in the config");
+                item(p.getInventory(), "§6Wall 2 First pos selector", Material.BRICK, 2, "§fbreak a block to save his coords in the config");
             }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase("§7Wall 2 Second pos")){
-                item(player.getInventory(), "§6Wall 2 Second pos selector", Material.BRICK, 3, "§fbreak a block to save his coords in the config");
+                item(p.getInventory(), "§6Wall 2 Second pos selector", Material.BRICK, 3, "§fbreak a block to save his coords in the config");
             }
         }else if(e.getView().getTitle().equals(ChatColor.GOLD + "MiniWalls")){
-            Player player = (Player) e.getWhoClicked();
-            ItemStack current = e.getCurrentItem();
             if(current == null) return;
             if(current.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GOLD+"Click to join MiniWalls")){
                 e.setCancelled(true);
-                player.chat("/mw join");
+                p.chat("/mw join");
             }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GREEN+"Your Stats")) {
                 e.setCancelled(true);
             }else if(current.getItemMeta().getDisplayName().equalsIgnoreCase(ChatColor.GOLD+"Kills Leaderboard")) {

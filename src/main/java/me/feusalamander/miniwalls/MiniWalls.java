@@ -129,5 +129,3 @@ public final class MiniWalls extends JavaPlugin{
         getLogger().info( "MiniWalls by FeuSalamander is shutting down !");
     }
 }
-// TODO: 23/09/2022 Arrow refill
-// TODO: 25/09/2022 gui to config

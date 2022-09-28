@@ -5,18 +5,37 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.Objects;
+
 public class MWgamecycle extends BukkitRunnable {
     private MiniWalls main;
     private int timer = 300;
+    private int d = 0;
     public MWgamecycle(MiniWalls main) {
         this.main = main;
     }
 
     @Override
     public void run() {
+        if(d == 10){
+            d = 0;
+            for(Player p : main.getPlayers()){
+                Inventory i = p.getInventory();
+                if(i.contains(Material.ARROW)){
+                    if(i.getItem(8).getAmount() < 3){
+                        i.getItem(8).add(1);
+                    }
+                }else{
+                    i.setItem(8, new ItemStack(Material.ARROW));
+                }
+            }
+        }
         for(Player pls : main.getPlayers()){
             if(pls.getFoodLevel() < 20){
                 pls.setFoodLevel(20);
@@ -70,6 +89,7 @@ public class MWgamecycle extends BukkitRunnable {
             cancel();
         }
         timer--;
+        d++;
     }
     private void wall(Material m){
         World w = Bukkit.getWorld("world");
