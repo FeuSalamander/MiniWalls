@@ -3,6 +3,8 @@ version: 2.2
 main: me.feusalamander.miniwalls.MiniWalls
 api-version: 1.18
 authors: [ FeuSalamander ]
+softdepend:
+  - LuckPerms
 description: a paper plugin to add the mini walls mini game
 commands:
   mw:

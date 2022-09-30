@@ -10,9 +10,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import java.util.Objects;
-
 public class MWgamecycle extends BukkitRunnable {
     private MiniWalls main;
     private int timer = 300;
@@ -20,7 +17,6 @@ public class MWgamecycle extends BukkitRunnable {
     public MWgamecycle(MiniWalls main) {
         this.main = main;
     }
-
     @Override
     public void run() {
         if(d == 10){

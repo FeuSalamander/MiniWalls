@@ -3,6 +3,8 @@ import me.feusalamander.miniwalls.GUI.MWconfigGui;
 import me.feusalamander.miniwalls.MWstates;
 import me.feusalamander.miniwalls.MiniWalls;
 import me.feusalamander.miniwalls.timers.MWautostart;
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.LuckPermsProvider;
 import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemorySection;
@@ -138,7 +140,12 @@ public class commands implements Listener {
                     .forEach(f -> {
                         int points = ((MemorySection) f.getValue()).getInt("kills");
                         OfflinePlayer s = Bukkit.getOfflinePlayer(UUID.fromString(f.getKey()));
-                        lo.add("§6"+pos+". §b"+s.getName()+" §e"+points);
+                        if(Bukkit.getPluginManager().getPlugin("luckperms") != null && LuckPermsProvider.get().getUserManager().getUser(UUID.fromString(f.getKey())).getCachedData().getMetaData().getPrefix() != null){
+                            String prefix = LuckPermsProvider.get().getUserManager().getUser(UUID.fromString(f.getKey())).getCachedData().getMetaData().getPrefix().replaceAll("&", "§");
+                            lo.add("§6"+pos+". §8"+prefix+s.getName()+" §e"+points);
+                        }else{
+                            lo.add("§6"+pos+". §8"+s.getName()+" §e"+points);
+                        }
                         pos.getAndIncrement();
                     });
             kM.setLore(lo);
@@ -163,7 +170,12 @@ public class commands implements Listener {
                     .forEach(f -> {
                         int points = ((MemorySection) f.getValue()).getInt("wins");
                         OfflinePlayer s = Bukkit.getOfflinePlayer(UUID.fromString(f.getKey()));
-                        low.add("§6"+pos1+". §b"+s.getName()+" §e"+points);
+                        if(Bukkit.getPluginManager().getPlugin("luckperms") != null && LuckPermsProvider.get().getUserManager().getUser(UUID.fromString(f.getKey())).getCachedData().getMetaData().getPrefix() != null){
+                            String prefix = LuckPermsProvider.get().getUserManager().getUser(UUID.fromString(f.getKey())).getCachedData().getMetaData().getPrefix().replaceAll("&", "§");
+                            low.add("§6"+pos1+". §8"+prefix+s.getName()+" §e"+points);
+                        }else{
+                            low.add("§6"+pos1+". §8"+s.getName()+" §e"+points);
+                        }
                         pos1.getAndIncrement();
                     });
             wM.setLore(low);

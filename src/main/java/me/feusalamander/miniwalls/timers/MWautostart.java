@@ -12,12 +12,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class MWautostart extends BukkitRunnable{
     private int timer = 15;
     private MiniWalls main;
-
     public MWautostart(MiniWalls main) {
         this.main = main;
     }
-
-
     @Override
     public void run() {
         for(Player pls : main.getPlayers()){
