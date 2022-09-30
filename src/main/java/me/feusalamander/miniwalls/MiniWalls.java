@@ -84,7 +84,7 @@ public final class MiniWalls extends JavaPlugin{
         objective.getScore("§b").setScore(6);
         objective.getScore("§5").setScore(5);
         objective.getScore("§e").setScore(4);
-        objective.getScore("Version: §7v2.2").setScore(3);
+        objective.getScore("Version: §7v2.3").setScore(3);
         objective.getScore("§a").setScore(2);
         objective.getScore("§e"+getConfig().getString("server")).setScore(1);
     }
