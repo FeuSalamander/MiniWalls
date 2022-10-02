@@ -37,6 +37,7 @@ public class commands implements Listener {
                 p.teleport(lobby);
                 p.setGameMode(GameMode.SPECTATOR);
                 main.getSpec().add(p);
+                p.sendMessage(ChatColor.DARK_RED+"The game is already running");
             }else if(!main.getPlayers().contains(p)){
                 main.getPlayers().add(p);
                 Location spawn  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Spawn.x"), main.getConfig().getInt("Locations.Spawn.y"), main.getConfig().getInt("Locations.Spawn.z"));
