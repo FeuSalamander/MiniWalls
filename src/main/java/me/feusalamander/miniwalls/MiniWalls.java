@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 public final class MiniWalls extends JavaPlugin{
     private List<Player> players = new ArrayList<>();
+    private List<Player> spec = new ArrayList<>();
     public List<String> activeteams = new ArrayList<>();
     public int blife = 20;
     public int rlife = 20;
@@ -96,6 +97,9 @@ public final class MiniWalls extends JavaPlugin{
     }
     public List<Player> getPlayers(){
         return players;
+    }
+    public List<Player> getSpec(){
+        return spec;
     }
     public void eliminate(Player player) {
         if(players.contains(player)) players.remove(player);

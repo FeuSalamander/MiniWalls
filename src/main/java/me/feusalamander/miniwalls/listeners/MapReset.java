@@ -101,21 +101,31 @@ public class MapReset implements Listener {
             }
         }
     }
-    public void eliminate(Player player) {
-        if(main.getPlayers().contains(player)) main.getPlayers().remove(player);
-        player.sendMessage("§4You got eliminated");
+    private void eliminate(Player p, Boolean s) {
+        if(main.getPlayers().contains(p)) main.getPlayers().remove(p);
+        if(s) main.getSpec().add(p);
+        p.sendMessage("§4You got eliminated");
+        Location spec  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Destruction.center.x"), main.getConfig().getInt("Destruction.center.y"), main.getConfig().getInt("Destruction.center.z"));
         Location lobby  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Lobby.x"), main.getConfig().getInt("Locations.Lobby.y"), main.getConfig().getInt("Locations.Lobby.z"));
-        player.teleport(lobby);
-        main.scoreboard.getTeam("Blue").removePlayer(player);
-        main.scoreboard.getTeam("Red").removePlayer(player);
-        main.scoreboard.getTeam("Green").removePlayer(player);
-        main.scoreboard.getTeam("Yellow").removePlayer(player);
-        player.getInventory().clear();
-        player.setLevel(0);
-        player.setHealth(20);
-        player.setFoodLevel(20);
-        PlayerData.setloses(player, PlayerData.getloses(player)+1);
-        player.setGameMode(GameMode.SURVIVAL);
+        if(s){
+            p.teleport(spec);
+        }else{
+            p.teleport(lobby);
+        }
+        main.scoreboard.getTeam("Blue").removePlayer(p);
+        main.scoreboard.getTeam("Red").removePlayer(p);
+        main.scoreboard.getTeam("Green").removePlayer(p);
+        main.scoreboard.getTeam("Yellow").removePlayer(p);
+        p.getInventory().clear();
+        p.setLevel(0);
+        p.setHealth(20);
+        p.setFoodLevel(20);
+        PlayerData.setloses(p, PlayerData.getloses(p)+1);
+        if(s) {
+            p.setGameMode(GameMode.SPECTATOR);
+        }else{
+            p.setGameMode(GameMode.SURVIVAL);
+        }
         if(main.scoreboard.getTeam("Blue").getSize() == 0){
             main.activeteams.remove("Blue");
         }
@@ -128,7 +138,7 @@ public class MapReset implements Listener {
         if(main.scoreboard.getTeam("Yellow").getSize() == 0){
             main.activeteams.remove("Yellow");
         }
-        player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
+        p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
         checkWin();
     }
     public void checkWin() {
@@ -165,6 +175,17 @@ public class MapReset implements Listener {
                     }
                 }
             }
+            for (int i = 0; i < main.getSpec().size(); i++) {
+                Player spec = main.getSpec().get(i);
+                Location lobby = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Lobby.x"), main.getConfig().getInt("Locations.Lobby.y"), main.getConfig().getInt("Locations.Lobby.z"));
+                spec.teleport(lobby);
+                main.getSpec().remove(spec);
+                spec.getInventory().clear();
+                spec.setLevel(0);
+                spec.setFoodLevel(20);
+                spec.setHealth(20);
+                spec.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
+            }
         }
     }
     @EventHandler
@@ -183,7 +204,7 @@ public class MapReset implements Listener {
                         if(main.scoreboard.getTeam("Blue").hasPlayer(player)){
                             if(main.blife <= 0){
                                 event.setDamage(0);
-                                eliminate(player);
+                                eliminate(player, true);
                                 PlayerData.setfinal(damager, PlayerData.getfinal(damager)+1);
                                 PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 for(Player list : main.getPlayers()) {
@@ -197,7 +218,7 @@ public class MapReset implements Listener {
                         if(main.scoreboard.getTeam("Red").hasPlayer(player)){
                             if(main.rlife <= 0){
                                 event.setDamage(0);
-                                eliminate(player);
+                                eliminate(player, true);
                                 PlayerData.setfinal(damager, PlayerData.getfinal(damager)+1);
                                 PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 for(Player list : main.getPlayers()) {
@@ -211,7 +232,7 @@ public class MapReset implements Listener {
                         if(main.scoreboard.getTeam("Green").hasPlayer(player)){
                             if(main.glife <= 0){
                                 event.setDamage(0);
-                                eliminate(player);
+                                eliminate(player, true);
                                 PlayerData.setfinal(damager, PlayerData.getfinal(damager)+1);
                                 PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 for(Player list : main.getPlayers()) {
@@ -225,7 +246,7 @@ public class MapReset implements Listener {
                         if(main.scoreboard.getTeam("Yellow").hasPlayer(player)){
                             if(main.ylife <= 0){
                                 event.setDamage(0);
-                                eliminate(player);
+                                eliminate(player, true);
                                 PlayerData.setfinal(damager, PlayerData.getfinal(damager)+1);
                                 PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 for(Player list : main.getPlayers()) {
@@ -249,7 +270,7 @@ public class MapReset implements Listener {
                         if(main.scoreboard.getTeam("Blue").hasPlayer(player)){
                             if(main.blife <= 0){
                                 event.setDamage(0);
-                                eliminate(player);
+                                eliminate(player, true);
                                 PlayerData.setfinal(s, PlayerData.getfinal(s)+1);
                                 PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 for(Player list : main.getPlayers()) {
@@ -262,7 +283,7 @@ public class MapReset implements Listener {
                         }else if(main.scoreboard.getTeam("Red").hasPlayer(player)){
                             if(main.rlife <= 0){
                                 event.setDamage(0);
-                                eliminate(player);
+                                eliminate(player, true);
                                 PlayerData.setfinal(s, PlayerData.getfinal(s)+1);
                                 PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 for(Player list : main.getPlayers()) {
@@ -275,7 +296,7 @@ public class MapReset implements Listener {
                         }else if(main.scoreboard.getTeam("Green").hasPlayer(player)){
                             if(main.glife <= 0){
                                 event.setDamage(0);
-                                eliminate(player);
+                                eliminate(player, true);
                                 PlayerData.setfinal(s, PlayerData.getfinal(s)+1);
                                 PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 for(Player list : main.getPlayers()) {
@@ -288,7 +309,7 @@ public class MapReset implements Listener {
                         }else if(main.scoreboard.getTeam("Yellow").hasPlayer(player)){
                             if(main.ylife <= 0){
                                 event.setDamage(0);
-                                eliminate(player);
+                                eliminate(player, true);
                                 PlayerData.setfinal(s, PlayerData.getfinal(s)+1);
                                 PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 for(Player list : main.getPlayers()) {
@@ -329,7 +350,7 @@ public class MapReset implements Listener {
                         if(main.scoreboard.getTeam("Blue").hasPlayer(player)) {
                             if (main.blife <= 0) {
                                 event.setDamage(0);
-                                eliminate(player);
+                                eliminate(player, true);
                                 PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 for (Player list : main.getPlayers()) {
                                     list.sendMessage("§9" + player.getName() + " has been eliminated");
@@ -341,7 +362,7 @@ public class MapReset implements Listener {
                         }else if(main.scoreboard.getTeam("Red").hasPlayer(player)) {
                             if (main.rlife <= 0) {
                                 event.setDamage(0);
-                                eliminate(player);
+                                eliminate(player, true);
                                 PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 for (Player list : main.getPlayers()) {
                                     list.sendMessage("§c" + player.getName() + " has been eliminated");
@@ -353,7 +374,7 @@ public class MapReset implements Listener {
                         }else if (main.scoreboard.getTeam("Green").hasPlayer(player)) {
                             if(main.glife <= 0) {
                                 event.setDamage(0);
-                                eliminate(player);
+                                eliminate(player, true);
                                 PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 for (Player list : main.getPlayers()) {
                                     list.sendMessage("§a" + player.getName() + " has been eliminated");
@@ -365,7 +386,7 @@ public class MapReset implements Listener {
                         }else if(main.scoreboard.getTeam("Yellow").hasPlayer(player)) {
                             if (main.ylife <= 0) {
                                 event.setDamage(0);
-                                eliminate(player);
+                                eliminate(player, true);
                                 PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
                                 for (Player list : main.getPlayers()) {
                                     list.sendMessage("§e" + player.getName() + " has been eliminated");
@@ -382,70 +403,63 @@ public class MapReset implements Listener {
     }
     @EventHandler
     public void onQuit(PlayerQuitEvent e){
-        Player player = e.getPlayer();
+        Player p = e.getPlayer();
         Location lobby  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Lobby.x"), main.getConfig().getInt("Locations.Lobby.y"), main.getConfig().getInt("Locations.Lobby.z"));
-        player.teleport(lobby);
-        player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
-        if(main.getPlayers().contains(player)){
-            player.teleport(lobby);
-            main.scoreboard.getTeam("Blue").removePlayer(player);
-            main.scoreboard.getTeam("Red").removePlayer(player);
-            main.scoreboard.getTeam("Green").removePlayer(player);
-            main.scoreboard.getTeam("Yellow").removePlayer(player);
-            if(main.isState(MWstates.WAITING)){
-                main.getPlayers().remove(player);
-                Bukkit.broadcastMessage(player.getName()+"§a left the MiniWalls game ! §7<§f" +main.getPlayers().size()+"§7/§f8§7>");
-                player.setLevel(0);
-                player.setFoodLevel(20);
-                player.getInventory().clear();
-            }else if(main.isState(MWstates.STARTING)){
-                main.getPlayers().remove(player);
-                Bukkit.broadcastMessage(player.getName()+"§a left the MiniWalls game ! §7<§f" +main.getPlayers().size()+"§7/§f8§7>");
-                player.setLevel(0);
-                player.setFoodLevel(20);
-                player.getInventory().clear();
+        p.teleport(lobby);
+        p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
+        if(main.getPlayers().contains(p)){
+            p.teleport(lobby);
+            main.scoreboard.getTeam("Blue").removePlayer(p);
+            main.scoreboard.getTeam("Red").removePlayer(p);
+            main.scoreboard.getTeam("Green").removePlayer(p);
+            main.scoreboard.getTeam("Yellow").removePlayer(p);
+            if(main.isState(MWstates.WAITING) || main.isState(MWstates.STARTING)){
+                main.getPlayers().remove(p);
+                Bukkit.broadcastMessage(p.getName()+"§a left the MiniWalls game ! §7<§f" +main.getPlayers().size()+"§7/§f8§7>");
+                p.setLevel(0);
+                p.setFoodLevel(20);
+                p.getInventory().clear();
             }else{
-                eliminate(player);
-                PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
+                eliminate(p, false);
+                PlayerData.setdeath(p, PlayerData.getdeath(p)+1);
                 for(Player list : main.getPlayers()) {
-                    list.sendMessage("§e"+player.getName()+"§eleft the game MiniWalls");
+                    list.sendMessage("§e"+ p.getName()+"§eleft the game MiniWalls");
                 }
             }
+        }else if(main.getSpec().contains(p)){
+            p.teleport(lobby);
+            p.setGameMode(GameMode.SURVIVAL);
         }
     }
     @EventHandler
     public void onLeave(PlayerCommandPreprocessEvent e){
-        Player player = e.getPlayer();
         if (e.getMessage().equalsIgnoreCase("/mw leave")){
+            Player p = e.getPlayer();
             Location lobby  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Lobby.x"), main.getConfig().getInt("Locations.Lobby.y"), main.getConfig().getInt("Locations.Lobby.z"));
-            if(main.getPlayers().contains(player)){
-                player.teleport(lobby);
-                player.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
-                main.scoreboard.getTeam("Blue").removePlayer(player);
-                main.scoreboard.getTeam("Red").removePlayer(player);
-                main.scoreboard.getTeam("Green").removePlayer(player);
-                main.scoreboard.getTeam("Yellow").removePlayer(player);
-                if(main.isState(MWstates.WAITING)){
-                    main.getPlayers().remove(player);
-                    Bukkit.broadcastMessage(player.getName()+"§a left the MiniWalls game ! §7<§f" +main.getPlayers().size()+"§7/§f8§7>");
-                    player.setLevel(0);
-                    player.setHealth(20);
-                    player.setFoodLevel(20);
-                    player.getInventory().clear();
-                }else if(main.isState(MWstates.STARTING)){
-                    main.getPlayers().remove(player);
-                    Bukkit.broadcastMessage(player.getName()+"§a leaved the MiniWalls game ! §7<§f" +main.getPlayers().size()+"§7/§f8§7>");
-                    player.setLevel(0);
-                    player.setHealth(20);
-                    player.setFoodLevel(20);
-                    player.getInventory().clear();
+            if(main.getPlayers().contains(p)){
+                p.teleport(lobby);
+                p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
+                main.scoreboard.getTeam("Blue").removePlayer(p);
+                main.scoreboard.getTeam("Red").removePlayer(p);
+                main.scoreboard.getTeam("Green").removePlayer(p);
+                main.scoreboard.getTeam("Yellow").removePlayer(p);
+                if(main.isState(MWstates.WAITING) || main.isState(MWstates.STARTING)){
+                    main.getPlayers().remove(p);
+                    Bukkit.broadcastMessage(p.getName()+"§a left the MiniWalls game ! §7<§f" +main.getPlayers().size()+"§7/§f8§7>");
+                    p.setLevel(0);
+                    p.setHealth(20);
+                    p.setFoodLevel(20);
+                    p.getInventory().clear();
                 }else{
-                    eliminate(player);
-                    PlayerData.setdeath(player, PlayerData.getdeath(player)+1);
+                    eliminate(p, false);
+                    PlayerData.setdeath(p, PlayerData.getdeath(p)+1);
                     for(Player list : main.getPlayers()) {
-                        list.sendMessage("§e"+player.getName()+"§eleft the game MiniWalls");
+                        list.sendMessage("§e"+ p.getName()+"§eleft the game MiniWalls");
                     }
                 }
+            }else if(main.getSpec().contains(p)){
+                p.teleport(lobby);
+                p.setGameMode(GameMode.SURVIVAL);
             }
         }
     }

@@ -1,6 +1,7 @@
 package me.feusalamander.miniwalls.timers;
 import me.feusalamander.miniwalls.MWstates;
 import me.feusalamander.miniwalls.MiniWalls;
+import me.feusalamander.miniwalls.listeners.MapReset;
 import org.bukkit.*;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;

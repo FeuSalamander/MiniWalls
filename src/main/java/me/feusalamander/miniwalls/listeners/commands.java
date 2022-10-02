@@ -3,25 +3,18 @@ import me.feusalamander.miniwalls.GUI.MWconfigGui;
 import me.feusalamander.miniwalls.MWstates;
 import me.feusalamander.miniwalls.MiniWalls;
 import me.feusalamander.miniwalls.timers.MWautostart;
-import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.text.DecimalFormat;
@@ -37,47 +30,47 @@ public class commands implements Listener {
 
     @EventHandler
     public void setspawn(PlayerCommandPreprocessEvent e){
-        Player player = e.getPlayer();
+        Player p = e.getPlayer();
         if(e.getMessage().equalsIgnoreCase("/mw join")){
             if(!(main.isState(MWstates.STARTING) || main.isState(MWstates.WAITING))) {
-                Location lobby  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Lobby.x"), main.getConfig().getInt("Locations.Lobby.y"), main.getConfig().getInt("Locations.Lobby.z"));
-                player.teleport(lobby);
-                player.sendMessage("§7The game is already started !");
-                return;
-            }else if(!main.getPlayers().contains(player)) {
-                main.getPlayers().add(player);
+                Location lobby  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Destruction.center.x"), main.getConfig().getInt("Destruction.center.y"), main.getConfig().getInt("Destruction.center.z"));
+                p.teleport(lobby);
+                p.setGameMode(GameMode.SPECTATOR);
+                main.getSpec().add(p);
+            }else if(!main.getPlayers().contains(p)){
+                main.getPlayers().add(p);
                 Location spawn  = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Spawn.x"), main.getConfig().getInt("Locations.Spawn.y"), main.getConfig().getInt("Locations.Spawn.z"));
-                player.teleport(spawn);
-                player.setHealth(20);
-                player.setFoodLevel(20);
-                player.getInventory().clear();
-                Bukkit.broadcastMessage(player.getName() + "§a joined the MiniWalls game ! §7<§f" + main.getPlayers().size() + "§7/§f8§7>");
-                player.setGameMode(GameMode.ADVENTURE);
+                p.teleport(spawn);
+                p.setHealth(20);
+                p.setFoodLevel(20);
+                p.getInventory().clear();
+                Bukkit.broadcastMessage(p.getName() + "§a joined the MiniWalls game ! §7<§f" + main.getPlayers().size() + "§7/§f8§7>");
+                p.setGameMode(GameMode.ADVENTURE);
                 ItemStack bwool = new ItemStack(Material.BLUE_WOOL);
                 ItemMeta woolb = bwool.getItemMeta();
                 woolb.setDisplayName("§1Click to join the §9Blue Team !");
                 bwool.setItemMeta(woolb);
-                player.getInventory().setItem(5, bwool);
+                p.getInventory().setItem(5, bwool);
                 ItemStack rwool = new ItemStack(Material.RED_WOOL);
                 ItemMeta woolr = bwool.getItemMeta();
                 woolr.setDisplayName("§4Click to join the §cRed Team !");
                 rwool.setItemMeta(woolr);
-                player.getInventory().setItem(6, rwool);
+                p.getInventory().setItem(6, rwool);
                 ItemStack gwool = new ItemStack(Material.GREEN_WOOL);
                 ItemMeta woolg = gwool.getItemMeta();
                 woolg.setDisplayName("§2Click to join the §aGreen Team !");
                 gwool.setItemMeta(woolg);
-                player.getInventory().setItem(7, gwool);
+                p.getInventory().setItem(7, gwool);
                 ItemStack ywool = new ItemStack(Material.YELLOW_WOOL);
                 ItemMeta wooly = ywool.getItemMeta();
                 wooly.setDisplayName("§6Click to join the §eYellow Team !");
                 ywool.setItemMeta(wooly);
-                player.getInventory().setItem(8, ywool);
+                p.getInventory().setItem(8, ywool);
                 ItemStack leave = new ItemStack(Material.IRON_TRAPDOOR);
                 ItemMeta leave2 = leave.getItemMeta();
                 leave2.setDisplayName("§cClick to leave");
                 leave.setItemMeta(leave2);
-                player.getInventory().setItem(0, leave);
+                p.getInventory().setItem(0, leave);
                 e.getPlayer().setScoreboard(main.scoreboard);
                 main.scoreboard.getTeam("playerss").setSuffix("§a" +main.getPlayers().size()+ "/§a8");
                 main.scoreboard.getTeam("playerss").setPrefix("Waiting ");
@@ -103,15 +96,15 @@ public class commands implements Listener {
             ItemMeta statM = stat.getItemMeta();
             statM.setDisplayName(ChatColor.GREEN+"Your Stats");
             ArrayList<String> lore = new ArrayList<>();
-            lore.add("§7Wins: §f"+PlayerData.getWins(player));
-            lore.add("§7Loses: §f"+PlayerData.getloses(player));
-            lore.add("§7Kills: §f"+PlayerData.getkills(player));
-            lore.add("§7Final Kills: §f"+PlayerData.getfinal(player));
-            lore.add("§7Deaths: §f"+PlayerData.getdeath(player));
-            if(PlayerData.getdeath(player) == 0){
-                lore.add("§7Ratio K/D: §f"+PlayerData.getkills(player));
+            lore.add("§7Wins: §f"+PlayerData.getWins(p));
+            lore.add("§7Loses: §f"+PlayerData.getloses(p));
+            lore.add("§7Kills: §f"+PlayerData.getkills(p));
+            lore.add("§7Final Kills: §f"+PlayerData.getfinal(p));
+            lore.add("§7Deaths: §f"+PlayerData.getdeath(p));
+            if(PlayerData.getdeath(p) == 0){
+                lore.add("§7Ratio K/D: §f"+PlayerData.getkills(p));
             }else{
-                number = (float)PlayerData.getkills(player)/PlayerData.getdeath(player);
+                number = (float)PlayerData.getkills(p)/PlayerData.getdeath(p);
                 DecimalFormat format = new DecimalFormat("0.00");
                 String output = format.format(number);
                 lore.add("§7Ratio K/D: §f"+output);
@@ -182,29 +175,29 @@ public class commands implements Listener {
             wM.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
             w.setItemMeta(wM);
             inv.setItem(23, w);
-            player.openInventory(inv);
+            p.openInventory(inv);
         }else if (e.getMessage().equalsIgnoreCase("/mw configgui")) {
-            if (player.hasPermission("mw.admin")) {
-                MWconfigGui.config(player);
+            if (p.hasPermission("mw.admin")) {
+                MWconfigGui.config(p);
             }else{
-                player.sendMessage("You don't have the permission");
+                p.sendMessage("You don't have the permission");
             }
         }else if (e.getMessage().equalsIgnoreCase("/mw help")) {
-            player.sendMessage("§1§l---------------------------------");
-            player.sendMessage("    §4All the commands of the mini walls plugin");
-            player.sendMessage("");
-            player.sendMessage("§5mw gui: §cOpen the Gui to see the leaderboard, the stats and play");
-            player.sendMessage("§5mw help: §cShow this help");
-            player.sendMessage("§5mw join: §cJoin the MiniWalls game");
-            player.sendMessage("§5mw leave: §cLeave the MiniWalls game");
-            player.sendMessage("§5mw reload: §cReload the config");
-            player.sendMessage("§1§l---------------------------------");
+            p.sendMessage("§1§l---------------------------------");
+            p.sendMessage("    §4All the commands of the mini walls plugin");
+            p.sendMessage("");
+            p.sendMessage("§5mw gui: §cOpen the Gui to see the leaderboard, the stats and play");
+            p.sendMessage("§5mw help: §cShow this help");
+            p.sendMessage("§5mw join: §cJoin the MiniWalls game");
+            p.sendMessage("§5mw leave: §cLeave the MiniWalls game");
+            p.sendMessage("§5mw reload: §cReload the config");
+            p.sendMessage("§1§l---------------------------------");
         }else if(e.getMessage().equalsIgnoreCase("/mw reload")){
-            if(player.hasPermission("mw.admin")){
-                player.sendMessage("The configuration file of MiniWalls got successfully reloaded");
+            if(p.hasPermission("mw.admin")){
+                p.sendMessage("The configuration file of MiniWalls got successfully reloaded");
                 main.reloadConfig();
             }else{
-                player.sendMessage("You don't have the permission");
+                p.sendMessage("You don't have the permission");
             }
         }
     }
