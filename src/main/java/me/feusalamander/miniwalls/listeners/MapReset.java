@@ -180,6 +180,7 @@ public class MapReset implements Listener {
                 Location lobby = new Location(Bukkit.getWorld("world"), main.getConfig().getInt("Locations.Lobby.x"), main.getConfig().getInt("Locations.Lobby.y"), main.getConfig().getInt("Locations.Lobby.z"));
                 spec.teleport(lobby);
                 main.getSpec().remove(spec);
+                spec.setGameMode(GameMode.SURVIVAL);
                 spec.getInventory().clear();
                 spec.setLevel(0);
                 spec.setFoodLevel(20);
