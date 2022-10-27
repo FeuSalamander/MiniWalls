@@ -1,7 +1,7 @@
 name: MiniWalls
-version: 2.4
+version: 2.5
 main: me.feusalamander.miniwalls.MiniWalls
-api-version: 1.18
+api-version: 1.13
 authors: [ FeuSalamander ]
 softdepend:
   - LuckPerms

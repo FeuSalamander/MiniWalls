@@ -38,13 +38,13 @@ public class MWgamecycle extends BukkitRunnable {
             }
             pls.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 25, 0));
             pls.setLevel(timer);
-            main.scoreboard.getTeam("playerss").setSuffix("§a" +main.getPlayers().size()+ "/§a8");
-            main.scoreboard.getTeam("playerss").setPrefix("Alive ");
-            main.scoreboard.getTeam("bv").setSuffix("§9Villager: "+main.blife+"§9♥");
-            main.scoreboard.getTeam("rv").setSuffix("§cVillager: "+main.rlife+"§c♥");
-            main.scoreboard.getTeam("gv").setSuffix("§aVillager: "+main.glife+"§a♥");
-            main.scoreboard.getTeam("yv").setSuffix("§eVillager: "+main.ylife+"§e♥");                                                                        
         }
+        main.scoreboard.getTeam("playerss").setSuffix("§a" +main.getPlayers().size()+ "/§a8");
+        main.scoreboard.getTeam("playerss").setPrefix("Alive ");
+        main.scoreboard.getTeam("bv").setSuffix("§9Villager: "+main.blife+"§9♥");
+        main.scoreboard.getTeam("rv").setSuffix("§cVillager: "+main.rlife+"§c♥");
+        main.scoreboard.getTeam("gv").setSuffix("§aVillager: "+main.glife+"§a♥");
+        main.scoreboard.getTeam("yv").setSuffix("§eVillager: "+main.ylife+"§e♥");
         if(main.getPlayers().size() <= 1){
             cancel();
         }
